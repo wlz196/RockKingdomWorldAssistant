@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洛克王国数据概览 - 大屏看板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; }
+        .header-font { font-family: 'ZCOOL KuaiLe', cursive; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .bg-gradient { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); }
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-4xl font-bold header-font text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                    洛克王国：世界 - 战术 AI 数据库分析器
+                </h1>
+                <p class="text-slate-400 mt-2">实时抓取自 wiki.lcx.cab | 共计 376 只精灵, 475 个技能</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="glass p-4 rounded-2xl text-center min-w-[120px]">
+                    <div class="text-3xl font-bold text-cyan-400">376</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider">精灵总量</div>
+                </div>
+                <div class="glass p-4 rounded-2xl text-center min-w-[120px]">
+                    <div class="text-3xl font-bold text-indigo-400">475</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider">技能总量</div>
+                </div>
+                <div class="glass p-4 rounded-2xl text-center min-w-[120px]">
+                    <div class="text-3xl font-bold text-emerald-400">17521</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wider">关联总数</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            <!-- Type Distribution Chart -->
+            <div class="glass p-6 rounded-3xl lg:col-span-1">
+                <h3 class="text-xl font-bold mb-4 header-font">精灵属性分布</h3>
+                <canvas id="typeChart" height="300"></canvas>
+            </div>
+            
+            <!-- Top Stats Chart -->
+            <div class="glass p-6 rounded-3xl lg:col-span-2">
+                <h3 class="text-xl font-bold mb-4 header-font">战力天花板 (全属性之和 Top 10)</h3>
+                <canvas id="topPetsChart" height="150"></canvas>
+            </div>
+        </div>
+
+        <!-- Sample Pets Table -->
+        <div class="glass rounded-3xl overflow-hidden mb-10">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center">
+                <h3 class="text-xl font-bold header-font">数据库采样集 (Top 20)</h3>
+                <span class="text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full border border-blue-500/30">SQLite: pet_info</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-slate-300 text-sm uppercase">
+                        <tr>
+                            <th class="p-4">编号</th>
+                            <th class="p-4">名称</th>
+                            <th class="p-4">属性</th>
+                            <th class="p-4">精力</th>
+                            <th class="p-4">攻击</th>
+                            <th class="p-4">防御</th>
+                            <th class="p-4">魔攻</th>
+                            <th class="p-4">魔抗</th>
+                            <th class="p-4">速度</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-200">
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">001</td>
+                            <td class="p-4 font-bold">迪莫</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">光</span>
+                                
+                            </td>
+                            <td class="p-4">120</td>
+                            <td class="p-4">80</td>
+                            <td class="p-4">105</td>
+                            <td class="p-4">80</td>
+                            <td class="p-4">105</td>
+                            <td class="p-4">92</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">002</td>
+                            <td class="p-4 font-bold">喵喵</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">草</span>
+                                
+                            </td>
+                            <td class="p-4">63</td>
+                            <td class="p-4">57</td>
+                            <td class="p-4">56</td>
+                            <td class="p-4">57</td>
+                            <td class="p-4">59</td>
+                            <td class="p-4">33</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">003</td>
+                            <td class="p-4 font-bold">喵呜</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">草</span>
+                                
+                            </td>
+                            <td class="p-4">85</td>
+                            <td class="p-4">77</td>
+                            <td class="p-4">75</td>
+                            <td class="p-4">77</td>
+                            <td class="p-4">79</td>
+                            <td class="p-4">44</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">004</td>
+                            <td class="p-4 font-bold">魔力猫</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">草</span>
+                                
+                            </td>
+                            <td class="p-4">106</td>
+                            <td class="p-4">96</td>
+                            <td class="p-4">94</td>
+                            <td class="p-4">96</td>
+                            <td class="p-4">99</td>
+                            <td class="p-4">55</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">005</td>
+                            <td class="p-4 font-bold">火花</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">火</span>
+                                
+                            </td>
+                            <td class="p-4">70</td>
+                            <td class="p-4">84</td>
+                            <td class="p-4">56</td>
+                            <td class="p-4">37</td>
+                            <td class="p-4">43</td>
+                            <td class="p-4">78</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">006</td>
+                            <td class="p-4 font-bold">焰火</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">火</span>
+                                
+                            </td>
+                            <td class="p-4">93</td>
+                            <td class="p-4">111</td>
+                            <td class="p-4">75</td>
+                            <td class="p-4">49</td>
+                            <td class="p-4">58</td>
+                            <td class="p-4">104</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">007</td>
+                            <td class="p-4 font-bold">火神</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">火</span>
+                                
+                            </td>
+                            <td class="p-4">117</td>
+                            <td class="p-4">139</td>
+                            <td class="p-4">94</td>
+                            <td class="p-4">61</td>
+                            <td class="p-4">72</td>
+                            <td class="p-4">130</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">008</td>
+                            <td class="p-4 font-bold">水蓝蓝</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">水</span>
+                                
+                            </td>
+                            <td class="p-4">75</td>
+                            <td class="p-4">35</td>
+                            <td class="p-4">56</td>
+                            <td class="p-4">76</td>
+                            <td class="p-4">79</td>
+                            <td class="p-4">51</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">009</td>
+                            <td class="p-4 font-bold">波波拉</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">水</span>
+                                
+                            </td>
+                            <td class="p-4">100</td>
+                            <td class="p-4">46</td>
+                            <td class="p-4">75</td>
+                            <td class="p-4">102</td>
+                            <td class="p-4">106</td>
+                            <td class="p-4">68</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">010</td>
+                            <td class="p-4 font-bold">水灵</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">水</span>
+                                
+                            </td>
+                            <td class="p-4">125</td>
+                            <td class="p-4">58</td>
+                            <td class="p-4">94</td>
+                            <td class="p-4">127</td>
+                            <td class="p-4">132</td>
+                            <td class="p-4">85</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">011</td>
+                            <td class="p-4 font-bold">鸭吉吉</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">普通</span>
+                                
+                            </td>
+                            <td class="p-4">136</td>
+                            <td class="p-4">95</td>
+                            <td class="p-4">55</td>
+                            <td class="p-4">35</td>
+                            <td class="p-4">45</td>
+                            <td class="p-4">105</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">012</td>
+                            <td class="p-4 font-bold">板板壳</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">水</span>
+                                
+                            </td>
+                            <td class="p-4">67</td>
+                            <td class="p-4">28</td>
+                            <td class="p-4">64</td>
+                            <td class="p-4">72</td>
+                            <td class="p-4">81</td>
+                            <td class="p-4">45</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">013</td>
+                            <td class="p-4 font-bold">咔咔壳</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">水</span>
+                                
+                            </td>
+                            <td class="p-4">90</td>
+                            <td class="p-4">37</td>
+                            <td class="p-4">85</td>
+                            <td class="p-4">96</td>
+                            <td class="p-4">107</td>
+                            <td class="p-4">60</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">014</td>
+                            <td class="p-4 font-bold">水泡壳</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">水</span>
+                                
+                            </td>
+                            <td class="p-4">112</td>
+                            <td class="p-4">46</td>
+                            <td class="p-4">107</td>
+                            <td class="p-4">120</td>
+                            <td class="p-4">134</td>
+                            <td class="p-4">75</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">018</td>
+                            <td class="p-4 font-bold">雪绒鸟冬天的样子</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">翼</span>
+                                
+                            </td>
+                            <td class="p-4">59</td>
+                            <td class="p-4">80</td>
+                            <td class="p-4">58</td>
+                            <td class="p-4">32</td>
+                            <td class="p-4">41</td>
+                            <td class="p-4">69</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">019</td>
+                            <td class="p-4 font-bold">冬羽雀冬天的样子</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">翼</span>
+                                
+                            </td>
+                            <td class="p-4">72</td>
+                            <td class="p-4">103</td>
+                            <td class="p-4">86</td>
+                            <td class="p-4">44</td>
+                            <td class="p-4">59</td>
+                            <td class="p-4">92</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">020</td>
+                            <td class="p-4 font-bold">岚鸟冬天的样子</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">翼</span>
+                                
+                            </td>
+                            <td class="p-4">90</td>
+                            <td class="p-4">128</td>
+                            <td class="p-4">108</td>
+                            <td class="p-4">55</td>
+                            <td class="p-4">74</td>
+                            <td class="p-4">115</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">168</td>
+                            <td class="p-4 font-bold">圆眼蜘蛛</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">虫</span>
+                                
+                            </td>
+                            <td class="p-4">55</td>
+                            <td class="p-4">37</td>
+                            <td class="p-4">55</td>
+                            <td class="p-4">37</td>
+                            <td class="p-4">55</td>
+                            <td class="p-4">66</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">169</td>
+                            <td class="p-4 font-bold">尖角蜘蛛</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">毒</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-600 text-xs"> 虫</span>
+                            </td>
+                            <td class="p-4">74</td>
+                            <td class="p-4">49</td>
+                            <td class="p-4">73</td>
+                            <td class="p-4">49</td>
+                            <td class="p-4">73</td>
+                            <td class="p-4">88</td>
+                        </tr>
+                        
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                            <td class="p-4 text-cyan-400 font-mono italic">170</td>
+                            <td class="p-4 font-bold">芋香巨角蛛</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded bg-slate-700 text-xs mr-1">毒</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-600 text-xs"> 虫</span>
+                            </td>
+                            <td class="p-4">92</td>
+                            <td class="p-4">61</td>
+                            <td class="p-4">91</td>
+                            <td class="p-4">61</td>
+                            <td class="p-4">91</td>
+                            <td class="p-4">110</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="text-center text-slate-500 text-sm py-10 border-t border-white/5">
+            Designed for 洛克王国 AI 助手 | Anti-Gravity Crawler Generated
+        </footer>
+    </div>
+
+    <script>
+        const ctxType = document.getElementById('typeChart').getContext('2d');
+        new Chart(ctxType, {
+            type: 'doughnut',
+            data: {
+                labels: ["\u5730", "\u6c34", "\u8349", "\u666e\u901a", "\u706b", "\u5e7b", "\u51b0", "\u7ffc", "\u5e7d", "\u6bd2", "\u6076", "\u673a\u68b0", "\u7535", "\u6b66", "\u5149", "\u866b", "\u9f99", "\u840c"],
+                datasets: [{
+                    data: [46, 33, 29, 29, 26, 24, 24, 23, 23, 21, 20, 16, 14, 14, 14, 10, 5, 5],
+                    backgroundColor: [
+                        '#38bdf8', '#818cf8', '#c084fc', '#f472b6', '#fb7185', '#fbbf24', '#a3e635', '#2dd4bf', 
+                        '#22d3ee', '#60a5fa', '#a78bfa', '#e879f9', '#f43f5e', '#f97316', '#eab308', '#84cc16'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 20
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                cutout: '70%'
+            }
+        });
+
+        const ctxPets = document.getElementById('topPetsChart').getContext('2d');
+        new Chart(ctxPets, {
+            type: 'bar',
+            data: {
+                labels: ["\u5723\u5251-X", "\u9cd7\u5c3e\u517d", "\u8ff7\u8ff7\u7bb1\u602a", "\u5b66\u9662\u5471\u5471", "\u8d85\u80fd\u963f\u5e03", "\u96ea\u5de8\u4eba", "\u706b\u7130\u733f", "\u5723\u5251\u4f8d\u4ece", "\u5723\u7fbd\u7ffc\u738b", "\u778c\u7761\u738b"],
+                datasets: [{
+                    label: '能力值总和',
+                    data: [868, 788, 782, 766, 720, 718, 715, 696, 686, 685],
+                    backgroundColor: 'rgba(56, 189, 248, 0.6)',
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: false, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>
+    

@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+target/
+
+# Build outputs
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Parser output
+parser/output/
+
+# Backup
+backup/
+
+# Third-party data
+aoe_top_data/

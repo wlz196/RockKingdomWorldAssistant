@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洛克王国战术百科 | Encyclopedia</title>
+    <link rel="stylesheet" href="encyclopedia.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar for Main Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>ROCO 百科</span>
+            </div>
+            
+            <nav class="main-tabs">
+                <button class="main-tab active" data-tab="petView">
+                    <i class="fas fa-paw"></i> <span>精灵图鉴</span>
+                </button>
+                <button class="main-tab" data-tab="skillView">
+                    <i class="fas fa-bolt-lightning"></i> <span>技能图鉴</span>
+                </button>
+                <button class="main-tab" data-tab="bloodlineView">
+                    <i class="fas fa-dna"></i> <span>血脉库</span>
+                </button>
+                <button class="main-tab" data-tab="buffView">
+                    <i class="fas fa-sparkles"></i> <span>Buff 库</span>
+                </button>
+                <button class="main-tab" data-tab="natureView">
+                    <i class="fas fa-balance-scale"></i> <span>性格表</span>
+                </button>
+                <button class="main-tab" data-tab="talentView">
+                    <i class="fas fa-award"></i> <span>特长库</span>
+                </button>
+                <button class="main-tab" data-tab="typeView">
+                    <i class="fas fa-shield-alt"></i> <span>属性克制</span>
+                </button>
+                <button class="main-tab" data-tab="statView">
+                    <i class="fas fa-calculator"></i> <span>能力模拟</span>
+                </button>
+                <button class="main-tab" data-tab="damageView">
+                    <i class="fas fa-crosshairs"></i> <span>伤害计算</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div id="petView" class="tab-pane active">
+                <!-- Top Filter Bar -->
+                <header class="top-filter-bar" style="display:flex; flex-direction:column; align-items:stretch; gap:16px; height:auto;">
+                    <div class="filter-row-block" style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="font-size:0.82rem; font-weight:700; color:#64748b;">是否图鉴内</div>
+                        <div class="category-filters" id="categoryFilters">
+                            <button class="cat-btn active" data-cat="all">全部精灵</button>
+                            <button class="cat-btn" data-cat="book">图鉴内</button>
+                            <button class="cat-btn" data-cat="non-book">暂无号</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-row-block" style="display:flex; flex-direction:column; gap:8px; min-width:0;">
+                        <div style="font-size:0.82rem; font-weight:700; color:#64748b;">属性筛选</div>
+                        <div class="type-scroll-container">
+                            <div class="type-filters-row" id="typeFilters">
+                                <!-- Dynamic Types -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-and-stats" style="margin-left: 0; min-width: 0; max-width: none; width: 100%;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #64748b; margin-bottom: 8px;">精灵搜索</div>
+                        <div class="search-container" style="width: 100%; position: relative;">
+                            <i class="fas fa-search" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#94a3b8;"></i>
+                            <input type="text" id="petSearch" placeholder="搜索精灵名称..." style="width: 100%; padding: 15px 15px 15px 42px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; color: #0f172a; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+                        </div>
+                        <div class="stats-counter" style="margin-top: 10px; color: #aaa; font-size: 0.9rem;">
+                            已加载 <span id="petCount" style="color: #00d4ff; font-weight: bold;">0</span> 项数据
+                        </div>
+                    </div>
+                </header>
+
+                <div class="pet-grid" id="petGrid">
+                    <!-- Dynamic Cards -->
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" class="btn-nav"><i class="fas fa-chevron-left"></i> 上一页</button>
+                    <span id="pageInfo">第 1 页</span>
+                    <button id="nextPage" class="btn-nav">下一页 <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div id="skillView" class="tab-pane" style="display:none">
+                <header class="top-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; height: auto; margin-bottom: 25px;">
+                    <div class="skill-tactical-filters">
+                        <div class="filter-row">
+                            <span class="filter-label"><i class="fas fa-brain"></i> 逻辑</span>
+                            <div id="skillLogicFilters" class="type-filters-row"></div>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label"><i class="fas fa-mask"></i> 系别</span>
+                            <div id="skillAttrFilters" class="type-filters-row"></div>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label"><i class="fas fa-fist-raised"></i> 性质</span>
+                            <div id="skillClassFilters" class="type-filters-row"></div>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label"><i class="fas fa-bolt"></i> 伤害</span>
+                            <div id="skillDamageFilters" class="type-filters-row"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-and-stats" style="margin-left: 0; width: 100%; display: flex; gap: 15px; align-items: center; background: rgba(59, 130, 246, 0.05); padding: 15px; border-radius: 15px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                        <div class="search-container" style="flex: 1; position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                            <input type="text" id="skillSearch" placeholder="搜索技能名称或描述..." style="width: 100%; padding: 12px 15px 12px 45px; background: white; border: 1px solid #e2e8f0; border-radius: 10px; color: #1e293b; font-size: 0.95rem;">
+                        </div>
+                        <div class="stats-counter" style="color: #64748b; white-space: nowrap;">
+                            已发现 <span id="skillCount" style="color: #3b82f6; font-weight: bold;">0</span> 项技能
+                        </div>
+                    </div>
+                </header>
+
+                <div class="pet-grid" id="skillGrid">
+                    <!-- Dynamic Cards -->
+                </div>
+
+                <div class="pagination">
+                    <button id="prevSkillPage" class="btn-nav"><i class="fas fa-chevron-left"></i> 上一页</button>
+                    <span id="skillPageInfo">第 1 页</span>
+                    <button id="nextSkillPage" class="btn-nav">下一页 <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div id="bloodlineView" class="tab-pane" style="display:none">
+                <header class="top-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="bloodlineSearch" placeholder="搜索血脉名称、简称或关联技能...">
+                    </div>
+                </header>
+                <div class="data-grid" id="bloodlineGrid"></div>
+            </div>
+            
+            <div id="buffView" class="tab-pane" style="display:none">
+                <header class="top-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="buffSearch" placeholder="搜索 Buff 名称...">
+                    </div>
+                    <div class="filter-group" style="margin-left:1rem">
+                        <select id="buffTypeFilter" class="btn-nav">
+                            <option value="">全部类型</option>
+                            <option value="1">增益</option>
+                            <option value="2">减益</option>
+                            <option value="3">其他</option>
+                            <option value="4">印记</option>
+                            <option value="5">特性</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="data-grid" id="buffGrid"></div>
+            </div>
+            
+            <div id="natureView" class="tab-pane" style="display:none">
+                <header class="top-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="natureSearch" placeholder="搜索性格名称或增减属性...">
+                    </div>
+                </header>
+                <div class="data-grid" id="natureGrid"></div>
+            </div>
+            
+            <div id="talentView" class="tab-pane" style="display:none">
+                <header class="top-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="talentSearch" placeholder="搜索特长名称或描述...">
+                    </div>
+                </header>
+                <div class="data-grid" id="talentGrid"></div>
+            </div>
+            
+            <div id="typeView" class="tab-pane" style="display:none">
+                <div class="calculator-container">
+                    <h3><i class="fas fa-calculator"></i> 属性克制计算器 (单/双系别)</h3>
+                    <div class="calc-inputs">
+                        <div class="input-group">
+                            <label>主系别</label>
+                            <select id="calcType1" class="btn-nav"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>副系别</label>
+                            <select id="calcType2" class="btn-nav">
+                                <option value="">无</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="calcResults" class="calc-results-grid">
+                        <div class="placeholder-text">请选择系别进行分析</div>
+                    </div>
+                </div>
+
+                <div class="matrix-header">
+                    <h3><i class="fas fa-table"></i> 全系别克制矩阵</h3>
+                    <span class="matrix-hint">* 纵轴为攻击方，横轴为防御方</span>
+                </div>
+                <div class="matrix-wrapper" id="typeMatrix"></div>
+            </div>
+
+            <div id="statView" class="tab-pane" style="display:none">
+                <div class="calculator-container">
+                    <header class="section-header">
+                        <h3><i class="fas fa-crosshairs"></i> 60级实战属性模拟器</h3>
+                        <p class="subtitle">支持星级倍率、性格联动与手动修正，实时模拟 60 级最终六维属性</p>
+                    </header>
+                    
+                    <div class="simulator-layout">
+                        <div class="sim-controls box-glass">
+                            <div class="sim-panel-header">
+                                <div>
+                                    <span class="panel-eyebrow">参数设置</span>
+                                    <h4>配置模拟条件</h4>
+                                </div>
+                                <span class="panel-badge">Lv.60</span>
+                            </div>
+
+                            <div class="sim-form-card">
+                                <div class="control-row">
+                                    <label>选择精灵</label>
+                                    <div class="search-with-results">
+                                        <input type="text" id="simPetSearch" placeholder="输入名称搜索并选择..." class="input-modern">
+                                        <div id="simPetResults" class="results-popover"></div>
+                                    </div>
+                                </div>
+
+                                <div class="control-row">
+                                    <label>核心性格</label>
+                                    <select id="simNature" class="select-modern">
+                                        <option value="">加载中...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sim-form-card sim-modifier-card">
+                                <div class="talent-panel-header">
+                                    <div>
+                                        <span class="panel-eyebrow">修正设置</span>
+                                        <h4>星级与属性修正</h4>
+                                    </div>
+                                    <span class="talent-range-tip">星级 0-5</span>
+                                </div>
+
+                                <div class="modifier-grid">
+                                    <div class="control-row">
+                                        <label>星级</label>
+                                        <input type="number" id="simStarLevel" class="input-modern" min="0" max="5" step="1" value="5">
+                                    </div>
+                                    <div class="control-row">
+                                        <label>正面修正</label>
+                                        <select id="simPlusAttr" class="select-modern"></select>
+                                    </div>
+                                    <div class="control-row">
+                                        <label>负面修正</label>
+                                        <select id="simMinusAttr" class="select-modern"></select>
+                                    </div>
+                                    <div class="control-row">
+                                        <label>正面修正幅度</label>
+                                        <select id="simPlusRate" class="select-modern">
+                                            <option value="1.10">+10%</option>
+                                            <option value="1.12">+12%</option>
+                                            <option value="1.14">+14%</option>
+                                            <option value="1.16">+16%</option>
+                                            <option value="1.18">+18%</option>
+                                            <option value="1.20" selected>+20%</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="talent-panel">
+                                <div class="talent-panel-header">
+                                    <div>
+                                        <span class="panel-eyebrow">天分设置</span>
+                                        <h4>六维天分（可选三项 0-10，其余为 0）</h4>
+                                    </div>
+                                    <span class="talent-range-tip">天分 0-10</span>
+                                </div>
+
+                                <div class="talents-grid">
+                                    <div class="talent-item">
+                                        <label>精力天分 <span id="val_hp">10</span></label>
+                                        <input type="range" min="0" max="10" value="10" class="range-modern" id="iv_hp">
+                                    </div>
+                                    <div class="talent-item">
+                                        <label>攻击天分 <span id="val_atk">10</span></label>
+                                        <input type="range" min="0" max="10" value="10" class="range-modern" id="iv_atk">
+                                    </div>
+                                    <div class="talent-item">
+                                        <label>防御天分 <span id="val_def">10</span></label>
+                                        <input type="range" min="0" max="10" value="10" class="range-modern" id="iv_def">
+                                    </div>
+                                    <div class="talent-item">
+                                        <label>魔攻天分 <span id="val_mag_atk">0</span></label>
+                                        <input type="range" min="0" max="10" value="0" class="range-modern" id="iv_mag_atk">
+                                    </div>
+                                    <div class="talent-item">
+                                        <label>魔防天分 <span id="val_mag_def">0</span></label>
+                                        <input type="range" min="0" max="10" value="0" class="range-modern" id="iv_mag_def">
+                                    </div>
+                                    <div class="talent-item">
+                                        <label>速度天分 <span id="val_spd">0</span></label>
+                                        <input type="range" min="0" max="10" value="0" class="range-modern" id="iv_spd">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sim-display box-glass">
+                            <div class="sim-panel-header sim-panel-header--display">
+                                <div>
+                                    <span class="panel-eyebrow">模拟结果</span>
+                                    <h4>最终能力面板</h4>
+                                </div>
+                                <span class="result-tip">选择精灵后实时刷新</span>
+                            </div>
+                            <div id="simSummary" class="sim-summary">
+                                当前配置：5星 / 正面修正 +20% / 负面修正 -10%
+                            </div>
+                            <div id="simBaseStats" class="sim-base-stats">
+                                <div class="sim-base-placeholder">选择宠物后展示种族值：精力 / 攻击 / 防御 / 魔攻 / 魔抗 / 速度</div>
+                            </div>
+                            <div id="simStatsResult" class="stats-result-grid">
+                                <!-- 动态渲染结果卡片 -->
+                                <div class="placeholder-text sim-placeholder">
+                                    <i class="fas fa-search"></i>
+                                    <span>请先搜索并选择精灵进行模拟</span>
+                                    <small>左侧设置性格与天赋后，这里会自动展示六维最终数值</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="damageView" class="tab-pane" style="display:none">
+                <div class="calculator-container">
+                    <header class="section-header">
+                        <h3><i class="fas fa-crosshairs"></i> 伤害计算器</h3>
+                        <p class="subtitle">正向伤害计算 / 反推防御值，支持能力等级、buff、本系加成与属性克制</p>
+                    </header>
+
+                    <!-- 模式切换 -->
+                    <div class="dmg-mode-tabs">
+                        <button class="dmg-mode-btn active" data-mode="calc" onclick="switchDmgMode('calc')">正向计算</button>
+                        <button class="dmg-mode-btn" data-mode="reverse" onclick="switchDmgMode('reverse')">反推防御</button>
+                    </div>
+
+                    <div class="dmg-layout">
+                        <!-- 第一行：攻击方 + 防御方 -->
+                        <div class="dmg-row">
+                            <!-- 攻击方 -->
+                            <div class="sim-form-card">
+                                <div class="sim-panel-header">
+                                    <div><span class="panel-eyebrow">攻击方</span><h4>能力值与技能</h4></div>
+                                </div>
+                                <div class="control-row">
+                                    <label>搜索精灵（加载技能）</label>
+                                    <div class="search-with-results">
+                                        <input type="text" id="dmgAtkPetSearch" placeholder="输入名称搜索..." class="input-modern">
+                                        <div id="dmgAtkPetResults" class="results-popover"></div>
+                                    </div>
+                                </div>
+                                <div class="control-row">
+                                    <label>攻击 / 魔攻能力值</label>
+                                    <div class="dmg-dual-input">
+                                        <input type="number" id="dmgAtkValue" placeholder="攻击" class="input-modern" value="">
+                                        <input type="number" id="dmgMagAtkValue" placeholder="魔攻" class="input-modern" value="">
+                                    </div>
+                                </div>
+                                <div class="control-row">
+                                    <label>选择技能</label>
+                                    <select id="dmgSkillSelect" class="select-modern">
+                                        <option value="">先搜索精灵加载技能...</option>
+                                    </select>
+                                </div>
+                                <div class="control-row">
+                                    <label>手动威力</label>
+                                    <input type="number" id="dmgManualPower" placeholder="留空用技能威力" class="input-modern" value="">
+                                </div>
+                                <div class="control-row">
+                                    <label>威力加成</label>
+                                    <input type="number" id="dmgPowerBonus" class="input-modern" value="0">
+                                </div>
+                                <div class="dmg-inline-row">
+                                    <div class="control-row">
+                                        <label>类型</label>
+                                        <select id="dmgDamageCategory" class="select-modern">
+                                            <option value="physical">物理</option>
+                                            <option value="magical">魔法</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-row">
+                                        <label>攻升</label>
+                                        <input type="number" id="dmgAtkUp" class="input-modern" min="0" max="6" value="0">
+                                    </div>
+                                    <div class="control-row">
+                                        <label>攻降</label>
+                                        <input type="number" id="dmgAtkDown" class="input-modern" min="0" max="6" value="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 防御方 -->
+                            <div class="sim-form-card">
+                                <div class="sim-panel-header">
+                                    <div><span class="panel-eyebrow">防御方</span><h4>能力值与属性</h4></div>
+                                </div>
+                                <div class="control-row">
+                                    <label>搜索精灵（加载属性）</label>
+                                    <div class="search-with-results">
+                                        <input type="text" id="dmgDefPetSearch" placeholder="输入名称搜索..." class="input-modern">
+                                        <div id="dmgDefPetResults" class="results-popover"></div>
+                                    </div>
+                                </div>
+                                <div class="control-row">
+                                    <label>防御 / 魔防能力值</label>
+                                    <div class="dmg-dual-input">
+                                        <input type="number" id="dmgDefValue" placeholder="防御" class="input-modern" value="">
+                                        <input type="number" id="dmgMagDefValue" placeholder="魔防" class="input-modern" value="">
+                                    </div>
+                                </div>
+                                <div class="dmg-inline-row">
+                                    <div class="control-row">
+                                        <label>防升</label>
+                                        <input type="number" id="dmgDefUp" class="input-modern" min="0" max="6" value="0">
+                                    </div>
+                                    <div class="control-row">
+                                        <label>防降</label>
+                                        <input type="number" id="dmgDefDown" class="input-modern" min="0" max="6" value="0">
+                                    </div>
+                                </div>
+                                <div class="control-row">
+                                    <label>属性克制</label>
+                                    <select id="dmgTypeEffect" class="select-modern">
+                                        <option value="1">普通 (×1)</option>
+                                        <option value="2">克制 (×2)</option>
+                                        <option value="0.5">抵抗 (×0.5)</option>
+                                        <option value="4">强克 (×4)</option>
+                                        <option value="0.25">强抗 (×0.25)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第二行：修正参数 + 计算结果 -->
+                        <div class="dmg-row">
+                            <div class="sim-form-card">
+                                <div class="sim-panel-header">
+                                    <div><span class="panel-eyebrow">修正</span><h4>Buff / 本系</h4></div>
+                                </div>
+                                <div class="control-row">
+                                    <label>威力提升buff</label>
+                                    <input type="number" id="dmgPowerBuff" class="input-modern" step="0.1" value="1.0">
+                                </div>
+                                <div class="control-row">
+                                    <label>本系加成</label>
+                                    <select id="dmgStab" class="select-modern">
+                                        <option value="1.25">是 (×1.25)</option>
+                                        <option value="1">否 (×1)</option>
+                                    </select>
+                                </div>
+                                <div class="control-row" id="dmgReverseInput" style="display:none">
+                                    <label>实际伤害（反推用）</label>
+                                    <input type="number" id="dmgActualDamage" placeholder="输入实际伤害值" class="input-modern" value="">
+                                </div>
+                            </div>
+                            <div class="sim-form-card" style="flex:1">
+                                <div class="sim-panel-header">
+                                    <div><span class="panel-eyebrow">计算结果</span><h4 id="dmgResultTitle">伤害值</h4></div>
+                                </div>
+                                <div id="dmgResultArea" class="dmg-result-area">
+                                    <div class="placeholder-text sim-placeholder">
+                                        <i class="fas fa-crosshairs"></i>
+                                        <span>填写攻防能力值和技能威力后自动计算</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Detail Drawer (Slide-in) -->
+    <div class="detail-drawer" id="detailDrawer">
+        <div class="drawer-overlay" id="drawerOverlay"></div>
+        <div class="drawer-content">
+            <button class="close-btn" id="closeDrawer">&times;</button>
+            <div class="drawer-body" id="drawerBody">
+                <!-- Dynamic Detail Content -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/constants.js"></script>
+    <script src="js/api.js"></script>
+    <script src="encyclopedia.js?v=v9_refactored"></script>
+</body>
+</html>
