@@ -13,7 +13,7 @@ server:
 
 roco:
   media-path: /root/roco/media/
-  frontend-path: /root/roco/frontend-data/dist/
+  frontend-path: /root/roco/frontend-data/
 
 logging:
   level:

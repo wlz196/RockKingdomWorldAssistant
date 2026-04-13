@@ -4,7 +4,7 @@ spring:
 
 roco:
   media-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/media/
-  frontend-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/frontend-data/dist/
+  frontend-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/frontend-data/
 
 logging:
   level:
