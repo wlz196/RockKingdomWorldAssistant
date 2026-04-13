@@ -10,5 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/media/**")
                 .addResourceLocations("file:media/");
+        // 图鉴前端静态文件（构建产物）
+        registry.addResourceHandler("/**")
+                .addResourceLocations("file:frontend-data/dist/", "file:frontend-data/");
     }
 }
