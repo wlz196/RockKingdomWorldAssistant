@@ -303,7 +303,8 @@ function renderSkillGalleryCards(skills) {
         `;
         card.style.cursor = 'pointer';
         card.onclick = () => showSkillDetail(s.id);
-        grid.appendChild(card);    
+        grid.appendChild(card);
+    });
     document.getElementById('skillCount').innerText = skills.length;
     document.getElementById('skillPageInfo').innerText = `第 ${currentSkillPage + 1} 页`;
 }
