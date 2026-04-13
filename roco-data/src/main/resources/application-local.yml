@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:/Users/wanglianzuo/project/RockKingdomWorldAssistant/roco_encyclopedia.db
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE

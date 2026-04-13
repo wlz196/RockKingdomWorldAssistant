@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:/root/roco/roco_encyclopedia.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 8082
+
+langchain4j:
+  open-ai:
+    chat-model:
+      api-key: ${AI_API_KEY:your-api-key-here}
+      base-url: https://gpt-agent.cc/v1
+      model-name: claude-sonnet-4-6
+      log-requests: true
+      log-responses: true

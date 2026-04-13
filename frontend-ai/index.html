@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洛克王国战术大师 | AI Assistant</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div class="overlay"></div>
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <span class="logo-text">ROCO TACTICS</span>
+                    <span class="tagline">人工智能战术大脑</span>
+                </div>
+            </header>
+
+            <main id="chat-window">
+                <div id="messages">
+                    <div class="message system">
+                        <div class="avatar">🤖</div>
+                        <div class="content">你好！我是你的洛克王国战术大师。有什么我可以帮你的吗？你可以问我关于精灵种族值、技能配置或属性克制的问题。</div>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <div class="input-area">
+                    <input type="text" id="user-input" placeholder="输入你想咨询的战术问题..." autocomplete="off">
+                    <button id="send-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2Z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
