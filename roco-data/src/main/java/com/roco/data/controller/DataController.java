@@ -44,7 +44,7 @@ public class DataController {
         final java.util.Set<Integer> petsWithSkills;
         if (hasSkill != null) {
             petsWithSkills = new java.util.HashSet<>(
-                jdbcTemplate.queryForList("SELECT DISTINCT pet_id FROM pet_skill_mapping", Integer.class));
+                jdbcTemplate.queryForList("SELECT DISTINCT pet_id FROM pet_level_skills", Integer.class));
         } else {
             petsWithSkills = null;
         }
@@ -122,6 +122,7 @@ public class DataController {
             @RequestParam(required = false) Integer filterLogicType,
             @RequestParam(required = false) Integer filterSkillCategory,
             @RequestParam(required = false) Integer filterDamageCategory,
+            @RequestParam(required = false) Boolean hasOwner,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "100") int size) {
 
@@ -151,6 +152,15 @@ public class DataController {
             params.add(filterDamageCategory);
         }
 
+        // 预查有精灵拥有的技能ID集合（仅在需要时查询）
+        final java.util.Set<Integer> skillsWithOwners;
+        if (hasOwner != null) {
+            skillsWithOwners = new java.util.HashSet<>(
+                jdbcTemplate.queryForList("SELECT DISTINCT skill_id FROM pet_level_skills", Integer.class));
+        } else {
+            skillsWithOwners = null;
+        }
+
         sql.append(" ORDER BY id ASC LIMIT ? OFFSET ?");
         params.add(size);
         params.add(page * size);
@@ -158,9 +168,10 @@ public class DataController {
         System.out.println("--- SKILL SEARCH DEBUG ---");
         System.out.println("SQL: " + sql.toString());
         System.out.println("Params: " + params);
+        System.out.println("hasOwner filter: " + hasOwner);
         System.out.println("--- END DEBUG ---");
 
-        return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
+        List<SkillItemDTO> results = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
             SkillItemDTO dto = new SkillItemDTO();
             dto.setId(rs.getInt("id"));
             dto.setName(rs.getString("name"));
@@ -201,6 +212,16 @@ public class DataController {
 
             return dto;
         }, params.toArray());
+
+        if (skillsWithOwners != null) {
+            results = results.stream()
+                .filter(dto -> {
+                    boolean has = skillsWithOwners.contains(dto.getId());
+                    return hasOwner ? has : !has;
+                })
+                .collect(java.util.stream.Collectors.toList());
+        }
+        return results;
     }
 
     // ===== 技能详情 =====
@@ -251,7 +272,7 @@ public class DataController {
         // 查能学习该技能的精灵列表
         List<Map<String, Object>> learners = jdbcTemplate.query(
             "SELECT m.pet_id, m.source, p.name, p.image_url, p.book_id, p.main_type_id, p.sub_type_id " +
-            "FROM pet_skill_mapping m JOIN pets p ON m.pet_id = p.id WHERE m.skill_id = ? ORDER BY p.name",
+            "FROM pet_level_skills m JOIN pets p ON m.pet_id = p.id WHERE m.skill_id = ? ORDER BY p.name",
             (rs, rowNum) -> {
                 Map<String, Object> map = new HashMap<>();
                 map.put("petId", rs.getInt("pet_id"));

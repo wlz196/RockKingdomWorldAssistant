@@ -20,6 +20,7 @@ var skillLogicType = '';
 var skillAttrId = '';
 var skillClassId = '';
 var skillDamageId = '';
+var skillHasOwner = '';
 
 // ===== 初始化与 Tab 路由 =====
 function initMainTabs() {
@@ -139,6 +140,12 @@ function initSkillFilters() {
         { id: 3, name: '魔法' },
         { id: 4, name: '特殊' }
     ], 'skillDamageId');
+
+    // Row 5: Has Owner
+    renderFilterRow('skillOwnerFilters', [
+        { id: 1, name: '有精灵拥有' },
+        { id: 0, name: '无精灵拥有' }
+    ], 'skillHasOwner');
 }
 
 function initSidebar() {
@@ -249,6 +256,11 @@ function loadSkillsGallery() {
         page: currentSkillPage,
         size: 20
     });
+    if (skillHasOwner === '1') {
+        params.set('hasOwner', 'true');
+    } else if (skillHasOwner === '0') {
+        params.set('hasOwner', 'false');
+    }
 
     const url = `${API_BASE}/skills?${params.toString()}`;
     console.log('Fetching skills with tactical matrix:', url);
