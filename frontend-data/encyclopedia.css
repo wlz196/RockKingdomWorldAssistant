@@ -368,6 +368,24 @@ h1, h2, h3, .logo {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+.sub-filter-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sub-filter-btn.active {
+    background: white;
+    color: var(--accent-blue);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
 .type-scroll-container {
     flex: 1;
     overflow-x: auto;
