@@ -2,6 +2,10 @@ spring:
   datasource:
     url: jdbc:sqlite:/Users/wanglianzuo/project/RockKingdomWorldAssistant/roco_encyclopedia.db
 
+roco:
+  media-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/media/
+  frontend-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/frontend-data/dist/
+
 logging:
   level:
     org.hibernate.SQL: DEBUG
