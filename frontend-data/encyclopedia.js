@@ -9,6 +9,8 @@ let currentBloodlineSearch = '';
 let currentNatureSearch = '';
 let currentTalentSearch = '';
 let currentCategory = 'all';
+let currentHasFeature = null;
+let currentHasSkill = null;
 let currentDetailData = null;
 let currentMainTab = 'petView';
 let activeMode = 'pets';
@@ -152,6 +154,34 @@ function initSidebar() {
             btn.classList.add('active');
             currentCategory = btn.getAttribute('data-cat');
             currentPage = 0;
+            // 显示/隐藏暂未收录子筛选
+            const subFilters = document.getElementById('nonBookSubFilters');
+            if (subFilters) {
+                subFilters.style.display = currentCategory === 'non-book' ? 'flex' : 'none';
+            }
+            // 重置子筛选状态
+            currentHasFeature = null;
+            currentHasSkill = null;
+            document.querySelectorAll('.sub-filter-btn').forEach(b => b.classList.remove('active'));
+            const allSubBtn = document.querySelector('.sub-filter-btn[data-filter="all"]');
+            if (allSubBtn) allSubBtn.classList.add('active');
+            loadPets();
+        };
+    });
+
+    // 暂未收录子筛选按钮
+    document.querySelectorAll('.sub-filter-btn').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll('.sub-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.getAttribute('data-filter');
+            currentHasFeature = null;
+            currentHasSkill = null;
+            if (filter === 'hasFeature') currentHasFeature = true;
+            else if (filter === 'noFeature') currentHasFeature = false;
+            else if (filter === 'hasSkill') currentHasSkill = true;
+            else if (filter === 'noSkill') currentHasSkill = false;
+            currentPage = 0;
             loadPets();
         };
     });
@@ -271,9 +301,9 @@ function renderSkillGalleryCards(skills) {
                 ${s.desc || '无详细描述'}
             </p>
         `;
-        grid.appendChild(card);
-    });
-    
+        card.style.cursor = 'pointer';
+        card.onclick = () => showSkillDetail(s.id);
+        grid.appendChild(card);    
     document.getElementById('skillCount').innerText = skills.length;
     document.getElementById('skillPageInfo').innerText = `第 ${currentSkillPage + 1} 页`;
 }
@@ -287,7 +317,9 @@ async function loadPets() {
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 2rem;">加载中...</div>';
     
     try {
-        const url = `${API_BASE}/pets?keyword=${encodeURIComponent(currentSearch)}&type=${encodeURIComponent(currentType)}&category=${currentCategory}&page=${currentPage}&size=20`;
+        const url = `${API_BASE}/pets?keyword=${encodeURIComponent(currentSearch)}&type=${encodeURIComponent(currentType)}&category=${currentCategory}&page=${currentPage}&size=20` +
+            (currentHasFeature !== null ? `&hasFeature=${currentHasFeature}` : '') +
+            (currentHasSkill !== null ? `&hasSkill=${currentHasSkill}` : '');
         const response = await fetch(url);
         const data = await response.json();
         const pets = Array.isArray(data) ? data : (data.content || []);
@@ -877,55 +909,115 @@ function updateTypeCalculator() {
     results.innerHTML = html;
 }
 
+// ===== 技能详情弹窗 =====
+async function showSkillDetail(skillId) {
+    const drawer = document.getElementById('detailDrawer');
+    const body = document.getElementById('drawerBody');
+    if (!drawer || !body) return;
+
+    drawer.classList.add('open');
+    body.innerHTML = '<div style="text-align:center; padding:3rem;">加载中...</div>';
+
+    try {
+        const res = await fetch(`${API_BASE}/skills/${skillId}/details`);
+        const d = await res.json();
+        if (d.error) { body.innerHTML = `<div style="padding:2rem; color:red;">${d.error}</div>`; return; }
+
+        const attrColor = getTypeColorByName(d.attribute);
+        const learnersHtml = (d.learners || []).map(p => {
+            const imgSrc = p.imageUrl ? `${MEDIA_BASE}${p.imageUrl}` : '';
+            const typeColor = getTypeColor(p.type1);
+            return `
+                <div class="pet-card" onclick="showDetail(${p.petId})" style="cursor:pointer">
+                    <div class="pet-image-container" style="height:80px">
+                        ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" class="pet-image" onerror="this.style.display='none'">` : ''}
+                    </div>
+                    <div class="pet-name">${p.name}</div>
+                    <div class="pet-types">
+                        <span class="type-tag" style="background:${typeColor}">${getTypeName(p.type1)}</span>
+                        <span class="type-tag" style="background:#94a3b8">${p.source}</span>
+                    </div>
+                </div>`;
+        }).join('');
+
+        body.innerHTML = `
+            <div style="text-align:center; padding:1.5rem 0;">
+                <img src="${MEDIA_BASE}${d.icon || 'skills/' + d.id + '_png.png'}" style="width:80px; height:80px; object-fit:contain;" onerror="this.style.display='none'">
+                <h2 style="margin:0.5rem 0;">${d.name}</h2>
+                <div style="display:flex; gap:8px; justify-content:center; margin-bottom:1rem;">
+                    <span class="type-tag" style="background:${attrColor}">${d.attribute}</span>
+                    <span class="type-tag" style="background:#64748b">${d.category}</span>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:1.5rem; text-align:center;">
+                <div style="background:rgba(0,0,0,0.03); padding:12px; border-radius:12px;">
+                    <div style="font-size:0.75rem; color:#64748b;">威力</div>
+                    <div style="font-size:1.2rem; font-weight:700;">${d.power || '--'}</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.03); padding:12px; border-radius:12px;">
+                    <div style="font-size:0.75rem; color:#64748b;">消耗</div>
+                    <div style="font-size:1.2rem; font-weight:700;">${d.pp || 0}</div>
+                </div>
+                <div style="background:rgba(0,0,0,0.03); padding:12px; border-radius:12px;">
+                    <div style="font-size:0.75rem; color:#64748b;">优先级</div>
+                    <div style="font-size:1.2rem; font-weight:700;">${d.priority || 0}</div>
+                </div>
+            </div>
+            <div style="background:rgba(0,0,0,0.03); padding:16px; border-radius:12px; margin-bottom:1.5rem;">
+                <div style="font-size:0.82rem; font-weight:700; color:#64748b; margin-bottom:8px;">技能描述</div>
+                <p style="line-height:1.6; color:#334155;">${d.desc || '暂无描述'}</p>
+            </div>
+            <div>
+                <div style="font-size:0.82rem; font-weight:700; color:#64748b; margin-bottom:12px;">可学习该技能的精灵 (${(d.learners || []).length})</div>
+                <div class="pet-grid">${learnersHtml || '<div style="grid-column:1/-1; text-align:center; color:#94a3b8; padding:1rem;">暂无精灵记录</div>'}</div>
+            </div>`;
+    } catch (e) {
+        body.innerHTML = `<div style="padding:2rem; color:red;">加载失败: ${e.message}</div>`;
+    }
+}
+
 // ===== 身高体重查询 =====
 async function loadDimensionSearch() {
     const grid = document.getElementById('dimResultGrid');
     const countEl = document.getElementById('dimResultCount');
     if (!grid) return;
 
-    const heightMin = document.getElementById('dimHeightMin')?.value || '';
-    const heightMax = document.getElementById('dimHeightMax')?.value || '';
-    const weightMin = document.getElementById('dimWeightMin')?.value || '';
-    const weightMax = document.getElementById('dimWeightMax')?.value || '';
+    const height = document.getElementById('dimHeight')?.value || '';
+    const weight = document.getElementById('dimWeight')?.value || '';
 
-    if (!heightMin && !heightMax && !weightMin && !weightMax) {
-        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#64748b;">请至少输入一个筛选条件</div>';
+    if (!height || !weight) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#64748b;">请同时输入身高和体重</div>';
         if (countEl) countEl.textContent = '';
         return;
     }
 
-    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">加载中...</div>';
+    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">查找中...</div>';
     try {
-        const params = new URLSearchParams();
-        if (heightMin) params.set('heightMin', heightMin);
-        if (heightMax) params.set('heightMax', heightMax);
-        if (weightMin) params.set('weightMin', weightMin);
-        if (weightMax) params.set('weightMax', weightMax);
-
-        const res = await fetch(`${API_BASE}/dimensions/search?${params}`);
+        const res = await fetch(`${API_BASE}/dimensions/match?height=${height}&weight=${weight}`);
         const data = await res.json();
-        if (countEl) countEl.textContent = `找到 ${data.length} 只精灵`;
+        if (countEl) countEl.textContent = `找到 ${data.length} 只精灵（按匹配度排序）`;
 
         if (!data.length) {
-            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#64748b;">未找到符合条件的精灵</div>';
+            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#64748b;">未找到匹配的精灵</div>';
             return;
         }
-        grid.innerHTML = data.map(p => {
+        grid.innerHTML = data.map((p, i) => {
             const type1Name = getTypeName(p.type1);
             const type1Color = getTypeColor(p.type1);
             const imgSrc = p.imageUrl ? `${MEDIA_BASE}${p.imageUrl}` : '';
             return `
-                <div class="pet-card" onclick="openDetail(${p.id})" style="cursor:pointer">
-                    <div class="pet-card-img">
-                        ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
+                <div class="pet-card" onclick="showDetail(${p.id})" style="cursor:pointer">
+                    <div class="pet-id">${i === 0 ? '最佳匹配' : '#' + (i + 1)}</div>
+                    <div class="pet-image-container" style="height:100px">
+                        ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" class="pet-image" onerror="this.style.display='none'">` : ''}
                     </div>
-                    <div class="pet-card-info">
-                        <h4>${p.name}</h4>
-                        <span class="type-badge" style="background:${type1Color}">${type1Name}</span>
-                        <div style="font-size:0.75rem; color:#64748b; margin-top:4px">
-                            身高: ${p.heightMin.toFixed(1)}-${p.heightMax.toFixed(1)}m<br>
-                            体重: ${p.weightMin.toFixed(1)}-${p.weightMax.toFixed(1)}kg
-                        </div>
+                    <div class="pet-name">${p.name}</div>
+                    <div class="pet-types">
+                        <span class="type-tag" style="background:${type1Color}">${type1Name}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#64748b; margin-top:4px">
+                        身高: ${p.heightMin.toFixed(1)}-${p.heightMax.toFixed(1)}m<br>
+                        体重: ${p.weightMin.toFixed(1)}-${p.weightMax.toFixed(1)}kg
                     </div>
                 </div>`;
         }).join('');
@@ -941,25 +1033,56 @@ let breedPetId2 = null;
 
 async function loadEggGroupFilters() {
     const container = document.getElementById('eggGroupFilters');
-    if (!container || container.children.length > 0) return; // 已加载则跳过
+    const select = document.getElementById('eggGroupSelect');
+    if (!container) return;
+    if (container.children.length > 0) return; // 已加载则跳过
 
     try {
         const res = await fetch(`${API_BASE}/egg-groups`);
         const groups = await res.json();
+
+        // 渲染按钮
         container.innerHTML = groups.map(g =>
             `<button class="type-btn" data-gid="${g.groupId}">${g.groupName} (${g.petCount})</button>`
         ).join('');
 
+        // 渲染下拉选择器
+        if (select) {
+            groups.forEach(g => {
+                const opt = document.createElement('option');
+                opt.value = g.groupId;
+                opt.textContent = `${g.groupName} (${g.petCount}只)`;
+                select.appendChild(opt);
+            });
+            select.onchange = () => {
+                const gid = select.value ? parseInt(select.value) : null;
+                currentEggGroupId = gid;
+                // 同步按钮高亮
+                container.querySelectorAll('.type-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.gid === select.value);
+                });
+                if (gid) loadEggGroupPets(gid);
+                else {
+                    document.getElementById('eggGroupPetGrid').innerHTML = '';
+                    document.getElementById('eggGroupPetCount').textContent = '';
+                }
+            };
+        }
+
+        // 按钮点击联动下拉
         container.querySelectorAll('.type-btn').forEach(btn => {
             btn.onclick = () => {
                 const gid = parseInt(btn.dataset.gid);
                 container.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
                 if (currentEggGroupId === gid) {
                     currentEggGroupId = null;
+                    if (select) select.value = '';
                     document.getElementById('eggGroupPetGrid').innerHTML = '';
+                    document.getElementById('eggGroupPetCount').textContent = '';
                 } else {
                     currentEggGroupId = gid;
                     btn.classList.add('active');
+                    if (select) select.value = String(gid);
                     loadEggGroupPets(gid);
                 }
             };
@@ -977,6 +1100,8 @@ async function loadEggGroupPets(groupId) {
     try {
         const res = await fetch(`${API_BASE}/egg-groups?groupId=${groupId}`);
         const data = await res.json();
+        const countEl = document.getElementById('eggGroupPetCount');
+        if (countEl) countEl.textContent = `共 ${data.length} 只精灵`;
         grid.innerHTML = data.map(p => {
             const type1Name = getTypeName(p.type1);
             const type1Color = getTypeColor(p.type1);

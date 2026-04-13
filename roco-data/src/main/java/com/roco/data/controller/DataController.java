@@ -35,8 +35,20 @@ public class DataController {
             @RequestParam(required = false, defaultValue = "") String keyword,
             @RequestParam(required = false) String type,
             @RequestParam(required = false, defaultValue = "all") String category,
+            @RequestParam(required = false) Boolean hasFeature,
+            @RequestParam(required = false) Boolean hasSkill,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "50") int size) {
+
+        // 预查有技能的精灵ID集合（仅在需要时查询）
+        final java.util.Set<Integer> petsWithSkills;
+        if (hasSkill != null) {
+            petsWithSkills = new java.util.HashSet<>(
+                jdbcTemplate.queryForList("SELECT DISTINCT pet_id FROM pet_skill_mapping", Integer.class));
+        } else {
+            petsWithSkills = null;
+        }
+
         return petRepository.findAll().stream()
             .filter(p -> (keyword.isEmpty() || (p.getName() != null && p.getName().contains(keyword))))
             .filter(p -> (p.getIsBoss() == null || p.getIsBoss() != 1))
@@ -48,6 +60,20 @@ public class DataController {
                     return p.getBookId() == null || p.getBookId() <= 0;
                 } else if ("complete".equals(category)) {
                     return p.getCompleteness() != null && p.getCompleteness() == 1;
+                }
+                return true;
+            })
+            .filter(p -> {
+                if (hasFeature != null) {
+                    boolean has = p.getPetFeature() != null && p.getPetFeature() > 0;
+                    return hasFeature ? has : !has;
+                }
+                return true;
+            })
+            .filter(p -> {
+                if (petsWithSkills != null) {
+                    boolean has = petsWithSkills.contains(p.getId());
+                    return hasSkill ? has : !has;
                 }
                 return true;
             })
@@ -177,6 +203,71 @@ public class DataController {
         }, params.toArray());
     }
 
+    // ===== 技能详情 =====
+    @GetMapping("/skills/{id}/details")
+    public Map<String, Object> getSkillDetails(@PathVariable Integer id) {
+        // 查技能基本信息
+        Map<Integer, String> typeMap = new HashMap<>();
+        jdbcTemplate.query("SELECT id, name FROM types", (rs) -> {
+            typeMap.put(rs.getInt("id"), rs.getString("name").replace("系", ""));
+        });
+
+        List<Map<String, Object>> skills = jdbcTemplate.query(
+            "SELECT * FROM skill_conf_main WHERE id = ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", rs.getInt("id"));
+                map.put("name", rs.getString("name"));
+                map.put("desc", rs.getString("desc"));
+                map.put("icon", dataService.formatSkillIcon(rs.getString("icon")));
+                map.put("attribute", typeMap.getOrDefault(rs.getInt("skill_dam_type"), "无"));
+                map.put("power", rs.getString("dam_para") != null ? rs.getString("dam_para") : "0");
+                map.put("priority", rs.getInt("skill_priority"));
+
+                int logicType = rs.getInt("type");
+                int damageCategory = rs.getInt("damage_type");
+                int skillClass = rs.getInt("skill_type");
+                if (logicType == 2) {
+                    map.put("category", "特性");
+                } else {
+                    map.put("category", switch (damageCategory) {
+                        case 2 -> "物理";
+                        case 3 -> "魔法";
+                        case 4 -> "特殊";
+                        default -> (skillClass == 3) ? "变化" : "常规";
+                    });
+                }
+
+                String energyCost = rs.getString("energy_cost");
+                try {
+                    map.put("pp", energyCost != null ? Integer.parseInt(energyCost.replace("[", "").replace("]", "")) : 0);
+                } catch (Exception e) { map.put("pp", 0); }
+                return map;
+            }, id);
+
+        if (skills.isEmpty()) return Map.of("error", "技能不存在");
+        Map<String, Object> result = skills.get(0);
+
+        // 查能学习该技能的精灵列表
+        List<Map<String, Object>> learners = jdbcTemplate.query(
+            "SELECT m.pet_id, m.source, p.name, p.image_url, p.book_id, p.main_type_id, p.sub_type_id " +
+            "FROM pet_skill_mapping m JOIN pets p ON m.pet_id = p.id WHERE m.skill_id = ? ORDER BY p.name",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("petId", rs.getInt("pet_id"));
+                map.put("name", rs.getString("name"));
+                map.put("bookId", rs.getObject("book_id"));
+                map.put("type1", rs.getObject("main_type_id"));
+                map.put("type2", rs.getObject("sub_type_id"));
+                map.put("imageUrl", dataService.formatImageUrl(rs.getString("image_url"), rs.getString("name")));
+                int source = rs.getInt("source");
+                map.put("source", source == 0 ? "自学" : source == 1 ? "技能石" : "血脉");
+                return map;
+            }, id);
+        result.put("learners", learners);
+        return result;
+    }
+
     @GetMapping("/natures")
     public List<Map<String, Object>> getAllNatures() {
         return jdbcTemplate.queryForList(
@@ -238,6 +329,36 @@ public class DataController {
     @GetMapping("/talents")
     public List<Map<String, Object>> getTalents() {
         return jdbcTemplate.queryForList("SELECT * FROM pet_talents WHERE is_referenced = 1");
+    }
+
+    // ===== 身高体重精确匹配 =====
+    @GetMapping("/dimensions/match")
+    public List<Map<String, Object>> matchByDimensions(
+            @RequestParam Double height,
+            @RequestParam Double weight) {
+        // 查找身高体重范围包含输入值的精灵，按匹配度排序
+        String sql = "SELECT d.pet_id, p.name, p.image_url, p.book_id, p.main_type_id, p.sub_type_id, " +
+            "d.height_min, d.height_max, d.weight_min, d.weight_max, " +
+            "ABS((d.height_min + d.height_max) / 2.0 - ?) + ABS((d.weight_min + d.weight_max) / 2.0 - ?) AS distance " +
+            "FROM pet_dimensions d JOIN pets p ON d.pet_id = p.id " +
+            "WHERE d.height_min <= ? AND d.height_max >= ? AND d.weight_min <= ? AND d.weight_max >= ? " +
+            "ORDER BY distance ASC LIMIT 50";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", rs.getInt("pet_id"));
+            map.put("name", rs.getString("name"));
+            map.put("bookId", rs.getObject("book_id"));
+            map.put("type1", rs.getObject("main_type_id"));
+            map.put("type2", rs.getObject("sub_type_id"));
+            map.put("imageUrl", dataService.formatImageUrl(rs.getString("image_url"), rs.getString("name")));
+            map.put("heightMin", rs.getDouble("height_min"));
+            map.put("heightMax", rs.getDouble("height_max"));
+            map.put("weightMin", rs.getDouble("weight_min"));
+            map.put("weightMax", rs.getDouble("weight_max"));
+            map.put("distance", rs.getDouble("distance"));
+            return map;
+        }, height, weight, height, height, weight, weight);
     }
 
     // ===== 身高体重查询 =====

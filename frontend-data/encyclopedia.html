@@ -65,7 +65,19 @@
                         <div class="category-filters" id="categoryFilters">
                             <button class="cat-btn active" data-cat="all">全部精灵</button>
                             <button class="cat-btn" data-cat="book">图鉴内</button>
-                            <button class="cat-btn" data-cat="non-book">暂无号</button>
+                            <button class="cat-btn" data-cat="non-book">暂未收录</button>
+                        </div>
+                    </div>
+
+                    <!-- 暂未收录子筛选 -->
+                    <div id="nonBookSubFilters" class="filter-row-block" style="display:none; flex-direction:column; gap:8px;">
+                        <div style="font-size:0.82rem; font-weight:700; color:#64748b;">收录状态筛选</div>
+                        <div class="category-filters">
+                            <button class="sub-filter-btn active" data-filter="all">全部</button>
+                            <button class="sub-filter-btn" data-filter="hasFeature">有特性</button>
+                            <button class="sub-filter-btn" data-filter="noFeature">无特性</button>
+                            <button class="sub-filter-btn" data-filter="hasSkill">有技能</button>
+                            <button class="sub-filter-btn" data-filter="noSkill">无技能</button>
                         </div>
                     </div>
 
@@ -509,31 +521,25 @@
                 <div class="calculator-container">
                     <header class="section-header">
                         <h3><i class="fas fa-ruler-combined"></i> 身高体重查询</h3>
-                        <p class="subtitle">根据身高/体重范围筛选可能的精灵</p>
+                        <p class="subtitle">输入精确身高和体重，查找最可能的精灵</p>
                     </header>
                     <div class="dmg-row" style="margin-bottom:1.5rem">
                         <div class="sim-form-card">
                             <div class="sim-panel-header">
-                                <div><span class="panel-eyebrow">筛选条件</span><h4>身高范围 (m)</h4></div>
+                                <div><span class="panel-eyebrow">精确值</span><h4>身高 (m)</h4></div>
                             </div>
-                            <div class="dmg-dual-input">
-                                <input type="number" id="dimHeightMin" placeholder="最小身高" class="input-modern" step="0.1" min="0">
-                                <input type="number" id="dimHeightMax" placeholder="最大身高" class="input-modern" step="0.1" min="0">
-                            </div>
+                            <input type="number" id="dimHeight" placeholder="输入身高，如 1.5" class="input-modern" step="0.1" min="0">
                         </div>
                         <div class="sim-form-card">
                             <div class="sim-panel-header">
-                                <div><span class="panel-eyebrow">筛选条件</span><h4>体重范围 (kg)</h4></div>
+                                <div><span class="panel-eyebrow">精确值</span><h4>体重 (kg)</h4></div>
                             </div>
-                            <div class="dmg-dual-input">
-                                <input type="number" id="dimWeightMin" placeholder="最小体重" class="input-modern" step="0.1" min="0">
-                                <input type="number" id="dimWeightMax" placeholder="最大体重" class="input-modern" step="0.1" min="0">
-                            </div>
+                            <input type="number" id="dimWeight" placeholder="输入体重，如 50" class="input-modern" step="0.1" min="0">
                         </div>
                     </div>
                     <div style="text-align:center; margin-bottom:1.5rem">
                         <button id="dimSearchBtn" class="btn-nav" style="padding:10px 30px; font-size:1rem; background:var(--accent-blue); color:white; border:none; border-radius:10px; cursor:pointer;">
-                            <i class="fas fa-search"></i> 查询精灵
+                            <i class="fas fa-search"></i> 查找精灵
                         </button>
                         <span id="dimResultCount" style="margin-left:1rem; color:var(--text-secondary);"></span>
                     </div>
@@ -554,7 +560,13 @@
                         <div class="sim-panel-header">
                             <div><span class="panel-eyebrow">蛋组浏览</span><h4>选择蛋组查看精灵</h4></div>
                         </div>
+                        <div class="control-row" style="margin-bottom:1rem">
+                            <select id="eggGroupSelect" class="select-modern" style="width:100%; padding:12px; font-size:1rem;">
+                                <option value="">-- 选择蛋组 --</option>
+                            </select>
+                        </div>
                         <div class="type-filters-row" id="eggGroupFilters" style="flex-wrap:wrap; gap:8px; margin-bottom:1rem"></div>
+                        <div id="eggGroupPetCount" style="color:#64748b; font-size:0.9rem; margin-bottom:0.5rem;"></div>
                         <div class="pet-grid" id="eggGroupPetGrid"></div>
                     </div>
 
