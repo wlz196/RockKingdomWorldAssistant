@@ -40,6 +40,12 @@
                 <button class="main-tab" data-tab="typeView">
                     <i class="fas fa-shield-alt"></i> <span>属性克制</span>
                 </button>
+                <button class="main-tab" data-tab="dimensionView">
+                    <i class="fas fa-ruler-combined"></i> <span>身高体重</span>
+                </button>
+                <button class="main-tab" data-tab="eggGroupView">
+                    <i class="fas fa-egg"></i> <span>蛋组查询</span>
+                </button>
                 <button class="main-tab" data-tab="statView">
                     <i class="fas fa-calculator"></i> <span>能力模拟</span>
                 </button>
@@ -494,6 +500,91 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 身高体重查询 -->
+            <div id="dimensionView" class="tab-pane" style="display:none">
+                <div class="calculator-container">
+                    <header class="section-header">
+                        <h3><i class="fas fa-ruler-combined"></i> 身高体重查询</h3>
+                        <p class="subtitle">根据身高/体重范围筛选可能的精灵</p>
+                    </header>
+                    <div class="dmg-row" style="margin-bottom:1.5rem">
+                        <div class="sim-form-card">
+                            <div class="sim-panel-header">
+                                <div><span class="panel-eyebrow">筛选条件</span><h4>身高范围 (m)</h4></div>
+                            </div>
+                            <div class="dmg-dual-input">
+                                <input type="number" id="dimHeightMin" placeholder="最小身高" class="input-modern" step="0.1" min="0">
+                                <input type="number" id="dimHeightMax" placeholder="最大身高" class="input-modern" step="0.1" min="0">
+                            </div>
+                        </div>
+                        <div class="sim-form-card">
+                            <div class="sim-panel-header">
+                                <div><span class="panel-eyebrow">筛选条件</span><h4>体重范围 (kg)</h4></div>
+                            </div>
+                            <div class="dmg-dual-input">
+                                <input type="number" id="dimWeightMin" placeholder="最小体重" class="input-modern" step="0.1" min="0">
+                                <input type="number" id="dimWeightMax" placeholder="最大体重" class="input-modern" step="0.1" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center; margin-bottom:1.5rem">
+                        <button id="dimSearchBtn" class="btn-nav" style="padding:10px 30px; font-size:1rem; background:var(--accent-blue); color:white; border:none; border-radius:10px; cursor:pointer;">
+                            <i class="fas fa-search"></i> 查询精灵
+                        </button>
+                        <span id="dimResultCount" style="margin-left:1rem; color:var(--text-secondary);"></span>
+                    </div>
+                    <div class="pet-grid" id="dimResultGrid"></div>
+                </div>
+            </div>
+
+            <!-- 蛋组查询 -->
+            <div id="eggGroupView" class="tab-pane" style="display:none">
+                <div class="calculator-container">
+                    <header class="section-header">
+                        <h3><i class="fas fa-egg"></i> 蛋组查询</h3>
+                        <p class="subtitle">查看蛋组精灵列表，检查两只精灵能否生蛋</p>
+                    </header>
+
+                    <!-- 蛋组筛选 -->
+                    <div class="sim-form-card" style="margin-bottom:1.5rem">
+                        <div class="sim-panel-header">
+                            <div><span class="panel-eyebrow">蛋组浏览</span><h4>选择蛋组查看精灵</h4></div>
+                        </div>
+                        <div class="type-filters-row" id="eggGroupFilters" style="flex-wrap:wrap; gap:8px; margin-bottom:1rem"></div>
+                        <div class="pet-grid" id="eggGroupPetGrid"></div>
+                    </div>
+
+                    <!-- 生蛋兼容性检查 -->
+                    <div class="sim-form-card">
+                        <div class="sim-panel-header">
+                            <div><span class="panel-eyebrow">兼容性检查</span><h4>查询两只精灵能否生蛋</h4></div>
+                        </div>
+                        <div class="dmg-row" style="margin-bottom:1rem">
+                            <div class="control-row" style="flex:1">
+                                <label>精灵 A</label>
+                                <div class="search-with-results">
+                                    <input type="text" id="breedPet1Search" placeholder="输入名称搜索..." class="input-modern">
+                                    <div id="breedPet1Results" class="results-popover"></div>
+                                </div>
+                            </div>
+                            <div class="control-row" style="flex:1">
+                                <label>精灵 B</label>
+                                <div class="search-with-results">
+                                    <input type="text" id="breedPet2Search" placeholder="输入名称搜索..." class="input-modern">
+                                    <div id="breedPet2Results" class="results-popover"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:center; margin-bottom:1rem">
+                            <button id="breedCheckBtn" class="btn-nav" style="padding:10px 30px; font-size:1rem; background:var(--accent-blue); color:white; border:none; border-radius:10px; cursor:pointer;">
+                                <i class="fas fa-check-circle"></i> 检查兼容性
+                            </button>
+                        </div>
+                        <div id="breedResult" style="text-align:center; padding:1rem;"></div>
                     </div>
                 </div>
             </div>

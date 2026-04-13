@@ -53,6 +53,12 @@ function initMainTabs() {
             if (target === 'damageView') {
                 initDamageCalc();
             }
+            if (target === 'dimensionView') {
+                // 身高体重查询页无需自动加载
+            }
+            if (target === 'eggGroupView') {
+                loadEggGroupFilters();
+            }
         };
     });
 }
@@ -871,6 +877,191 @@ function updateTypeCalculator() {
     results.innerHTML = html;
 }
 
+// ===== 身高体重查询 =====
+async function loadDimensionSearch() {
+    const grid = document.getElementById('dimResultGrid');
+    const countEl = document.getElementById('dimResultCount');
+    if (!grid) return;
+
+    const heightMin = document.getElementById('dimHeightMin')?.value || '';
+    const heightMax = document.getElementById('dimHeightMax')?.value || '';
+    const weightMin = document.getElementById('dimWeightMin')?.value || '';
+    const weightMax = document.getElementById('dimWeightMax')?.value || '';
+
+    if (!heightMin && !heightMax && !weightMin && !weightMax) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#64748b;">请至少输入一个筛选条件</div>';
+        if (countEl) countEl.textContent = '';
+        return;
+    }
+
+    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">加载中...</div>';
+    try {
+        const params = new URLSearchParams();
+        if (heightMin) params.set('heightMin', heightMin);
+        if (heightMax) params.set('heightMax', heightMax);
+        if (weightMin) params.set('weightMin', weightMin);
+        if (weightMax) params.set('weightMax', weightMax);
+
+        const res = await fetch(`${API_BASE}/dimensions/search?${params}`);
+        const data = await res.json();
+        if (countEl) countEl.textContent = `找到 ${data.length} 只精灵`;
+
+        if (!data.length) {
+            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#64748b;">未找到符合条件的精灵</div>';
+            return;
+        }
+        grid.innerHTML = data.map(p => {
+            const type1Name = getTypeName(p.type1);
+            const type1Color = getTypeColor(p.type1);
+            const imgSrc = p.imageUrl ? `${MEDIA_BASE}${p.imageUrl}` : '';
+            return `
+                <div class="pet-card" onclick="openDetail(${p.id})" style="cursor:pointer">
+                    <div class="pet-card-img">
+                        ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
+                    </div>
+                    <div class="pet-card-info">
+                        <h4>${p.name}</h4>
+                        <span class="type-badge" style="background:${type1Color}">${type1Name}</span>
+                        <div style="font-size:0.75rem; color:#64748b; margin-top:4px">
+                            身高: ${p.heightMin.toFixed(1)}-${p.heightMax.toFixed(1)}m<br>
+                            体重: ${p.weightMin.toFixed(1)}-${p.weightMax.toFixed(1)}kg
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
+    } catch (e) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:red; padding:2rem;">加载失败: ${e.message}</div>`;
+    }
+}
+
+// ===== 蛋组查询 =====
+let currentEggGroupId = null;
+let breedPetId1 = null;
+let breedPetId2 = null;
+
+async function loadEggGroupFilters() {
+    const container = document.getElementById('eggGroupFilters');
+    if (!container || container.children.length > 0) return; // 已加载则跳过
+
+    try {
+        const res = await fetch(`${API_BASE}/egg-groups`);
+        const groups = await res.json();
+        container.innerHTML = groups.map(g =>
+            `<button class="type-btn" data-gid="${g.groupId}">${g.groupName} (${g.petCount})</button>`
+        ).join('');
+
+        container.querySelectorAll('.type-btn').forEach(btn => {
+            btn.onclick = () => {
+                const gid = parseInt(btn.dataset.gid);
+                container.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                if (currentEggGroupId === gid) {
+                    currentEggGroupId = null;
+                    document.getElementById('eggGroupPetGrid').innerHTML = '';
+                } else {
+                    currentEggGroupId = gid;
+                    btn.classList.add('active');
+                    loadEggGroupPets(gid);
+                }
+            };
+        });
+    } catch (e) {
+        container.innerHTML = `<span style="color:red">加载蛋组失败: ${e.message}</span>`;
+    }
+}
+
+async function loadEggGroupPets(groupId) {
+    const grid = document.getElementById('eggGroupPetGrid');
+    if (!grid) return;
+    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">加载中...</div>';
+
+    try {
+        const res = await fetch(`${API_BASE}/egg-groups?groupId=${groupId}`);
+        const data = await res.json();
+        grid.innerHTML = data.map(p => {
+            const type1Name = getTypeName(p.type1);
+            const type1Color = getTypeColor(p.type1);
+            const imgSrc = p.imageUrl ? `${MEDIA_BASE}${p.imageUrl}` : '';
+            return `
+                <div class="pet-card" onclick="openDetail(${p.petId})" style="cursor:pointer">
+                    <div class="pet-card-img">
+                        ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
+                    </div>
+                    <div class="pet-card-info">
+                        <h4>${p.name}</h4>
+                        <span class="type-badge" style="background:${type1Color}">${type1Name}</span>
+                    </div>
+                </div>`;
+        }).join('');
+    } catch (e) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:red; padding:2rem;">加载失败: ${e.message}</div>`;
+    }
+}
+
+// 生蛋兼容性 — 精灵搜索弹出
+function initBreedPetSearch(inputId, resultsId, setPetId) {
+    const input = document.getElementById(inputId);
+    const results = document.getElementById(resultsId);
+    if (!input || !results) return;
+
+    input.oninput = debounce(async () => {
+        const keyword = input.value.trim();
+        if (!keyword) { results.style.display = 'none'; return; }
+        try {
+            const res = await fetch(`${API_BASE}/pets?keyword=${encodeURIComponent(keyword)}&size=8`);
+            const pets = await res.json();
+            if (!pets.length) { results.style.display = 'none'; return; }
+            results.innerHTML = pets.map(p =>
+                `<div class="result-item" style="padding:8px 12px; cursor:pointer; border-bottom:1px solid #f1f5f9;"
+                      onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background=''"
+                      onclick="window._selectBreedPet('${inputId}', '${resultsId}', ${p.id}, '${p.name.replace(/'/g, "\\'")}', '${setPetId}')">${p.name}</div>`
+            ).join('');
+            results.style.display = 'block';
+        } catch (e) { results.style.display = 'none'; }
+    }, 250);
+
+    document.addEventListener('click', (e) => {
+        if (!results.contains(e.target) && e.target !== input) results.style.display = 'none';
+    });
+}
+
+window._selectBreedPet = function(inputId, resultsId, petId, petName, varName) {
+    document.getElementById(inputId).value = petName;
+    document.getElementById(resultsId).style.display = 'none';
+    if (varName === 'breedPetId1') breedPetId1 = petId;
+    else breedPetId2 = petId;
+};
+
+async function checkBreedCompat() {
+    const resultDiv = document.getElementById('breedResult');
+    if (!resultDiv) return;
+
+    if (!breedPetId1 || !breedPetId2) {
+        resultDiv.innerHTML = '<div style="color:#f59e0b; font-weight:600;">请先选择两只精灵</div>';
+        return;
+    }
+
+    resultDiv.innerHTML = '<div>检查中...</div>';
+    try {
+        const res = await fetch(`${API_BASE}/egg-groups/breed-check?petId1=${breedPetId1}&petId2=${breedPetId2}`);
+        const data = await res.json();
+        const canBreed = data.canBreed;
+        const icon = canBreed ? '&#10004;' : '&#10008;';
+        const color = canBreed ? '#22c55e' : '#ef4444';
+        const msg = canBreed
+            ? `可以生蛋！共同蛋组: ${data.commonGroups.join('、')}`
+            : '不能生蛋，没有共同蛋组';
+
+        resultDiv.innerHTML = `
+            <div style="font-size:1.5rem; color:${color}; font-weight:700; margin-bottom:0.5rem">${icon} ${msg}</div>
+            <div style="color:#64748b; font-size:0.9rem">
+                ${data.pet1} 的蛋组: ${data.pet1Groups.join('、') || '无'}<br>
+                ${data.pet2} 的蛋组: ${data.pet2Groups.join('、') || '无'}
+            </div>`;
+    } catch (e) {
+        resultDiv.innerHTML = `<div style="color:red">查询失败: ${e.message}</div>`;
+    }
+}
+
 // ===== DOMContentLoaded 入口 =====
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Encyclopedia DOM Loaded');
@@ -942,6 +1133,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nextSkillPage = document.getElementById('nextSkillPage');
     if (nextSkillPage) nextSkillPage.onclick = () => { currentSkillPage++; loadSkillsGallery(); };
+
+    // 身高体重查询按钮
+    const dimSearchBtn = document.getElementById('dimSearchBtn');
+    if (dimSearchBtn) dimSearchBtn.onclick = () => loadDimensionSearch();
+
+    // 蛋组生蛋兼容性搜索
+    initBreedPetSearch('breedPet1Search', 'breedPet1Results', 'breedPetId1');
+    initBreedPetSearch('breedPet2Search', 'breedPet2Results', 'breedPetId2');
+    const breedCheckBtn = document.getElementById('breedCheckBtn');
+    if (breedCheckBtn) breedCheckBtn.onclick = () => checkBreedCompat();
 
     // Initialize Stat Simulator
     initSkillFilters();

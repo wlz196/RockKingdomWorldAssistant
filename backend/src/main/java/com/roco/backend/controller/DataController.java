@@ -251,6 +251,137 @@ public class DataController {
         return jdbcTemplate.queryForList("SELECT * FROM pet_talents WHERE is_referenced = 1");
     }
 
+    // ===== 身高体重查询 =====
+    @GetMapping("/dimensions/search")
+    public List<Map<String, Object>> searchByDimensions(
+            @RequestParam(required = false) Double heightMin,
+            @RequestParam(required = false) Double heightMax,
+            @RequestParam(required = false) Double weightMin,
+            @RequestParam(required = false) Double weightMax) {
+        StringBuilder sql = new StringBuilder(
+            "SELECT d.pet_id, p.name, p.image_url, p.book_id, p.main_type_id, p.sub_type_id, " +
+            "d.height_min, d.height_max, d.weight_min, d.weight_max " +
+            "FROM pet_dimensions d JOIN pets p ON d.pet_id = p.id WHERE 1=1"
+        );
+        List<Object> params = new ArrayList<>();
+        // 身高范围：精灵的 [height_min, height_max] 与查询范围有交集
+        if (heightMin != null) {
+            sql.append(" AND d.height_max >= ?");
+            params.add(heightMin);
+        }
+        if (heightMax != null) {
+            sql.append(" AND d.height_min <= ?");
+            params.add(heightMax);
+        }
+        // 体重范围同理
+        if (weightMin != null) {
+            sql.append(" AND d.weight_max >= ?");
+            params.add(weightMin);
+        }
+        if (weightMax != null) {
+            sql.append(" AND d.weight_min <= ?");
+            params.add(weightMax);
+        }
+        sql.append(" ORDER BY p.name ASC LIMIT 200");
+
+        return jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", rs.getInt("pet_id"));
+            map.put("name", rs.getString("name"));
+            map.put("bookId", rs.getObject("book_id"));
+            map.put("type1", rs.getObject("main_type_id"));
+            map.put("type2", rs.getObject("sub_type_id"));
+            map.put("imageUrl", petService.formatImageUrl(rs.getString("image_url"), rs.getString("name")));
+            map.put("heightMin", rs.getDouble("height_min"));
+            map.put("heightMax", rs.getDouble("height_max"));
+            map.put("weightMin", rs.getDouble("weight_min"));
+            map.put("weightMax", rs.getDouble("weight_max"));
+            return map;
+        }, params.toArray());
+    }
+
+    // ===== 蛋组查询 =====
+    @GetMapping("/egg-groups")
+    public List<Map<String, Object>> getEggGroups(
+            @RequestParam(required = false) Integer groupId) {
+        // 蛋组名称映射
+        Map<Integer, String> groupNames = new HashMap<>();
+        groupNames.put(1, "植物组"); groupNames.put(2, "动物组"); groupNames.put(3, "龙系组");
+        groupNames.put(4, "守护组"); groupNames.put(5, "萌系组"); groupNames.put(6, "精灵组");
+        groupNames.put(7, "唯美组"); groupNames.put(8, "力量组"); groupNames.put(9, "矿石组");
+        groupNames.put(10, "不死组"); groupNames.put(11, "翼组"); groupNames.put(12, "猎鹰组");
+        groupNames.put(13, "幻灵组"); groupNames.put(14, "神系组"); groupNames.put(15, "动作组");
+
+        if (groupId != null) {
+            // 返回指定蛋组的精灵列表
+            return jdbcTemplate.query(
+                "SELECT e.group_id, p.id as pet_id, p.name, p.image_url, p.book_id, p.main_type_id, p.sub_type_id " +
+                "FROM pet_egg_groups e JOIN pets p ON e.pet_id = p.id WHERE e.group_id = ? ORDER BY p.name",
+                (rs, rowNum) -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("petId", rs.getInt("pet_id"));
+                    map.put("name", rs.getString("name"));
+                    map.put("bookId", rs.getObject("book_id"));
+                    map.put("type1", rs.getObject("main_type_id"));
+                    map.put("type2", rs.getObject("sub_type_id"));
+                    map.put("imageUrl", petService.formatImageUrl(rs.getString("image_url"), rs.getString("name")));
+                    map.put("groupId", rs.getInt("group_id"));
+                    map.put("groupName", groupNames.getOrDefault(rs.getInt("group_id"), "未知组"));
+                    return map;
+                }, groupId);
+        }
+
+        // 返回所有蛋组概览（组ID、名称、精灵数量）
+        return jdbcTemplate.query(
+            "SELECT group_id, COUNT(*) as pet_count FROM pet_egg_groups GROUP BY group_id ORDER BY group_id",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                int gid = rs.getInt("group_id");
+                map.put("groupId", gid);
+                map.put("groupName", groupNames.getOrDefault(gid, "未知组"));
+                map.put("petCount", rs.getInt("pet_count"));
+                return map;
+            });
+    }
+
+    @GetMapping("/egg-groups/breed-check")
+    public Map<String, Object> checkBreedCompatibility(
+            @RequestParam Integer petId1,
+            @RequestParam Integer petId2) {
+        // 查询两只精灵的蛋组
+        List<Integer> groups1 = jdbcTemplate.queryForList(
+            "SELECT group_id FROM pet_egg_groups WHERE pet_id = ?", Integer.class, petId1);
+        List<Integer> groups2 = jdbcTemplate.queryForList(
+            "SELECT group_id FROM pet_egg_groups WHERE pet_id = ?", Integer.class, petId2);
+
+        // 蛋组名称映射
+        Map<Integer, String> groupNames = new HashMap<>();
+        groupNames.put(1, "植物组"); groupNames.put(2, "动物组"); groupNames.put(3, "龙系组");
+        groupNames.put(4, "守护组"); groupNames.put(5, "萌系组"); groupNames.put(6, "精灵组");
+        groupNames.put(7, "唯美组"); groupNames.put(8, "力量组"); groupNames.put(9, "矿石组");
+        groupNames.put(10, "不死组"); groupNames.put(11, "翼组"); groupNames.put(12, "猎鹰组");
+        groupNames.put(13, "幻灵组"); groupNames.put(14, "神系组"); groupNames.put(15, "动作组");
+
+        // 求交集
+        List<String> commonGroups = groups1.stream()
+            .filter(groups2::contains)
+            .map(gid -> groupNames.getOrDefault(gid, "未知组"))
+            .collect(Collectors.toList());
+
+        // 查精灵名称
+        String name1 = petRepository.findById(petId1).map(Pet::getName).orElse("未知");
+        String name2 = petRepository.findById(petId2).map(Pet::getName).orElse("未知");
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("pet1", name1);
+        result.put("pet2", name2);
+        result.put("pet1Groups", groups1.stream().map(g -> groupNames.getOrDefault(g, "未知组")).collect(Collectors.toList()));
+        result.put("pet2Groups", groups2.stream().map(g -> groupNames.getOrDefault(g, "未知组")).collect(Collectors.toList()));
+        result.put("canBreed", !commonGroups.isEmpty());
+        result.put("commonGroups", commonGroups);
+        return result;
+    }
+
     @GetMapping("/types")
     public Map<String, Object> getTypeData() {
         Map<String, Object> result = new HashMap<>();
