@@ -928,7 +928,7 @@ async function showSkillDetail(skillId) {
     const body = document.getElementById('drawerBody');
     if (!drawer || !body) return;
 
-    drawer.classList.add('open');
+    drawer.classList.add('active');
     body.innerHTML = '<div style="text-align:center; padding:3rem;">加载中...</div>';
 
     try {
