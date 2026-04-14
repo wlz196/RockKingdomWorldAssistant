@@ -29,6 +29,9 @@ public class SkillInfo {
     @Column(name = "dam_para")
     private String damPara;
 
+    @Column(name = "skill_dam_type")
+    private Integer skillDamType;
+
     @Column(name = "damage_type")
     private Integer damageType;
 
@@ -62,6 +65,9 @@ public class SkillInfo {
 
     public Integer getDamageType() { return damageType; }
     public void setDamageType(Integer damageType) { this.damageType = damageType; }
+
+    public Integer getSkillDamType() { return skillDamType; }
+    public void setSkillDamType(Integer skillDamType) { this.skillDamType = skillDamType; }
 
     // Logic Methods
     public String getTypeName() {

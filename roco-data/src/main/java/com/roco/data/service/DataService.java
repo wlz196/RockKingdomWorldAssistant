@@ -112,8 +112,21 @@ public class DataService {
                 skillMap.put("description", si.getDescription());
                 skillMap.put("icon", formatSkillIcon(si.getIcon()));
                 skillMap.put("type", si.getType());
-                skillMap.put("attribute", typeMap.getOrDefault(si.getDamageType(), "普通"));
-                skillMap.put("category", si.getSkillTypeName());
+                skillMap.put("attribute", typeMap.getOrDefault(si.getSkillDamType(), "普通"));
+                
+                int logicType = si.getType() != null ? si.getType() : 0;
+                int damageCategory = si.getDamageType() != null ? si.getDamageType() : 0;
+                int skillClass = si.getSkillType() != null ? si.getSkillType() : 0;
+                if (logicType == 2) {
+                    skillMap.put("category", "特性");
+                } else {
+                    skillMap.put("category", switch (damageCategory) {
+                        case 2 -> "物理";
+                        case 3 -> "魔法";
+                        case 4 -> "特殊";
+                        default -> (skillClass == 3) ? "变化" : "常规";
+                    });
+                }
                 skillMap.put("power", si.getPower());
                 skillMap.put("energyConsumption", si.getEnergyConsumption());
 
