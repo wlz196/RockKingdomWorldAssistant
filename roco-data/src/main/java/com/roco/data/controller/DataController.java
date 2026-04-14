@@ -157,6 +157,14 @@ public class DataController {
         if (hasOwner != null) {
             skillsWithOwners = new java.util.HashSet<>(
                 jdbcTemplate.queryForList("SELECT DISTINCT skill_id FROM pet_level_skills", Integer.class));
+            if (skillsWithOwners.isEmpty()) {
+                sql.append(" AND 1=0"); // 没有任何技能被拥有，直接返回空
+            } else {
+                sql.append(hasOwner ? " AND id IN (" : " AND id NOT IN (");
+                sql.append(String.join(",", java.util.Collections.nCopies(skillsWithOwners.size(), "?")));
+                sql.append(")");
+                params.addAll(skillsWithOwners);
+            }
         } else {
             skillsWithOwners = null;
         }
@@ -213,14 +221,6 @@ public class DataController {
             return dto;
         }, params.toArray());
 
-        if (skillsWithOwners != null) {
-            results = results.stream()
-                .filter(dto -> {
-                    boolean has = skillsWithOwners.contains(dto.getId());
-                    return hasOwner ? has : !has;
-                })
-                .collect(java.util.stream.Collectors.toList());
-        }
         return results;
     }
 
