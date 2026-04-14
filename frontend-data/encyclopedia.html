@@ -171,20 +171,18 @@
             </div>
             
             <div id="buffView" class="tab-pane" style="display:none">
-                <header class="top-bar">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="buffSearch" placeholder="搜索 Buff 名称...">
+                <header class="top-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; height: auto; margin-bottom: 25px;">
+                    <div class="skill-tactical-filters">
+                        <div class="filter-row">
+                            <span class="filter-label"><i class="fas fa-filter"></i> 类型</span>
+                            <div id="buffTypeFilters" class="type-filters-row"></div>
+                        </div>
                     </div>
-                    <div class="filter-group" style="margin-left:1rem">
-                        <select id="buffTypeFilter" class="btn-nav">
-                            <option value="">全部类型</option>
-                            <option value="1">增益</option>
-                            <option value="2">减益</option>
-                            <option value="3">其他</option>
-                            <option value="4">印记</option>
-                            <option value="5">特性</option>
-                        </select>
+                    <div class="search-and-stats" style="margin-left: 0; width: 100%; display: flex; gap: 15px; align-items: center; background: rgba(59, 130, 246, 0.05); padding: 15px; border-radius: 15px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                        <div class="search-container" style="flex: 1; position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                            <input type="text" id="buffSearch" placeholder="搜索 Buff 名称..." style="width: 100%; padding: 12px 15px 12px 45px; background: white; border: 1px solid #e2e8f0; border-radius: 10px; color: #1e293b; font-size: 0.95rem;">
+                        </div>
                     </div>
                 </header>
                 <div class="data-grid" id="buffGrid"></div>

@@ -690,16 +690,43 @@ async function loadBloodlines() {
 }
 
 // ===== Buff Tab =====
+let currentBuffType = '';
+
+function initBuffFilters() {
+    const container = document.getElementById('buffTypeFilters');
+    if (!container || container.children.length > 0) return;
+
+    const buffTypes = [
+        { id: '', name: '全部' },
+        { id: '1', name: '增益' },
+        { id: '2', name: '减益' },
+        { id: '3', name: '特性' },
+        { id: '4', name: '印记' }
+    ];
+
+    buffTypes.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = `type-btn ${currentBuffType === t.id ? 'active' : ''}`;
+        btn.innerHTML = `<span>${t.name}</span>`;
+        btn.onclick = () => {
+            currentBuffType = t.id;
+            container.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadBuffs();
+        };
+        container.appendChild(btn);
+    });
+}
+
 async function loadBuffs() {
     const grid = document.getElementById('buffGrid');
     if (!grid) return;
     grid.innerHTML = '<div class="loading-spinner">加载中...</div>';
     try {
         const searchInput = document.getElementById('buffSearch');
-        const typeSelect = document.getElementById('buffTypeFilter');
         const search = searchInput ? searchInput.value : '';
-        const type = typeSelect ? typeSelect.value : '';
-        
+        const type = currentBuffType;
+
         const response = await fetch(`${API_BASE}/buffs?keyword=${encodeURIComponent(search)}${type ? `&type=${type}` : ''}`);
         const data = await response.json();
         grid.innerHTML = data.map(b => `
@@ -1254,11 +1281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (buffSearch) {
         buffSearch.oninput = debounce(() => loadBuffs(), 300);
     }
-    
-    const buffTypeFilter = document.getElementById('buffTypeFilter');
-    if (buffTypeFilter) {
-        buffTypeFilter.onchange = () => loadBuffs();
-    }
+
+    initBuffFilters();
 
     const prevPage = document.getElementById('prevPage');
     if (prevPage) prevPage.onclick = () => { if (currentPage > 0) { currentPage--; loadPets(); } };
