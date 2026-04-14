@@ -1311,688 +1311,1151 @@ document.addEventListener('DOMContentLoaded', () => {
     initNatures();
 });
 
-// --- Stat Simulator Logic (Hardened with Unicode Escapes) ---
-let currentSimPet = null;
-let natureData = [];
-let isSyncingNatureControls = false;
-const SIM_ATTRS = [
-    { key: 'hp', label: '\u7cbe\u529b', attrId: 79 },
-    { key: 'atk', label: '\u653b\u51fb', attrId: 80 },
-    { key: 'mag_atk', label: '\u9b54\u653b', attrId: 81 },
-    { key: 'def', label: '\u9632\u5fa1', attrId: 82 },
-    { key: 'mag_def', label: '\u9b54\u6297', attrId: 83 },
-    { key: 'spd', label: '\u901f\u5ea6', attrId: 84 }
-];
-const DEFAULT_MINUS_RATE = 0.9;
 
-function getDefaultPlusRateByStar(starLevel) {
-    const safeStar = Math.max(0, Math.min(5, Number.isFinite(starLevel) ? starLevel : 5));
-    return Number((1.1 + safeStar * 0.02).toFixed(2));
+// --- NEW SIMULATOR LOGIC (PORTED) ---
+
+const IMAGE_BASE = MEDIA_BASE.replace(/\/media\/?$/, "");
+const PVP_STAR_LEVEL = 5;
+const PRESET_STORAGE_KEY = 'myAtkPetPresetsV1';
+
+
+let simPet = null;
+let battleAtkPet = null;
+let battleDefPet = null;
+let duelMyPet = null;
+let duelEnemyPet = null;
+
+const D = {
+    
+    
+    
+
+    simSearch: document.getElementById('simSearch'),
+    simSearchResults: document.getElementById('simSearchResults'),
+    simPetInfo: document.getElementById('simPetInfo'),
+    simPetImg: document.getElementById('simPetImg'),
+    simPetName: document.getElementById('simPetName'),
+    simBaseHp: document.getElementById('simBaseHp'),
+    simBaseAtk: document.getElementById('simBaseAtk'),
+    simBaseDef: document.getElementById('simBaseDef'),
+    simBaseMatk: document.getElementById('simBaseMatk'),
+    simBaseMdef: document.getElementById('simBaseMdef'),
+    simBaseSpd: document.getElementById('simBaseSpd'),
+    simNaturePlus: document.getElementById('simNaturePlus'),
+    simNatureMinus: document.getElementById('simNatureMinus'),
+    simPresetSelect: document.getElementById('simPresetSelect'),
+    simPresetLoadBtn: document.getElementById('simPresetLoadBtn'),
+    simPresetSaveBtn: document.getElementById('simPresetSaveBtn'),
+    simPresetDeleteBtn: document.getElementById('simPresetDeleteBtn'),
+    simIvs: {
+        hp: document.getElementById('simIvHp'),
+        atk: document.getElementById('simIvAtk'),
+        def: document.getElementById('simIvDef'),
+        matk: document.getElementById('simIvMatk'),
+        mdef: document.getElementById('simIvMdef'),
+        spd: document.getElementById('simIvSpd')
+    },
+    simFinalHp: document.getElementById('simFinalHp'),
+    simFinalAtk: document.getElementById('simFinalAtk'),
+    simFinalDef: document.getElementById('simFinalDef'),
+    simFinalMatk: document.getElementById('simFinalMatk'),
+    simFinalMdef: document.getElementById('simFinalMdef'),
+    simFinalSpd: document.getElementById('simFinalSpd'),
+    simRangeHp: document.getElementById('simRangeHp'),
+    simRangeAtk: document.getElementById('simRangeAtk'),
+    simRangeDef: document.getElementById('simRangeDef'),
+    simRangeMatk: document.getElementById('simRangeMatk'),
+    simRangeMdef: document.getElementById('simRangeMdef'),
+    simRangeSpd: document.getElementById('simRangeSpd'),
+    simGapHp: document.getElementById('simGapHp'),
+    simGapAtk: document.getElementById('simGapAtk'),
+    simGapDef: document.getElementById('simGapDef'),
+    simGapMatk: document.getElementById('simGapMatk'),
+    simGapMdef: document.getElementById('simGapMdef'),
+    simGapSpd: document.getElementById('simGapSpd'),
+
+    battleAtkSearch: document.getElementById('battleAtkSearch'),
+    battleAtkSearchResults: document.getElementById('battleAtkSearchResults'),
+    battleNaturePlus: document.getElementById('battleNaturePlus'),
+    battleNatureMinus: document.getElementById('battleNatureMinus'),
+    battlePresetSelect: document.getElementById('battlePresetSelect'),
+    battlePresetLoadBtn: document.getElementById('battlePresetLoadBtn'),
+    battleIvs: {
+        hp: document.getElementById('battleIvHp'),
+        atk: document.getElementById('battleIvAtk'),
+        def: document.getElementById('battleIvDef'),
+        matk: document.getElementById('battleIvMatk'),
+        mdef: document.getElementById('battleIvMdef'),
+        spd: document.getElementById('battleIvSpd')
+    },
+
+    battleDefSearch: document.getElementById('battleDefSearch'),
+    battleDefSearchResults: document.getElementById('battleDefSearchResults'),
+    battleDefHpRange: document.getElementById('battleDefHpRange'),
+    battleDefHpNeutral0: document.getElementById('battleDefHpNeutral0'),
+    battleDefHpPlus0: document.getElementById('battleDefHpPlus0'),
+    battleDefHpNeutral10: document.getElementById('battleDefHpNeutral10'),
+    battleDefHpPlus10: document.getElementById('battleDefHpPlus10'),
+    battleDefHpMinus0: document.getElementById('battleDefHpMinus0'),
+    battleDefHpMinus10: document.getElementById('battleDefHpMinus10'),
+
+    simplePowerGroup: document.getElementById('simplePowerGroup'),
+    complexInputs: document.getElementById('complexInputs'),
+    dmgPower: document.getElementById('dmgPower'),
+    dmgHits: document.getElementById('dmgHits'),
+
+    cplFinalPower: document.getElementById('cplFinalPower'),
+    cplSkillPower: document.getElementById('cplSkillPower'),
+    cplResponseMult: document.getElementById('cplResponseMult'),
+    cplPowerBonus: document.getElementById('cplPowerBonus'),
+    cplAtkUp: document.getElementById('cplAtkUp'),
+    cplDefDown: document.getElementById('cplDefDown'),
+    cplAtkDown: document.getElementById('cplAtkDown'),
+    cplDefUp: document.getElementById('cplDefUp'),
+    cplStab: document.getElementById('cplStab'),
+    cplTypeEff: document.getElementById('cplTypeEff'),
+    cplWeather: document.getElementById('cplWeather'),
+    cplMitigation: document.getElementById('cplMitigation'),
+
+    resDmgAll: document.getElementById('resDmgAll'),
+    resDmgMinus0: document.getElementById('resDmgMinus0'),
+    resDmgMinus10: document.getElementById('resDmgMinus10'),
+    resDmgNeutral0: document.getElementById('resDmgNeutral0'),
+    resDmgNeutral10: document.getElementById('resDmgNeutral10'),
+    resDmgPlus0: document.getElementById('resDmgPlus0'),
+    resDmgPlus10: document.getElementById('resDmgPlus10'),
+
+    duelMySearch: document.getElementById('duelMySearch'),
+    duelMySearchResults: document.getElementById('duelMySearchResults'),
+    duelMyPetInfo: document.getElementById('duelMyPetInfo'),
+    duelMyImg: document.getElementById('duelMyImg'),
+    duelMyName: document.getElementById('duelMyName'),
+    duelMyBaseHp: document.getElementById('duelMyBaseHp'),
+    duelMyBaseAtk: document.getElementById('duelMyBaseAtk'),
+    duelMyBaseDef: document.getElementById('duelMyBaseDef'),
+    duelMyBaseMatk: document.getElementById('duelMyBaseMatk'),
+    duelMyBaseMdef: document.getElementById('duelMyBaseMdef'),
+    duelMyBaseSpd: document.getElementById('duelMyBaseSpd'),
+    duelMyNaturePlus: document.getElementById('duelMyNaturePlus'),
+    duelMyNatureMinus: document.getElementById('duelMyNatureMinus'),
+    duelMyPresetSelect: document.getElementById('duelMyPresetSelect'),
+    duelMyPresetLoadBtn: document.getElementById('duelMyPresetLoadBtn'),
+    duelMyIvs: {
+        hp: document.getElementById('duelMyIvHp'),
+        atk: document.getElementById('duelMyIvAtk'),
+        def: document.getElementById('duelMyIvDef'),
+        matk: document.getElementById('duelMyIvMatk'),
+        mdef: document.getElementById('duelMyIvMdef'),
+        spd: document.getElementById('duelMyIvSpd')
+    },
+    duelMyFinalHp: document.getElementById('duelMyFinalHp'),
+    duelMyFinalAtk: document.getElementById('duelMyFinalAtk'),
+    duelMyFinalDef: document.getElementById('duelMyFinalDef'),
+    duelMyFinalMatk: document.getElementById('duelMyFinalMatk'),
+    duelMyFinalMdef: document.getElementById('duelMyFinalMdef'),
+    duelMyFinalSpd: document.getElementById('duelMyFinalSpd'),
+
+    duelEnemySearch: document.getElementById('duelEnemySearch'),
+    duelEnemySearchResults: document.getElementById('duelEnemySearchResults'),
+    duelEnemyPetInfo: document.getElementById('duelEnemyPetInfo'),
+    duelEnemyImg: document.getElementById('duelEnemyImg'),
+    duelEnemyName: document.getElementById('duelEnemyName'),
+    duelEnemyBaseHp: document.getElementById('duelEnemyBaseHp'),
+    duelEnemyBaseAtk: document.getElementById('duelEnemyBaseAtk'),
+    duelEnemyBaseDef: document.getElementById('duelEnemyBaseDef'),
+    duelEnemyBaseMatk: document.getElementById('duelEnemyBaseMatk'),
+    duelEnemyBaseMdef: document.getElementById('duelEnemyBaseMdef'),
+    duelEnemyBaseSpd: document.getElementById('duelEnemyBaseSpd'),
+    duelEnemyNaturePlus: document.getElementById('duelEnemyNaturePlus'),
+    duelEnemyNatureMinus: document.getElementById('duelEnemyNatureMinus'),
+    duelEnemyPresetSelect: document.getElementById('duelEnemyPresetSelect'),
+    duelEnemyPresetLoadBtn: document.getElementById('duelEnemyPresetLoadBtn'),
+    duelEnemyIvs: {
+        hp: document.getElementById('duelEnemyIvHp'),
+        atk: document.getElementById('duelEnemyIvAtk'),
+        def: document.getElementById('duelEnemyIvDef'),
+        matk: document.getElementById('duelEnemyIvMatk'),
+        mdef: document.getElementById('duelEnemyIvMdef'),
+        spd: document.getElementById('duelEnemyIvSpd')
+    },
+    duelEnemyFinalHp: document.getElementById('duelEnemyFinalHp'),
+    duelEnemyFinalAtk: document.getElementById('duelEnemyFinalAtk'),
+    duelEnemyFinalDef: document.getElementById('duelEnemyFinalDef'),
+    duelEnemyFinalMatk: document.getElementById('duelEnemyFinalMatk'),
+    duelEnemyFinalMdef: document.getElementById('duelEnemyFinalMdef'),
+    duelEnemyFinalSpd: document.getElementById('duelEnemyFinalSpd'),
+
+    duelMyToEnemyPower: document.getElementById('duelMyToEnemyPower'),
+    duelMyToEnemyHits: document.getElementById('duelMyToEnemyHits'),
+    duelMySimplePowerGroup: document.getElementById('duelMySimplePowerGroup'),
+    duelMyComplexInputs: document.getElementById('duelMyComplexInputs'),
+    duelMyCplFinalPower: document.getElementById('duelMyCplFinalPower'),
+    duelMyCplSkillPower: document.getElementById('duelMyCplSkillPower'),
+    duelMyCplResponseMult: document.getElementById('duelMyCplResponseMult'),
+    duelMyCplPowerBonus: document.getElementById('duelMyCplPowerBonus'),
+    duelMyCplAtkUp: document.getElementById('duelMyCplAtkUp'),
+    duelMyCplDefDown: document.getElementById('duelMyCplDefDown'),
+    duelMyCplAtkDown: document.getElementById('duelMyCplAtkDown'),
+    duelMyCplDefUp: document.getElementById('duelMyCplDefUp'),
+    duelMyCplStab: document.getElementById('duelMyCplStab'),
+    duelMyCplTypeEff: document.getElementById('duelMyCplTypeEff'),
+    duelMyCplWeather: document.getElementById('duelMyCplWeather'),
+    duelMyCplMitigation: document.getElementById('duelMyCplMitigation'),
+    duelEnemyToMyPower: document.getElementById('duelEnemyToMyPower'),
+    duelEnemyToMyHits: document.getElementById('duelEnemyToMyHits'),
+    duelEnemySimplePowerGroup: document.getElementById('duelEnemySimplePowerGroup'),
+    duelEnemyComplexInputs: document.getElementById('duelEnemyComplexInputs'),
+    duelEnemyCplFinalPower: document.getElementById('duelEnemyCplFinalPower'),
+    duelEnemyCplSkillPower: document.getElementById('duelEnemyCplSkillPower'),
+    duelEnemyCplResponseMult: document.getElementById('duelEnemyCplResponseMult'),
+    duelEnemyCplPowerBonus: document.getElementById('duelEnemyCplPowerBonus'),
+    duelEnemyCplAtkUp: document.getElementById('duelEnemyCplAtkUp'),
+    duelEnemyCplDefDown: document.getElementById('duelEnemyCplDefDown'),
+    duelEnemyCplAtkDown: document.getElementById('duelEnemyCplAtkDown'),
+    duelEnemyCplDefUp: document.getElementById('duelEnemyCplDefUp'),
+    duelEnemyCplStab: document.getElementById('duelEnemyCplStab'),
+    duelEnemyCplTypeEff: document.getElementById('duelEnemyCplTypeEff'),
+    duelEnemyCplWeather: document.getElementById('duelEnemyCplWeather'),
+    duelEnemyCplMitigation: document.getElementById('duelEnemyCplMitigation'),
+    duelMyToEnemySingle: document.getElementById('duelMyToEnemySingle'),
+    duelMyToEnemyTotal: document.getElementById('duelMyToEnemyTotal'),
+    duelMyToEnemyPct: document.getElementById('duelMyToEnemyPct'),
+    duelMyToEnemyTurns: document.getElementById('duelMyToEnemyTurns'),
+    duelEnemyToMySingle: document.getElementById('duelEnemyToMySingle'),
+    duelEnemyToMyTotal: document.getElementById('duelEnemyToMyTotal'),
+    duelEnemyToMyPct: document.getElementById('duelEnemyToMyPct'),
+    duelEnemyToMyTurns: document.getElementById('duelEnemyToMyTurns')
+};
+
+const ATTR_MAP = { hp: 79, atk: 80, matk: 81, def: 82, mdef: 83, spd: 84 };
+const ATTR_LABELS = {
+    '': '无', hp: '精力', atk: '物攻', def: '物防', matk: '魔攻', mdef: '魔抗', spd: '速度'
+};
+
+function pickNumber(obj, keys, fallback = 0) {
+    for (const key of keys) {
+        const v = obj?.[key];
+        if (v !== undefined && v !== null && v !== '') {
+            const n = Number(v);
+            if (!Number.isNaN(n)) return n;
+        }
+    }
+    return fallback;
 }
 
-function clampStarLevel(value) {
-    const num = parseInt(value, 10);
-    if (Number.isNaN(num)) return 5;
-    return Math.max(0, Math.min(5, num));
+function normalizePetStats(pet) {
+    return {
+        ...pet,
+        hp: pickNumber(pet, ['hp']),
+        attack: pickNumber(pet, ['attack', 'atk']),
+        defense: pickNumber(pet, ['defense', 'def']),
+        magic_attack: pickNumber(pet, ['magic_attack', 'magicAttack', 'sp_atk', 'spAttack']),
+        magic_defense: pickNumber(pet, ['magic_defense', 'magicDefense', 'sp_def', 'spDefense']),
+        speed: pickNumber(pet, ['speed', 'spd'])
+    };
 }
 
-function getAttrLabelById(attrId) {
-    const attr = SIM_ATTRS.find(item => item.attrId === Number(attrId));
-    return attr ? attr.label : '\u65e0';
+function fmt1(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n.toFixed(1) : '0.0';
 }
 
-function populateModifierSelects() {
-    const plusSelect = document.getElementById('simPlusAttr');
-    const minusSelect = document.getElementById('simMinusAttr');
-    if (!plusSelect || !minusSelect) return;
-
-    const options = SIM_ATTRS.map(attr => `<option value="${attr.attrId}">${attr.label}</option>`).join('');
-    plusSelect.innerHTML = options;
-    minusSelect.innerHTML = options;
-    plusSelect.value = '80';
-    minusSelect.value = '81';
+function resolvePetImageUrl(imageUrl) {
+    if (!imageUrl) return '';
+    if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
+    const clean = String(imageUrl).replace(/^\/+/, '');
+    if (clean.startsWith('media/')) return `${IMAGE_BASE}/${clean}`;
+    return `${IMAGE_BASE}/media/${clean}`;
 }
 
-function buildNatureOptionLabel(nature) {
-    const plus = nature.plusAttrName || getAttrLabelById(nature.plus_attr_id) || '\u65e0';
-    const minus = nature.minusAttrName || getAttrLabelById(nature.minus_attr_id) || '\u65e0';
-    return `${nature.name} (\u52a0${plus} / \u51cf${minus})`;
+function debounce(func, wait) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => func.apply(this, args), wait);
+    };
 }
 
-function getSelectedModifiers() {
-    const starInput = document.getElementById('simStarLevel');
-    const plusSelect = document.getElementById('simPlusAttr');
-    const minusSelect = document.getElementById('simMinusAttr');
-    const plusRateSelect = document.getElementById('simPlusRate');
+function getSelectedDamageMode() {
+    return document.querySelector('input[name="dmgMode"]:checked')?.value || 'simple';
+}
 
-    const starLevel = clampStarLevel(starInput ? starInput.value : 5);
-    const plusAttrId = parseInt(plusSelect ? plusSelect.value : 80, 10);
-    const minusAttrId = parseInt(minusSelect ? minusSelect.value : 81, 10);
-    const plusRate = Number(plusRateSelect ? plusRateSelect.value : getDefaultPlusRateByStar(starLevel));
+function getSelectedDamageType() {
+    return document.querySelector('input[name="dmgType"]:checked')?.value || 'physical';
+}
+
+function getSelectedDuelDamageMode(name) {
+    return document.querySelector(`input[name="${name}"]:checked`)?.value || 'simple';
+}
+
+function setupNatureSelectors(elPlus, elMinus) {
+    const options = [
+        { value: '', label: '无' },
+        { value: 'hp', label: '精力' },
+        { value: 'atk', label: '物攻' },
+        { value: 'def', label: '物防' },
+        { value: 'matk', label: '魔攻' },
+        { value: 'mdef', label: '魔抗' },
+        { value: 'spd', label: '速度' }
+    ];
+    const html = options.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+    elPlus.innerHTML = html;
+    elMinus.innerHTML = html;
+    elPlus.value = '';
+    elMinus.value = '';
+}
+
+function normalizeNaturePair(elPlus, elMinus, changed) {
+    if (elPlus.value && elPlus.value === elMinus.value) {
+        if (changed === 'plus') elMinus.value = '';
+        else elPlus.value = '';
+    }
+}
+
+function getIvs(ivsEls) {
+    return {
+        hp: Number(ivsEls.hp.value) || 0,
+        atk: Number(ivsEls.atk.value) || 0,
+        def: Number(ivsEls.def.value) || 0,
+        matk: Number(ivsEls.matk.value) || 0,
+        mdef: Number(ivsEls.mdef.value) || 0,
+        spd: Number(ivsEls.spd.value) || 0
+    };
+}
+
+function setIvs(ivsEls, ivs) {
+    for (const key of Object.keys(ivsEls)) {
+        const n = Number(ivs?.[key]);
+        ivsEls[key].value = Number.isFinite(n) ? String(Math.max(0, Math.min(10, Math.trunc(n)))) : '0';
+    }
+}
+
+function calcFinalStats(pet, ivs, plusAttr, minusAttr) {
+    const star = PVP_STAR_LEVEL;
+    const plusId = plusAttr ? ATTR_MAP[plusAttr] : undefined;
+    const minusId = minusAttr ? ATTR_MAP[minusAttr] : undefined;
+
+    const getMod = (attrId) => {
+        if (plusId === attrId) return 1.1 + star * 0.02;
+        if (minusId === attrId) return 0.9;
+        return 1.0;
+    };
+
+    const talentHP = (1 + star) * 0.85;
+    const talentOther = (1 + star) * 0.55;
+
+    const calc = (base, iv, mod, isHp = false) => {
+        if (isHp) return (base * 1.7 + iv * talentHP + 70) * mod + 100;
+        return (base * 1.1 + iv * talentOther + 10) * mod + 50;
+    };
 
     return {
-        starLevel,
-        plusAttrId,
-        minusAttrId,
-        plusRate,
-        minusRate: DEFAULT_MINUS_RATE
+        hp: calc(pet.hp, ivs.hp, getMod(ATTR_MAP.hp), true),
+        atk: calc(pet.attack, ivs.atk, getMod(ATTR_MAP.atk)),
+        def: calc(pet.defense, ivs.def, getMod(ATTR_MAP.def)),
+        matk: calc(pet.magic_attack, ivs.matk, getMod(ATTR_MAP.matk)),
+        mdef: calc(pet.magic_defense, ivs.mdef, getMod(ATTR_MAP.mdef)),
+        spd: calc(pet.speed, ivs.spd, getMod(ATTR_MAP.spd))
     };
 }
 
-function syncSummary(modifiers) {
-    const summary = document.getElementById('simSummary');
-    if (!summary) return;
-    const plusLabel = getAttrLabelById(modifiers.plusAttrId);
-    const minusLabel = getAttrLabelById(modifiers.minusAttrId);
-    summary.textContent = `当前配置：${modifiers.starLevel}星 / ${plusLabel} +${Math.round((modifiers.plusRate - 1) * 100)}% / ${minusLabel} -10%`;
-}
+function buildDefRanges(pet) {
+    const star = PVP_STAR_LEVEL;
+    const talentHP = (1 + star) * 0.85;
+    const talentOther = (1 + star) * 0.55;
+    const plusMod = 1.1 + star * 0.02;
+    const minusMod = 0.9;
 
-function findMatchingNature(plusAttrId, minusAttrId) {
-    return natureData.find(n => {
-        return Number(n.plus_attr_id) === Number(plusAttrId)
-            && Number(n.minus_attr_id) === Number(minusAttrId);
+    const calcHp = (base, iv, mod) => (base * 1.7 + iv * talentHP + 70) * mod + 100;
+    const calcDef = (base, iv, mod) => (base * 1.1 + iv * talentOther + 10) * mod + 50;
+
+    const buildRange = (base, mod, isHp = false) => ({
+        min: isHp ? calcHp(base, 0, mod) : calcDef(base, 0, mod),
+        max: isHp ? calcHp(base, 10, mod) : calcDef(base, 10, mod)
     });
-}
 
-function getNatureSelectLabelByValue(value) {
-    const select = document.getElementById('simNature');
-    if (!select) return '';
-    const option = Array.from(select.options).find(item => item.value === String(value));
-    return option ? option.textContent : '';
-}
-
-function refreshNatureSelectState() {
-    const select = document.getElementById('simNature');
-    if (!select) return;
-    const modifiers = getSelectedModifiers();
-    const matchedNature = findMatchingNature(modifiers.plusAttrId, modifiers.minusAttrId);
-    const targetValue = matchedNature ? String(matchedNature.id) : 'custom';
-
-    if (!Array.from(select.options).some(option => option.value === targetValue)) {
-        return;
-    }
-
-    select.value = targetValue;
-    if (select.value !== targetValue) {
-        select.selectedIndex = Array.from(select.options).findIndex(option => option.value === targetValue);
-    }
-}
-
-function renderSimBaseStats(base) {
-    const container = document.getElementById('simBaseStats');
-    if (!container) return;
-
-    if (!base) {
-        container.innerHTML = '<div class="sim-base-placeholder">选择宠物后展示种族值：精力 / 攻击 / 防御 / 魔攻 / 魔抗 / 速度</div>';
-        return;
-    }
-
-    const labels = {
-        hp: '\u7cbe\u529b',
-        atk: '\u653b\u51fb',
-        def: '\u9632\u5fa1',
-        mag_atk: '\u9b54\u653b',
-        mag_def: '\u9b54\u6297',
-        spd: '\u901f\u5ea6'
-    };
-
-    container.innerHTML = Object.entries(base).map(([key, value]) => `
-        <div class="sim-base-stat-card">
-            <strong>${value}</strong>
-            <span>${labels[key]}</span>
-        </div>
-    `).join('');
-}
-
-function syncNatureFromManualControls() {
-    if (isSyncingNatureControls) return;
-    const select = document.getElementById('simNature');
-    if (!select) return;
-
-    isSyncingNatureControls = true;
-    refreshNatureSelectState();
-    isSyncingNatureControls = false;
-}
-
-function syncManualControlsFromNature() {
-    const select = document.getElementById('simNature');
-    const plusSelect = document.getElementById('simPlusAttr');
-    const minusSelect = document.getElementById('simMinusAttr');
-    if (!select || !plusSelect || !minusSelect) return;
-
-    if (select.value === 'custom') {
-        syncSummary(getSelectedModifiers());
-        return;
-    }
-
-    const natureId = parseInt(select.value, 10);
-    const nature = natureData.find(n => n.id === natureId);
-    if (!nature) return;
-
-    isSyncingNatureControls = true;
-    plusSelect.value = String(nature.plus_attr_id);
-    minusSelect.value = String(nature.minus_attr_id);
-    isSyncingNatureControls = false;
-    syncSummary(getSelectedModifiers());
-}
-
-async function initNatures() {
-    try {
-        const response = await fetch(`${API_BASE}/natures`);
-        natureData = await response.json();
-        populateModifierSelects();
-        const select = document.getElementById('simNature');
-        if (select) {
-            select.innerHTML = natureData.map(n => `<option value="${n.id}">${buildNatureOptionLabel(n)}</option>`).join('')
-                + `<option value="custom">\u81ea\u5b9a\u4e49\u4fee\u6b63</option>`;
-            select.value = "1";
-            syncManualControlsFromNature();
+    return {
+        hp: {
+            minus: buildRange(pet.hp, minusMod, true),
+            neutral: buildRange(pet.hp, 1.0, true),
+            plus: buildRange(pet.hp, plusMod, true)
+        },
+        def: {
+            minus: buildRange(pet.defense, minusMod),
+            neutral: buildRange(pet.defense, 1.0),
+            plus: buildRange(pet.defense, plusMod)
+        },
+        mdef: {
+            minus: buildRange(pet.magic_defense, minusMod),
+            neutral: buildRange(pet.magic_defense, 1.0),
+            plus: buildRange(pet.magic_defense, plusMod)
         }
-        setupSimListeners();
+    };
+}
+
+function calcTurnsRange(hpRange, dmgRange) {
+    if (!hpRange || !dmgRange || dmgRange.min <= 0 || dmgRange.max <= 0) return '-';
+    const fast = Math.max(1, Math.ceil(hpRange.min / dmgRange.max));
+    const slow = Math.max(1, Math.ceil(hpRange.max / dmgRange.min));
+    return fast === slow ? `${fast}击` : `${fast}~${slow}击`;
+}
+
+function getPresets() {
+    try {
+        const raw = localStorage.getItem(PRESET_STORAGE_KEY);
+        const data = raw ? JSON.parse(raw) : [];
+        return Array.isArray(data) ? data : [];
     } catch (e) {
-        console.error("Failed to load natures:", e);
+        console.error('读取模板失败:', e);
+        return [];
     }
 }
 
-function setupSimListeners() {
-    const simSearchInput = document.getElementById('simPetSearch');
-    const simResults = document.getElementById('simPetResults');
+function savePresets(list) {
+    localStorage.setItem(PRESET_STORAGE_KEY, JSON.stringify(list));
+}
 
-    if (simSearchInput) {
-        simSearchInput.addEventListener('input', debounce(async (e) => {
-            const kw = e.target.value.trim();
-            if (kw.length < 1) {
-                simResults.style.display = 'none';
+function presetLabel(p) {
+    return `${p.petName} [加:${ATTR_LABELS[p.naturePlus || '']} 减:${ATTR_LABELS[p.natureMinus || '']}]`;
+}
+
+function renderPresetSelects(selectedId = '') {
+    const list = getPresets().sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+    const html = list.length
+        ? list.map(p => `<option value="${p.id}">${presetLabel(p)}</option>`).join('')
+        : '<option value="">未保存任何配置</option>';
+    D.simPresetSelect.innerHTML = html;
+    D.battlePresetSelect.innerHTML = html;
+    D.duelMyPresetSelect.innerHTML = html;
+    D.duelEnemyPresetSelect.innerHTML = html;
+    if (selectedId) {
+        D.simPresetSelect.value = selectedId;
+        D.battlePresetSelect.value = selectedId;
+        D.duelMyPresetSelect.value = selectedId;
+        D.duelEnemyPresetSelect.value = selectedId;
+    }
+}
+
+function collectSimConfig() {
+    return {
+        naturePlus: D.simNaturePlus.value || '',
+        natureMinus: D.simNatureMinus.value || '',
+        ivs: getIvs(D.simIvs)
+    };
+}
+
+function applyConfigToSim(cfg) {
+    D.simNaturePlus.value = cfg?.naturePlus || '';
+    D.simNatureMinus.value = cfg?.natureMinus || '';
+    normalizeNaturePair(D.simNaturePlus, D.simNatureMinus, 'minus');
+    setIvs(D.simIvs, cfg?.ivs || {});
+}
+
+function applyConfigToBattle(cfg) {
+    D.battleNaturePlus.value = cfg?.naturePlus || '';
+    D.battleNatureMinus.value = cfg?.natureMinus || '';
+    normalizeNaturePair(D.battleNaturePlus, D.battleNatureMinus, 'minus');
+    setIvs(D.battleIvs, cfg?.ivs || {});
+}
+
+function applyConfigToDuelMy(cfg) {
+    D.duelMyNaturePlus.value = cfg?.naturePlus || '';
+    D.duelMyNatureMinus.value = cfg?.natureMinus || '';
+    normalizeNaturePair(D.duelMyNaturePlus, D.duelMyNatureMinus, 'minus');
+    setIvs(D.duelMyIvs, cfg?.ivs || {});
+}
+
+function applyConfigToDuelEnemy(cfg) {
+    D.duelEnemyNaturePlus.value = cfg?.naturePlus || '';
+    D.duelEnemyNatureMinus.value = cfg?.natureMinus || '';
+    normalizeNaturePair(D.duelEnemyNaturePlus, D.duelEnemyNatureMinus, 'minus');
+    setIvs(D.duelEnemyIvs, cfg?.ivs || {});
+}
+
+function fillPetCard(pet, refs) {
+    if (!pet) return;
+    refs.box.classList.remove('hidden');
+    refs.img.src = resolvePetImageUrl(pet.imageUrl);
+    refs.name.innerText = pet.name;
+    refs.baseHp.innerText = pet.hp;
+    refs.baseAtk.innerText = pet.attack;
+    refs.baseDef.innerText = pet.defense;
+    refs.baseMatk.innerText = pet.magic_attack;
+    refs.baseMdef.innerText = pet.magic_defense;
+    refs.baseSpd.innerText = pet.speed;
+}
+
+function setTopTab() {}
+
+let fitTimer = null;
+
+function requestWindowFit() {}
+
+function updateDamageModeUI() {
+    const mode = getSelectedDamageMode();
+    D.simplePowerGroup.classList.toggle('hidden', mode === 'complex');
+    D.complexInputs.classList.toggle('hidden', mode !== 'complex');
+    requestWindowFit();
+}
+
+function updateDuelDamageModeUI() {
+    const myMode = getSelectedDuelDamageMode('duelMyToEnemyMode');
+    D.duelMySimplePowerGroup.classList.toggle('hidden', myMode === 'complex');
+    D.duelMyComplexInputs.classList.toggle('hidden', myMode !== 'complex');
+
+    const enemyMode = getSelectedDuelDamageMode('duelEnemyToMyMode');
+    D.duelEnemySimplePowerGroup.classList.toggle('hidden', enemyMode === 'complex');
+    D.duelEnemyComplexInputs.classList.toggle('hidden', enemyMode !== 'complex');
+
+    requestWindowFit();
+}
+
+function calcComplexPower(raw) {
+    const skillPower = Math.max(0, Number(raw.skillPower) || 0);
+    const responseMult = Math.max(0, Number(raw.responseMult) || 0);
+    const powerBonus = Number(raw.powerBonus) || 0;
+    const atkUp = (Number(raw.atkUp) || 0) / 100;
+    const defDown = (Number(raw.defDown) || 0) / 100;
+    const atkDown = (Number(raw.atkDown) || 0) / 100;
+    const defUp = (Number(raw.defUp) || 0) / 100;
+    const stab = Math.max(0, Number(raw.stab) || 0);
+    const typeEff = Math.max(0, Number(raw.typeEff) || 0);
+    const weather = Math.max(0, Number(raw.weather) || 0);
+    const mitigation = Math.min(100, Math.max(0, Number(raw.mitigation) || 0)) / 100;
+
+    const effectivePower = skillPower * responseMult + powerBonus;
+    const ratio = (1 + atkUp + defDown) / Math.max(0.01, (1 + atkDown + defUp));
+    const power = Math.max(0, effectivePower * ratio * stab * typeEff * weather);
+    return {
+        power,
+        mitigationFactor: 1 - mitigation
+    };
+}
+
+async function searchPets(keyword) {
+    const res = await fetch(`${API_BASE}/pets?keyword=${encodeURIComponent(keyword)}&size=10`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.content || []);
+}
+
+async function fetchPetDetails(id) {
+    const res = await fetch(`${API_BASE}/pets/${id}/details`);
+    return normalizePetStats(await res.json());
+}
+
+function bindSearch(inputEl, resultEl, onSelect) {
+    inputEl.addEventListener('input', debounce(async (e) => {
+        const keyword = e.target.value.trim();
+        if (!keyword) {
+            resultEl.style.display = 'none';
+            return;
+        }
+        try {
+            const pets = await searchPets(keyword);
+            if (!pets.length) {
+                resultEl.innerHTML = '<div style="padding:8px;color:#888;">未找到精灵</div>';
+                resultEl.style.display = 'block';
                 return;
             }
-            const res = await fetch(`${API_BASE}/pets?keyword=${encodeURIComponent(kw)}&size=5`);
-            const pets = await res.json();
-            if (pets.length > 0) {
-                simResults.innerHTML = pets.map(p => `
-                    <div class="sim-result-item" onclick="selectSimPet(${p.id})">
-                        <img src="${MEDIA_BASE}${p.imageUrl || `pets/JL_${p.name}.png`}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
-                        <span>${p.name}</span>
-                    </div>
-                `).join('');
-                simResults.style.display = 'block';
-            } else {
-                simResults.style.display = 'none';
-            }
-        }, 300));
+            resultEl.innerHTML = pets.map(p => `
+                <div class="search-item" data-id="${p.id}">
+                    <img src="${resolvePetImageUrl(p.imageUrl)}" style="width:20px;height:20px;vertical-align:middle;margin-right:5px;">
+                    ${p.name}
+                </div>
+            `).join('');
+            resultEl.style.display = 'block';
+            resultEl.querySelectorAll('.search-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    resultEl.style.display = 'none';
+                    inputEl.value = item.innerText.trim();
+                    onSelect(item.dataset.id);
+                });
+            });
+        } catch (err) {
+            console.error('搜索失败:', err);
+        }
+    }, 300));
+}
 
-        document.addEventListener('click', (e) => {
-            if (!simResults.contains(e.target) && e.target !== simSearchInput) {
-                simResults.style.display = 'none';
-            }
-        });
+function updateSimUI() {
+    if (!simPet) return;
+    const ivs = getIvs(D.simIvs);
+    const stats = calcFinalStats(simPet, ivs, D.simNaturePlus.value, D.simNatureMinus.value);
+    D.simFinalHp.innerText = fmt1(stats.hp);
+    D.simFinalAtk.innerText = fmt1(stats.atk);
+    D.simFinalDef.innerText = fmt1(stats.def);
+    D.simFinalMatk.innerText = fmt1(stats.matk);
+    D.simFinalMdef.innerText = fmt1(stats.mdef);
+    D.simFinalSpd.innerText = fmt1(stats.spd);
+
+    const setRange = (key, rangeEl, gapEl) => {
+        const ivMin = { ...ivs, [key]: 0 };
+        const ivMax = { ...ivs, [key]: 10 };
+        const minStats = calcFinalStats(simPet, ivMin, D.simNaturePlus.value, D.simNatureMinus.value);
+        const maxStats = calcFinalStats(simPet, ivMax, D.simNaturePlus.value, D.simNatureMinus.value);
+
+        const map = {
+            hp: 'hp',
+            atk: 'atk',
+            def: 'def',
+            matk: 'matk',
+            mdef: 'mdef',
+            spd: 'spd'
+        };
+        const attr = map[key];
+        rangeEl.innerText = `${fmt1(minStats[attr])}~${fmt1(maxStats[attr])}`;
+        gapEl.innerText = `+${fmt1(maxStats[attr] - minStats[attr])}`;
+    };
+
+    setRange('hp', D.simRangeHp, D.simGapHp);
+    setRange('atk', D.simRangeAtk, D.simGapAtk);
+    setRange('def', D.simRangeDef, D.simGapDef);
+    setRange('matk', D.simRangeMatk, D.simGapMatk);
+    setRange('mdef', D.simRangeMdef, D.simGapMdef);
+    setRange('spd', D.simRangeSpd, D.simGapSpd);
+}
+
+function updateBattleUI() {
+    const resetDamageRows = () => {
+        D.resDmgAll.innerText = '0~0';
+        D.resDmgMinus0.innerText = '0 (0%)';
+        D.resDmgMinus10.innerText = '0 (0%)';
+        D.resDmgNeutral0.innerText = '0 (0%)';
+        D.resDmgNeutral10.innerText = '0 (0%)';
+        D.resDmgPlus0.innerText = '0 (0%)';
+        D.resDmgPlus10.innerText = '0 (0%)';
+    };
+
+    if (!battleDefPet) {
+        D.battleDefHpRange.innerText = '0~0';
+        D.battleDefHpNeutral0.innerText = '0';
+        D.battleDefHpPlus0.innerText = '0';
+        D.battleDefHpNeutral10.innerText = '0';
+        D.battleDefHpPlus10.innerText = '0';
+        D.battleDefHpMinus0.innerText = '0';
+        D.battleDefHpMinus10.innerText = '0';
+        resetDamageRows();
+        return;
     }
 
-    const ivIds = ['hp', 'atk', 'def', 'mag_atk', 'mag_def', 'spd'];
-    ivIds.forEach(id => {
-        const el = document.getElementById('iv_' + id);
-        if (el) {
-            el.addEventListener('input', (e) => {
-                document.getElementById('val_' + id).textContent = e.target.value;
-                updateSimulator();
+    const ranges = buildDefRanges(battleDefPet);
+    D.battleDefHpRange.innerText = `${fmt1(ranges.hp.minus.min)}~${fmt1(ranges.hp.plus.max)}`;
+    D.battleDefHpNeutral0.innerText = fmt1(ranges.hp.neutral.min);
+    D.battleDefHpPlus0.innerText = fmt1(ranges.hp.plus.min);
+    D.battleDefHpNeutral10.innerText = fmt1(ranges.hp.neutral.max);
+    D.battleDefHpPlus10.innerText = fmt1(ranges.hp.plus.max);
+    D.battleDefHpMinus0.innerText = fmt1(ranges.hp.minus.min);
+    D.battleDefHpMinus10.innerText = fmt1(ranges.hp.minus.max);
+
+    if (!battleAtkPet) {
+        resetDamageRows();
+        return;
+    }
+
+    const mode = getSelectedDamageMode();
+    const dmgType = getSelectedDamageType();
+    const hits = Math.max(1, Math.trunc(Number(D.dmgHits.value) || 1));
+
+    let power = Number(D.dmgPower.value) || 0;
+    let mitigationFactor = 1;
+    if (mode === 'complex') {
+        const cpl = calcComplexPower({
+            skillPower: D.cplSkillPower.value,
+            responseMult: D.cplResponseMult.value,
+            powerBonus: D.cplPowerBonus.value,
+            atkUp: D.cplAtkUp.value,
+            defDown: D.cplDefDown.value,
+            atkDown: D.cplAtkDown.value,
+            defUp: D.cplDefUp.value,
+            stab: D.cplStab.value,
+            typeEff: D.cplTypeEff.value,
+            weather: D.cplWeather.value,
+            mitigation: D.cplMitigation.value
+        });
+        power = cpl.power;
+        mitigationFactor = cpl.mitigationFactor;
+    }
+    D.cplFinalPower.innerText = fmt1(power);
+
+    const atkStats = calcFinalStats(battleAtkPet, getIvs(D.battleIvs), D.battleNaturePlus.value, D.battleNatureMinus.value);
+    const atkValue = dmgType === 'physical' ? atkStats.atk : atkStats.matk;
+    const defByNature = dmgType === 'physical' ? ranges.def : ranges.mdef;
+
+    const calc = (atk, def, pwr) => (atk / def) * 0.9 * pwr * mitigationFactor * hits;
+
+    const toDmgRange = (range) => ({
+        min: calc(atkValue, range.max, power),
+        max: calc(atkValue, range.min, power)
+    });
+
+    const minusDmg = toDmgRange(defByNature.minus);
+    const neutralDmg = toDmgRange(defByNature.neutral);
+    const plusDmg = toDmgRange(defByNature.plus);
+
+    const dmgMin = Math.min(minusDmg.min, neutralDmg.min, plusDmg.min);
+    const dmgMax = Math.max(minusDmg.max, neutralDmg.max, plusDmg.max);
+
+    const toPointText = (hp, dmg) => {
+        const pct = hp > 0 ? (dmg / hp) * 100 : 0;
+        return `${fmt1(dmg)} (${fmt1(pct)}%)`;
+    };
+
+    D.resDmgMinus0.innerText = toPointText(ranges.hp.minus.min, minusDmg.max);
+    D.resDmgMinus10.innerText = toPointText(ranges.hp.minus.max, minusDmg.min);
+    D.resDmgNeutral0.innerText = toPointText(ranges.hp.neutral.min, neutralDmg.max);
+    D.resDmgNeutral10.innerText = toPointText(ranges.hp.neutral.max, neutralDmg.min);
+    D.resDmgPlus0.innerText = toPointText(ranges.hp.plus.min, plusDmg.max);
+    D.resDmgPlus10.innerText = toPointText(ranges.hp.plus.max, plusDmg.min);
+
+    D.resDmgAll.innerText = `${fmt1(dmgMin)}~${fmt1(dmgMax)}`;
+}
+
+function getCheckedRadio(name, fallback = 'physical') {
+    return document.querySelector(`input[name="${name}"]:checked`)?.value || fallback;
+}
+
+function calcDuelDirection(attackerPet, attackerIvsEls, attackerPlusEl, attackerMinusEl, defenderPet, defenderIvsEls, defenderPlusEl, defenderMinusEl, dmgType, power, hits, mitigationFactor = 1) {
+    if (!attackerPet || !defenderPet) return null;
+
+    const atkStats = calcFinalStats(
+        attackerPet,
+        getIvs(attackerIvsEls),
+        attackerPlusEl.value,
+        attackerMinusEl.value
+    );
+    const defStats = calcFinalStats(
+        defenderPet,
+        getIvs(defenderIvsEls),
+        defenderPlusEl.value,
+        defenderMinusEl.value
+    );
+
+    const atkVal = dmgType === 'physical' ? atkStats.atk : atkStats.matk;
+    const defVal = Math.max(1, dmgType === 'physical' ? defStats.def : defStats.mdef);
+    const p = Math.max(0, Number(power) || 0);
+    const h = Math.max(1, Math.trunc(Number(hits) || 1));
+
+    const single = (atkVal / defVal) * 0.9 * p * mitigationFactor;
+    const total = single * h;
+    const pct = defStats.hp > 0 ? (total / defStats.hp) * 100 : 0;
+    const turns = total > 0 ? Math.max(1, Math.ceil(defStats.hp / total)) : 0;
+
+    return {
+        single,
+        total,
+        pct,
+        turns: turns > 0 ? `${turns}击` : '-'
+    };
+}
+
+function updateDuelUI() {
+    const renderFinalStats = (pet, ivEls, plusEl, minusEl, refs) => {
+        if (!pet) {
+            refs.hp.innerText = '0.0';
+            refs.atk.innerText = '0.0';
+            refs.def.innerText = '0.0';
+            refs.matk.innerText = '0.0';
+            refs.mdef.innerText = '0.0';
+            refs.spd.innerText = '0.0';
+            return;
+        }
+        const stats = calcFinalStats(pet, getIvs(ivEls), plusEl.value, minusEl.value);
+        refs.hp.innerText = fmt1(stats.hp);
+        refs.atk.innerText = fmt1(stats.atk);
+        refs.def.innerText = fmt1(stats.def);
+        refs.matk.innerText = fmt1(stats.matk);
+        refs.mdef.innerText = fmt1(stats.mdef);
+        refs.spd.innerText = fmt1(stats.spd);
+    };
+
+    renderFinalStats(duelMyPet, D.duelMyIvs, D.duelMyNaturePlus, D.duelMyNatureMinus, {
+        hp: D.duelMyFinalHp,
+        atk: D.duelMyFinalAtk,
+        def: D.duelMyFinalDef,
+        matk: D.duelMyFinalMatk,
+        mdef: D.duelMyFinalMdef,
+        spd: D.duelMyFinalSpd
+    });
+
+    renderFinalStats(duelEnemyPet, D.duelEnemyIvs, D.duelEnemyNaturePlus, D.duelEnemyNatureMinus, {
+        hp: D.duelEnemyFinalHp,
+        atk: D.duelEnemyFinalAtk,
+        def: D.duelEnemyFinalDef,
+        matk: D.duelEnemyFinalMatk,
+        mdef: D.duelEnemyFinalMdef,
+        spd: D.duelEnemyFinalSpd
+    });
+
+    const reset = () => {
+        D.duelMyToEnemySingle.innerText = '0.0';
+        D.duelMyToEnemyTotal.innerText = '0.0';
+        D.duelMyToEnemyPct.innerText = '0.0%';
+        D.duelMyToEnemyTurns.innerText = '-';
+        D.duelEnemyToMySingle.innerText = '0.0';
+        D.duelEnemyToMyTotal.innerText = '0.0';
+        D.duelEnemyToMyPct.innerText = '0.0%';
+        D.duelEnemyToMyTurns.innerText = '-';
+    };
+
+    if (!duelMyPet || !duelEnemyPet) {
+        D.duelMyCplFinalPower.innerText = '0.0';
+        D.duelEnemyCplFinalPower.innerText = '0.0';
+        reset();
+        return;
+    }
+
+    const myMode = getSelectedDuelDamageMode('duelMyToEnemyMode');
+    const enemyMode = getSelectedDuelDamageMode('duelEnemyToMyMode');
+
+    let myPower = Number(D.duelMyToEnemyPower.value) || 0;
+    let myMitigationFactor = 1;
+    if (myMode === 'complex') {
+        const cpl = calcComplexPower({
+            skillPower: D.duelMyCplSkillPower.value,
+            responseMult: D.duelMyCplResponseMult.value,
+            powerBonus: D.duelMyCplPowerBonus.value,
+            atkUp: D.duelMyCplAtkUp.value,
+            defDown: D.duelMyCplDefDown.value,
+            atkDown: D.duelMyCplAtkDown.value,
+            defUp: D.duelMyCplDefUp.value,
+            stab: D.duelMyCplStab.value,
+            typeEff: D.duelMyCplTypeEff.value,
+            weather: D.duelMyCplWeather.value,
+            mitigation: D.duelMyCplMitigation.value
+        });
+        myPower = cpl.power;
+        myMitigationFactor = cpl.mitigationFactor;
+    }
+    D.duelMyCplFinalPower.innerText = fmt1(myPower);
+
+    let enemyPower = Number(D.duelEnemyToMyPower.value) || 0;
+    let enemyMitigationFactor = 1;
+    if (enemyMode === 'complex') {
+        const cpl = calcComplexPower({
+            skillPower: D.duelEnemyCplSkillPower.value,
+            responseMult: D.duelEnemyCplResponseMult.value,
+            powerBonus: D.duelEnemyCplPowerBonus.value,
+            atkUp: D.duelEnemyCplAtkUp.value,
+            defDown: D.duelEnemyCplDefDown.value,
+            atkDown: D.duelEnemyCplAtkDown.value,
+            defUp: D.duelEnemyCplDefUp.value,
+            stab: D.duelEnemyCplStab.value,
+            typeEff: D.duelEnemyCplTypeEff.value,
+            weather: D.duelEnemyCplWeather.value,
+            mitigation: D.duelEnemyCplMitigation.value
+        });
+        enemyPower = cpl.power;
+        enemyMitigationFactor = cpl.mitigationFactor;
+    }
+    D.duelEnemyCplFinalPower.innerText = fmt1(enemyPower);
+
+    const myToEnemy = calcDuelDirection(
+        duelMyPet,
+        D.duelMyIvs,
+        D.duelMyNaturePlus,
+        D.duelMyNatureMinus,
+        duelEnemyPet,
+        D.duelEnemyIvs,
+        D.duelEnemyNaturePlus,
+        D.duelEnemyNatureMinus,
+        getCheckedRadio('duelMyToEnemyType', 'physical'),
+        myPower,
+        D.duelMyToEnemyHits.value,
+        myMitigationFactor
+    );
+
+    const enemyToMy = calcDuelDirection(
+        duelEnemyPet,
+        D.duelEnemyIvs,
+        D.duelEnemyNaturePlus,
+        D.duelEnemyNatureMinus,
+        duelMyPet,
+        D.duelMyIvs,
+        D.duelMyNaturePlus,
+        D.duelMyNatureMinus,
+        getCheckedRadio('duelEnemyToMyType', 'physical'),
+        enemyPower,
+        D.duelEnemyToMyHits.value,
+        enemyMitigationFactor
+    );
+
+    if (!myToEnemy || !enemyToMy) {
+        reset();
+        return;
+    }
+
+    D.duelMyToEnemySingle.innerText = fmt1(myToEnemy.single);
+    D.duelMyToEnemyTotal.innerText = fmt1(myToEnemy.total);
+    D.duelMyToEnemyPct.innerText = `${fmt1(myToEnemy.pct)}%`;
+    D.duelMyToEnemyTurns.innerText = myToEnemy.turns;
+
+    D.duelEnemyToMySingle.innerText = fmt1(enemyToMy.single);
+    D.duelEnemyToMyTotal.innerText = fmt1(enemyToMy.total);
+    D.duelEnemyToMyPct.innerText = `${fmt1(enemyToMy.pct)}%`;
+    D.duelEnemyToMyTurns.innerText = enemyToMy.turns;
+}
+
+function updateAll() {
+    updateSimUI();
+    updateBattleUI();
+    updateDuelUI();
+}
+
+function setupEventListeners() {
+    
+    
+    
+
+    bindSearch(D.simSearch, D.simSearchResults, async (id) => {
+        simPet = await fetchPetDetails(id);
+        fillPetCard(simPet, {
+            box: D.simPetInfo,
+            img: D.simPetImg,
+            name: D.simPetName,
+            baseHp: D.simBaseHp,
+            baseAtk: D.simBaseAtk,
+            baseDef: D.simBaseDef,
+            baseMatk: D.simBaseMatk,
+            baseMdef: D.simBaseMdef,
+            baseSpd: D.simBaseSpd
+        });
+        updateAll();
+    });
+
+    bindSearch(D.battleAtkSearch, D.battleAtkSearchResults, async (id) => {
+        battleAtkPet = await fetchPetDetails(id);
+        D.battleNaturePlus.value = '';
+        D.battleNatureMinus.value = '';
+        setIvs(D.battleIvs, { hp: 0, atk: 0, def: 0, matk: 0, mdef: 0, spd: 0 });
+        updateAll();
+    });
+
+    bindSearch(D.battleDefSearch, D.battleDefSearchResults, async (id) => {
+        battleDefPet = await fetchPetDetails(id);
+        updateAll();
+    });
+
+    bindSearch(D.duelMySearch, D.duelMySearchResults, async (id) => {
+        duelMyPet = await fetchPetDetails(id);
+        fillPetCard(duelMyPet, {
+            box: D.duelMyPetInfo,
+            img: D.duelMyImg,
+            name: D.duelMyName,
+            baseHp: D.duelMyBaseHp,
+            baseAtk: D.duelMyBaseAtk,
+            baseDef: D.duelMyBaseDef,
+            baseMatk: D.duelMyBaseMatk,
+            baseMdef: D.duelMyBaseMdef,
+            baseSpd: D.duelMyBaseSpd
+        });
+        updateAll();
+    });
+
+    bindSearch(D.duelEnemySearch, D.duelEnemySearchResults, async (id) => {
+        duelEnemyPet = await fetchPetDetails(id);
+        fillPetCard(duelEnemyPet, {
+            box: D.duelEnemyPetInfo,
+            img: D.duelEnemyImg,
+            name: D.duelEnemyName,
+            baseHp: D.duelEnemyBaseHp,
+            baseAtk: D.duelEnemyBaseAtk,
+            baseDef: D.duelEnemyBaseDef,
+            baseMatk: D.duelEnemyBaseMatk,
+            baseMdef: D.duelEnemyBaseMdef,
+            baseSpd: D.duelEnemyBaseSpd
+        });
+        updateAll();
+    });
+
+    document.addEventListener('click', (e) => {
+        [
+            [D.simSearch, D.simSearchResults],
+            [D.battleAtkSearch, D.battleAtkSearchResults],
+            [D.battleDefSearch, D.battleDefSearchResults],
+            [D.duelMySearch, D.duelMySearchResults],
+            [D.duelEnemySearch, D.duelEnemySearchResults]
+        ].forEach(([input, box]) => {
+            if (!input.contains(e.target) && !box.contains(e.target)) box.style.display = 'none';
+        });
+    });
+
+    D.simNaturePlus.addEventListener('change', () => { normalizeNaturePair(D.simNaturePlus, D.simNatureMinus, 'plus'); updateAll(); });
+    D.simNatureMinus.addEventListener('change', () => { normalizeNaturePair(D.simNaturePlus, D.simNatureMinus, 'minus'); updateAll(); });
+    D.battleNaturePlus.addEventListener('change', () => { normalizeNaturePair(D.battleNaturePlus, D.battleNatureMinus, 'plus'); updateAll(); });
+    D.battleNatureMinus.addEventListener('change', () => { normalizeNaturePair(D.battleNaturePlus, D.battleNatureMinus, 'minus'); updateAll(); });
+    D.duelMyNaturePlus.addEventListener('change', () => { normalizeNaturePair(D.duelMyNaturePlus, D.duelMyNatureMinus, 'plus'); updateAll(); });
+    D.duelMyNatureMinus.addEventListener('change', () => { normalizeNaturePair(D.duelMyNaturePlus, D.duelMyNatureMinus, 'minus'); updateAll(); });
+    D.duelEnemyNaturePlus.addEventListener('change', () => { normalizeNaturePair(D.duelEnemyNaturePlus, D.duelEnemyNatureMinus, 'plus'); updateAll(); });
+    D.duelEnemyNatureMinus.addEventListener('change', () => { normalizeNaturePair(D.duelEnemyNaturePlus, D.duelEnemyNatureMinus, 'minus'); updateAll(); });
+
+    Object.values(D.simIvs).forEach(el => el.addEventListener('input', updateAll));
+    Object.values(D.battleIvs).forEach(el => el.addEventListener('input', updateAll));
+    Object.values(D.duelMyIvs).forEach(el => el.addEventListener('input', updateAll));
+    Object.values(D.duelEnemyIvs).forEach(el => el.addEventListener('input', updateAll));
+
+    ['dmgMode', 'dmgType'].forEach(name => {
+        document.querySelectorAll(`input[name="${name}"]`).forEach(el => el.addEventListener('change', () => {
+            updateDamageModeUI();
+            updateAll();
+        }));
+    });
+
+    [
+        D.dmgPower, D.dmgHits,
+        D.cplSkillPower, D.cplResponseMult, D.cplPowerBonus,
+        D.cplAtkUp, D.cplDefDown, D.cplAtkDown, D.cplDefUp,
+        D.cplStab, D.cplTypeEff, D.cplWeather, D.cplMitigation
+    ].forEach(el => el.addEventListener('input', updateAll));
+
+    [
+        D.duelMyToEnemyPower,
+        D.duelMyToEnemyHits,
+        D.duelEnemyToMyPower,
+        D.duelEnemyToMyHits
+    ].forEach(el => el.addEventListener('input', updateAll));
+
+    ['duelMyToEnemyType', 'duelEnemyToMyType'].forEach(name => {
+        document.querySelectorAll(`input[name="${name}"]`).forEach(el => {
+            el.addEventListener('change', updateAll);
+        });
+    });
+
+    ['duelMyToEnemyMode', 'duelEnemyToMyMode'].forEach(name => {
+        document.querySelectorAll(`input[name="${name}"]`).forEach(el => {
+            el.addEventListener('change', () => {
+                updateDuelDamageModeUI();
+                updateAll();
+            });
+        });
+    });
+
+    D.simPresetSaveBtn.addEventListener('click', () => {
+        if (!simPet) {
+            alert('请先在 Tab1 选择精灵后再保存模板。');
+            return;
+        }
+        const list = getPresets();
+        const existing = list.find(p => p.petId === simPet.id);
+        const payload = {
+            id: existing?.id || `pet-${simPet.id}`,
+            petId: simPet.id,
+            petName: simPet.name,
+            naturePlus: D.simNaturePlus.value || '',
+            natureMinus: D.simNatureMinus.value || '',
+            ivs: getIvs(D.simIvs),
+            updatedAt: Date.now()
+        };
+        const next = existing ? list.map(p => p.id === existing.id ? payload : p) : [...list, payload];
+        savePresets(next);
+        renderPresetSelects(payload.id);
+    });
+
+
+        [
+            D.duelMyCplSkillPower, D.duelMyCplResponseMult, D.duelMyCplPowerBonus,
+            D.duelMyCplAtkUp, D.duelMyCplDefDown, D.duelMyCplAtkDown, D.duelMyCplDefUp,
+            D.duelMyCplStab, D.duelMyCplTypeEff, D.duelMyCplWeather, D.duelMyCplMitigation,
+            D.duelEnemyCplSkillPower, D.duelEnemyCplResponseMult, D.duelEnemyCplPowerBonus,
+            D.duelEnemyCplAtkUp, D.duelEnemyCplDefDown, D.duelEnemyCplAtkDown, D.duelEnemyCplDefUp,
+            D.duelEnemyCplStab, D.duelEnemyCplTypeEff, D.duelEnemyCplWeather, D.duelEnemyCplMitigation
+        ].forEach(el => el.addEventListener('input', updateAll));
+    D.simPresetLoadBtn.addEventListener('click', async () => {
+        const preset = getPresets().find(p => p.id === D.simPresetSelect.value);
+        if (!preset) return;
+        if (!simPet || simPet.id !== preset.petId) {
+            simPet = await fetchPetDetails(preset.petId);
+            fillPetCard(simPet, {
+                box: D.simPetInfo,
+                img: D.simPetImg,
+                name: D.simPetName,
+                baseHp: D.simBaseHp,
+                baseAtk: D.simBaseAtk,
+                baseDef: D.simBaseDef,
+                baseMatk: D.simBaseMatk,
+                baseMdef: D.simBaseMdef,
+                baseSpd: D.simBaseSpd
             });
         }
+        applyConfigToSim(preset);
+        updateAll();
     });
 
-    const simStarLevel = document.getElementById('simStarLevel');
-    const simPlusAttr = document.getElementById('simPlusAttr');
-    const simMinusAttr = document.getElementById('simMinusAttr');
-    const simPlusRate = document.getElementById('simPlusRate');
-
-    if (simStarLevel) {
-        simStarLevel.addEventListener('input', (e) => {
-            const starLevel = clampStarLevel(e.target.value);
-            e.target.value = starLevel;
-            updateSimulator();
-        });
-    }
-
-    [simPlusAttr, simMinusAttr].forEach(el => {
-        if (!el) return;
-        el.addEventListener('change', () => {
-            syncNatureFromManualControls();
-            updateSimulator();
-        });
+    D.simPresetDeleteBtn.addEventListener('click', () => {
+        const id = D.simPresetSelect.value;
+        if (!id) return;
+        const next = getPresets().filter(p => p.id !== id);
+        savePresets(next);
+        renderPresetSelects();
     });
 
-    if (simPlusRate) {
-        simPlusRate.addEventListener('change', () => {
-            syncSummary(getSelectedModifiers());
-            updateSimulator();
-        });
-    }
-
-    const simNatureSelect = document.getElementById('simNature');
-    if (simNatureSelect) {
-        simNatureSelect.addEventListener('change', () => {
-            if (!isSyncingNatureControls) {
-                syncManualControlsFromNature();
-            }
-            updateSimulator();
-        });
-    }
-}
-
-window.selectSimPet = async (id) => {
-    const res = await fetch(`${API_BASE}/pets/${id}/details`);
-    currentSimPet = await res.json();
-    document.getElementById('simPetSearch').value = currentSimPet.name;
-    document.getElementById('simPetResults').style.display = 'none';
-    updateSimulator();
-};
-
-function updateSimulator() {
-    const modifiers = getSelectedModifiers();
-    refreshNatureSelectState();
-    syncSummary(modifiers);
-    if (!currentSimPet) return;
-
-    const ivs = {
-        hp: parseInt(document.getElementById('iv_hp').value),
-        atk: parseInt(document.getElementById('iv_atk').value),
-        def: parseInt(document.getElementById('iv_def').value),
-        mag_atk: parseInt(document.getElementById('iv_mag_atk').value),
-        mag_def: parseInt(document.getElementById('iv_mag_def').value),
-        spd: parseInt(document.getElementById('iv_spd').value)
-    };
-
-    const base = {
-        hp: currentSimPet.hp || 0,
-        atk: currentSimPet.attack || 0,
-        def: currentSimPet.defense || 0,
-        mag_atk: currentSimPet.magic_attack || currentSimPet.sp_atk || 0,
-        mag_def: currentSimPet.magic_defense || currentSimPet.sp_def || 0,
-        spd: currentSimPet.speed || 0
-    };
-    renderSimBaseStats(base);
-
-    const getMod = (attrId) => {
-        if (modifiers.plusAttrId === attrId) return modifiers.plusRate;
-        if (modifiers.minusAttrId === attrId) return modifiers.minusRate;
-        return 1.0;
-    };
-
-    // 生命: (1+星级) × 0.85，其他: (1+星级) × 0.55
-    const talentModHP = (1 + modifiers.starLevel) * 0.85;
-    const talentModOther = (1 + modifiers.starLevel) * 0.55;
-
-    const results = {
-        hp: Math.round((base.hp * 1.7 + ivs.hp * talentModHP + 70) * getMod(79) + 100),
-        atk: Math.round((base.atk * 1.1 + ivs.atk * talentModOther + 10) * getMod(80) + 50),
-        mag_atk: Math.round((base.mag_atk * 1.1 + ivs.mag_atk * talentModOther + 10) * getMod(81) + 50),
-        def: Math.round((base.def * 1.1 + ivs.def * talentModOther + 10) * getMod(82) + 50),
-        mag_def: Math.round((base.mag_def * 1.1 + ivs.mag_def * talentModOther + 10) * getMod(83) + 50),
-        spd: Math.round((base.spd * 1.1 + ivs.spd * talentModOther + 10) * getMod(84) + 50)
-    };
-
-    renderSimResults(results);
-}
-
-function renderSimResults(res) {
-    const container = document.getElementById('simStatsResult');
-    const labels = {
-        hp: '\u7cbe\u529b', atk: '\u653b\u51fb', def: '\u9632\u5fa1', // 精力, 攻击, 防御
-        mag_atk: '\u9b54\u653b', mag_def: '\u9b54\u6297', spd: '\u901f\u5ea6' // 魔攻, 魔抗, 速度
-    };
-
-    container.innerHTML = Object.keys(res).map(key => `
-        <div class="stat-card-sim">
-            <span class="stat-val-sim">${res[key]}</span>
-            <span class="stat-label-sim">${labels[key]}</span>
-        </div>
-    `).join('') + `
-        <div class="sim-export-btns">
-            <button class="dmg-mode-btn" onclick="exportSimToAttacker()">导出为攻击方</button>
-            <button class="dmg-mode-btn" onclick="exportSimToDefender()">导出为防御方</button>
-        </div>`;
-}
-
-// debounce 已提取到 js/api.js
-
-// ===== 伤害计算器 =====
-let dmgCalcInited = false;
-let dmgMode = 'calc'; // 'calc' 或 'reverse'
-let dmgAtkPetData = null; // 攻击方精灵数据（用于技能列表和属性判断）
-let dmgDefPetData = null; // 防御方精灵数据（用于属性克制判断）
-let dmgTypeRelations = null; // 属性克制关系缓存
-let dmgSkillList = []; // 当前攻击方技能列表
-
-function initDamageCalc() {
-    if (dmgCalcInited) return;
-    dmgCalcInited = true;
-
-    // 加载属性克制数据
-    fetch(`${API_BASE}/types`).then(r => r.json()).then(data => {
-        dmgTypeRelations = data.relations || [];
-    });
-
-    // 攻击方精灵搜索
-    const atkSearch = document.getElementById('dmgAtkPetSearch');
-    const atkResults = document.getElementById('dmgAtkPetResults');
-    if (atkSearch) {
-        atkSearch.addEventListener('input', debounce(async (e) => {
-            const kw = e.target.value.trim();
-            if (kw.length < 1) { atkResults.style.display = 'none'; return; }
-            const res = await fetch(`${API_BASE}/pets?keyword=${encodeURIComponent(kw)}&size=5`);
-            const pets = await res.json();
-            if (pets.length > 0) {
-                atkResults.innerHTML = pets.map(p => `
-                    <div class="sim-result-item" onclick="selectDmgAttacker(${p.id})">
-                        <img src="${MEDIA_BASE}${p.imageUrl || `pets/JL_${p.name}.png`}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><span>${p.name}</span>
-                    </div>`).join('');
-                atkResults.style.display = 'block';
-            } else { atkResults.style.display = 'none'; }
-        }, 300));
-    }
-
-    // 防御方精灵搜索
-    const defSearch = document.getElementById('dmgDefPetSearch');
-    const defResults = document.getElementById('dmgDefPetResults');
-    if (defSearch) {
-        defSearch.addEventListener('input', debounce(async (e) => {
-            const kw = e.target.value.trim();
-            if (kw.length < 1) { defResults.style.display = 'none'; return; }
-            const res = await fetch(`${API_BASE}/pets?keyword=${encodeURIComponent(kw)}&size=5`);
-            const pets = await res.json();
-            if (pets.length > 0) {
-                defResults.innerHTML = pets.map(p => `
-                    <div class="sim-result-item" onclick="selectDmgDefender(${p.id})">
-                        <img src="${MEDIA_BASE}${p.imageUrl || `pets/JL_${p.name}.png`}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><span>${p.name}</span>
-                    </div>`).join('');
-                defResults.style.display = 'block';
-            } else { defResults.style.display = 'none'; }
-        }, 300));
-    }
-
-    // 点击外部关闭搜索结果
-    document.addEventListener('click', (e) => {
-        if (atkResults && !atkResults.contains(e.target) && e.target !== atkSearch) atkResults.style.display = 'none';
-        if (defResults && !defResults.contains(e.target) && e.target !== defSearch) defResults.style.display = 'none';
-    });
-
-    // 所有输入变化时自动重算
-    const inputIds = ['dmgAtkValue', 'dmgMagAtkValue', 'dmgDefValue', 'dmgMagDefValue',
-        'dmgManualPower', 'dmgPowerBonus', 'dmgAtkUp', 'dmgAtkDown', 'dmgDefUp', 'dmgDefDown',
-        'dmgPowerBuff', 'dmgActualDamage'];
-    inputIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('input', () => runDmgCalc());
-    });
-    const selectIds = ['dmgSkillSelect', 'dmgDamageCategory', 'dmgStab', 'dmgTypeEffect'];
-    selectIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('change', () => runDmgCalc());
-    });
-}
-
-// 选择攻击方精灵 → 加载技能列表
-window.selectDmgAttacker = async (id) => {
-    const res = await fetch(`${API_BASE}/pets/${id}/details`);
-    dmgAtkPetData = await res.json();
-    document.getElementById('dmgAtkPetSearch').value = dmgAtkPetData.name;
-    document.getElementById('dmgAtkPetResults').style.display = 'none';
-    loadDmgSkills(dmgAtkPetData);
-    autoDetectTypeEffect();
-    runDmgCalc();
-};
-
-// 选择防御方精灵 → 记录属性用于克制判断
-window.selectDmgDefender = async (id) => {
-    const res = await fetch(`${API_BASE}/pets/${id}/details`);
-    dmgDefPetData = await res.json();
-    document.getElementById('dmgDefPetSearch').value = dmgDefPetData.name;
-    document.getElementById('dmgDefPetResults').style.display = 'none';
-    autoDetectTypeEffect();
-    runDmgCalc();
-};
-
-// 加载攻击方技能到下拉框
-function loadDmgSkills(petData) {
-    const select = document.getElementById('dmgSkillSelect');
-    if (!select || !petData.skills) return;
-    dmgSkillList = [];
-    // 合并所有来源的技能
-    Object.values(petData.skills).forEach(arr => {
-        arr.forEach(s => {
-            if (s.type !== 2) { // 排除被动特性
-                dmgSkillList.push(s);
-            }
-        });
-    });
-    select.innerHTML = '<option value="">手动输入威力</option>' +
-        dmgSkillList.map((s, i) => {
-            const power = parsePower(s.power);
-            const cat = s.category || '';
-            return `<option value="${i}">[${cat}] ${s.name} (威力${power})</option>`;
-        }).join('');
-}
-
-// 解析技能威力（dam_para 格式如 "[80]" 或 "[90, 0, 45, 1, 1]"，取第一个值）
-function parsePower(raw) {
-    if (!raw) return 0;
-    const str = String(raw).replace(/[\[\]]/g, '').trim();
-    const first = str.split(',')[0].trim();
-    return parseInt(first, 10) || 0;
-}
-
-// PLACEHOLDER_DMG_FUNCS
-
-// 自动检测属性克制倍率
-function autoDetectTypeEffect() {
-    if (!dmgAtkPetData || !dmgDefPetData || !dmgTypeRelations) return;
-    const select = document.getElementById('dmgSkillSelect');
-    const skillIdx = select ? parseInt(select.value, 10) : NaN;
-    if (isNaN(skillIdx) || !dmgSkillList[skillIdx]) return;
-
-    const skill = dmgSkillList[skillIdx];
-    // 技能属性ID（skill_dam_type 对应 types 表的 id）
-    const skillAttr = skill.attribute; // 属性名称如"火"
-    const skillAttrId = types.find(t => t.name === skillAttr)?.id;
-    if (!skillAttrId) return;
-
-    const defType1 = parseInt(dmgDefPetData.type1, 10);
-    const defType2 = parseInt(dmgDefPetData.type2, 10);
-
-    // 查找克制关系
-    let mult = 1;
-    const r1 = dmgTypeRelations.find(r => r.attacker_id === skillAttrId && r.defender_id === defType1);
-    if (r1) mult *= (r1.multiplier === 1 ? 2 : r1.multiplier === -1 ? 0.5 : 1);
-    if (defType2 && defType2 !== defType1) {
-        const r2 = dmgTypeRelations.find(r => r.attacker_id === skillAttrId && r.defender_id === defType2);
-        if (r2) mult *= (r2.multiplier === 1 ? 2 : r2.multiplier === -1 ? 0.5 : 1);
-    }
-
-    const effectSelect = document.getElementById('dmgTypeEffect');
-    if (effectSelect) {
-        // 匹配最接近的选项
-        const closest = [0.25, 0.5, 1, 2, 4].reduce((a, b) => Math.abs(b - mult) < Math.abs(a - mult) ? b : a);
-        effectSelect.value = String(closest);
-    }
-}
-
-// 模式切换
-window.switchDmgMode = (mode) => {
-    dmgMode = mode;
-    document.querySelectorAll('.dmg-mode-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
-    });
-    const reverseInput = document.getElementById('dmgReverseInput');
-    if (reverseInput) reverseInput.style.display = mode === 'reverse' ? '' : 'none';
-    const title = document.getElementById('dmgResultTitle');
-    if (title) title.textContent = mode === 'calc' ? '伤害值' : '反推防御值';
-    runDmgCalc();
-};
-
-// 核心计算
-function runDmgCalc() {
-    const isPhysical = document.getElementById('dmgDamageCategory')?.value === 'physical';
-
-    // 获取攻击能力值
-    const atk = parseFloat(document.getElementById(isPhysical ? 'dmgAtkValue' : 'dmgMagAtkValue')?.value) || 0;
-    // 获取防御能力值
-    const def = parseFloat(document.getElementById(isPhysical ? 'dmgDefValue' : 'dmgMagDefValue')?.value) || 0;
-
-    // 技能威力
-    const skillSelect = document.getElementById('dmgSkillSelect');
-    const skillIdx = skillSelect ? parseInt(skillSelect.value, 10) : NaN;
-    const manualPower = parseFloat(document.getElementById('dmgManualPower')?.value);
-    let power = 0;
-    if (!isNaN(manualPower) && manualPower > 0) {
-        power = manualPower;
-    } else if (!isNaN(skillIdx) && dmgSkillList[skillIdx]) {
-        power = parsePower(dmgSkillList[skillIdx].power);
-    }
-
-    const powerBonus = parseFloat(document.getElementById('dmgPowerBonus')?.value) || 0;
-    const atkUp = Math.min(6, Math.max(0, parseInt(document.getElementById('dmgAtkUp')?.value) || 0));
-    const atkDown = Math.min(6, Math.max(0, parseInt(document.getElementById('dmgAtkDown')?.value) || 0));
-    const defUp = Math.min(6, Math.max(0, parseInt(document.getElementById('dmgDefUp')?.value) || 0));
-    const defDown = Math.min(6, Math.max(0, parseInt(document.getElementById('dmgDefDown')?.value) || 0));
-    const powerBuff = parseFloat(document.getElementById('dmgPowerBuff')?.value) || 1.0;
-    const stab = parseFloat(document.getElementById('dmgStab')?.value) || 1.0;
-    const typeEffect = parseFloat(document.getElementById('dmgTypeEffect')?.value) || 1.0;
-
-    // 能力等级 = (1 + 我方攻升 + 敌方防降) / (1 + 我方攻降 + 敌方防升)
-    const abilityLevel = (1 + atkUp + defDown) / (1 + atkDown + defUp);
-
-    const resultArea = document.getElementById('dmgResultArea');
-    if (!resultArea) return;
-
-    if (dmgMode === 'calc') {
-        // 正向计算
-        if (atk <= 0 || def <= 0 || power <= 0) {
-            resultArea.innerHTML = `<div class="placeholder-text sim-placeholder">
-                <i class="fas fa-crosshairs"></i>
-                <span>请填写攻击能力值、防御能力值和技能威力</span>
-            </div>`;
-            return;
+    D.battlePresetLoadBtn.addEventListener('click', async () => {
+        const preset = getPresets().find(p => p.id === D.battlePresetSelect.value);
+        if (!preset) return;
+        if (!battleAtkPet || battleAtkPet.id !== preset.petId) {
+            battleAtkPet = await fetchPetDetails(preset.petId);
+            D.battleAtkSearch.value = preset.petName;
         }
-        const damage = Math.floor((atk / def) * 0.9 * (power + powerBonus) * abilityLevel * powerBuff * stab * typeEffect);
-        renderDmgResult(damage, { atk, def, power, powerBonus, abilityLevel, powerBuff, stab, typeEffect });
-    } else {
-        // 反推防御
-        const actualDmg = parseFloat(document.getElementById('dmgActualDamage')?.value) || 0;
-        if (atk <= 0 || power <= 0 || actualDmg <= 0) {
-            resultArea.innerHTML = `<div class="placeholder-text sim-placeholder">
-                <i class="fas fa-crosshairs"></i>
-                <span>请填写攻击能力值、技能威力和实际伤害值</span>
-            </div>`;
-            return;
+        applyConfigToBattle(preset);
+        updateAll();
+    });
+
+    D.duelMyPresetLoadBtn.addEventListener('click', async () => {
+        const preset = getPresets().find(p => p.id === D.duelMyPresetSelect.value);
+        if (!preset) return;
+        if (!duelMyPet || duelMyPet.id !== preset.petId) {
+            duelMyPet = await fetchPetDetails(preset.petId);
+            D.duelMySearch.value = preset.petName;
+            fillPetCard(duelMyPet, {
+                box: D.duelMyPetInfo,
+                img: D.duelMyImg,
+                name: D.duelMyName,
+                baseHp: D.duelMyBaseHp,
+                baseAtk: D.duelMyBaseAtk,
+                baseDef: D.duelMyBaseDef,
+                baseMatk: D.duelMyBaseMatk,
+                baseMdef: D.duelMyBaseMdef,
+                baseSpd: D.duelMyBaseSpd
+            });
         }
-        const reversedDef = (atk * 0.9 * (power + powerBonus) * abilityLevel * powerBuff * stab * typeEffect) / actualDmg;
-        renderReverseResult(reversedDef, { atk, power, powerBonus, abilityLevel, powerBuff, stab, typeEffect, actualDmg });
-    }
-}
+        applyConfigToDuelMy(preset);
+        updateAll();
+    });
 
-// PLACEHOLDER_DMG_RENDER
-
-// 渲染正向计算结果
-function renderDmgResult(damage, params) {
-    const area = document.getElementById('dmgResultArea');
-    area.innerHTML = `
-        <div class="dmg-result-big">
-            <div class="dmg-value">${damage}</div>
-            <div class="dmg-label">预计伤害</div>
-        </div>
-        <div class="dmg-formula-breakdown">
-            <h5>公式分解</h5>
-            <div class="dmg-formula-row"><span>攻击 / 防御</span><span>${params.atk} / ${params.def} = ${(params.atk / params.def).toFixed(3)}</span></div>
-            <div class="dmg-formula-row"><span>× 0.9</span><span>固定系数</span></div>
-            <div class="dmg-formula-row"><span>× (威力 + 加成)</span><span>${params.power} + ${params.powerBonus} = ${params.power + params.powerBonus}</span></div>
-            <div class="dmg-formula-row"><span>× 能力等级</span><span>${params.abilityLevel.toFixed(3)}</span></div>
-            <div class="dmg-formula-row"><span>× 威力buff</span><span>${params.powerBuff}</span></div>
-            <div class="dmg-formula-row"><span>× 本系加成</span><span>${params.stab}</span></div>
-            <div class="dmg-formula-row"><span>× 属性克制</span><span>${params.typeEffect}</span></div>
-            <div class="dmg-formula-row"><span>最终伤害</span><span>${damage}</span></div>
-        </div>`;
-}
-
-// 渲染反推防御结果
-function renderReverseResult(reversedDef, params) {
-    const area = document.getElementById('dmgResultArea');
-    area.innerHTML = `
-        <div class="dmg-reverse-result">
-            <div class="dmg-value">${reversedDef.toFixed(1)}</div>
-            <div class="dmg-label">反推防御能力值</div>
-        </div>
-        <div class="dmg-formula-breakdown">
-            <h5>反推公式</h5>
-            <div class="dmg-formula-row"><span>防御 = 攻击 × 0.9 × 总威力 × 各修正 / 实际伤害</span><span></span></div>
-            <div class="dmg-formula-row"><span>攻击能力值</span><span>${params.atk}</span></div>
-            <div class="dmg-formula-row"><span>总威力</span><span>${params.power + params.powerBonus}</span></div>
-            <div class="dmg-formula-row"><span>能力等级</span><span>${params.abilityLevel.toFixed(3)}</span></div>
-            <div class="dmg-formula-row"><span>威力buff × 本系 × 克制</span><span>${params.powerBuff} × ${params.stab} × ${params.typeEffect}</span></div>
-            <div class="dmg-formula-row"><span>实际伤害</span><span>${params.actualDmg}</span></div>
-            <div class="dmg-formula-row"><span>反推防御</span><span>${reversedDef.toFixed(1)}</span></div>
-        </div>`;
-}
-
-// 从能力模拟器导出到伤害计算器
-window.exportSimToAttacker = () => {
-    if (!currentSimPet) return;
-    // 切换到伤害计算tab
-    document.querySelector('.main-tab[data-tab="damageView"]')?.click();
-    // 等待初始化完成后填入数值
-    setTimeout(() => {
-        const simResults = getSimResults();
-        if (simResults) {
-            document.getElementById('dmgAtkValue').value = simResults.atk;
-            document.getElementById('dmgMagAtkValue').value = simResults.mag_atk;
+    D.duelEnemyPresetLoadBtn.addEventListener('click', async () => {
+        const preset = getPresets().find(p => p.id === D.duelEnemyPresetSelect.value);
+        if (!preset) return;
+        if (!duelEnemyPet || duelEnemyPet.id !== preset.petId) {
+            duelEnemyPet = await fetchPetDetails(preset.petId);
+            D.duelEnemySearch.value = preset.petName;
+            fillPetCard(duelEnemyPet, {
+                box: D.duelEnemyPetInfo,
+                img: D.duelEnemyImg,
+                name: D.duelEnemyName,
+                baseHp: D.duelEnemyBaseHp,
+                baseAtk: D.duelEnemyBaseAtk,
+                baseDef: D.duelEnemyBaseDef,
+                baseMatk: D.duelEnemyBaseMatk,
+                baseMdef: D.duelEnemyBaseMdef,
+                baseSpd: D.duelEnemyBaseSpd
+            });
         }
-        runDmgCalc();
-    }, 100);
-};
-
-window.exportSimToDefender = () => {
-    if (!currentSimPet) return;
-    document.querySelector('.main-tab[data-tab="damageView"]')?.click();
-    setTimeout(() => {
-        const simResults = getSimResults();
-        if (simResults) {
-            document.getElementById('dmgDefValue').value = simResults.def;
-            document.getElementById('dmgMagDefValue').value = simResults.mag_def;
-        }
-        runDmgCalc();
-    }, 100);
-};
-
-// 获取当前模拟器计算结果
-function getSimResults() {
-    if (!currentSimPet) return null;
-    const ivs = {
-        hp: parseInt(document.getElementById('iv_hp')?.value) || 0,
-        atk: parseInt(document.getElementById('iv_atk')?.value) || 0,
-        def: parseInt(document.getElementById('iv_def')?.value) || 0,
-        mag_atk: parseInt(document.getElementById('iv_mag_atk')?.value) || 0,
-        mag_def: parseInt(document.getElementById('iv_mag_def')?.value) || 0,
-        spd: parseInt(document.getElementById('iv_spd')?.value) || 0
-    };
-    const base = {
-        hp: currentSimPet.hp || 0,
-        atk: currentSimPet.attack || 0,
-        def: currentSimPet.defense || 0,
-        mag_atk: currentSimPet.magic_attack || currentSimPet.sp_atk || 0,
-        mag_def: currentSimPet.magic_defense || currentSimPet.sp_def || 0,
-        spd: currentSimPet.speed || 0
-    };
-    const modifiers = getSelectedModifiers();
-    const getMod = (attrId) => {
-        if (modifiers.plusAttrId === attrId) return modifiers.plusRate;
-        if (modifiers.minusAttrId === attrId) return modifiers.minusRate;
-        return 1.0;
-    };
-    const talentModHP = (1 + modifiers.starLevel) * 0.85;
-    const talentModOther = (1 + modifiers.starLevel) * 0.55;
-    return {
-        hp: Math.round((base.hp * 1.7 + ivs.hp * talentModHP + 70) * getMod(79) + 100),
-        atk: Math.round((base.atk * 1.1 + ivs.atk * talentModOther + 10) * getMod(80) + 50),
-        mag_atk: Math.round((base.mag_atk * 1.1 + ivs.mag_atk * talentModOther + 10) * getMod(81) + 50),
-        def: Math.round((base.def * 1.1 + ivs.def * talentModOther + 10) * getMod(82) + 50),
-        mag_def: Math.round((base.mag_def * 1.1 + ivs.mag_def * talentModOther + 10) * getMod(83) + 50),
-        spd: Math.round((base.spd * 1.1 + ivs.spd * talentModOther + 10) * getMod(84) + 50)
-    };
+        applyConfigToDuelEnemy(preset);
+        updateAll();
+    });
 }
+
+function init() {
+    setupNatureSelectors(D.simNaturePlus, D.simNatureMinus);
+    setupNatureSelectors(D.battleNaturePlus, D.battleNatureMinus);
+    setupNatureSelectors(D.duelMyNaturePlus, D.duelMyNatureMinus);
+    setupNatureSelectors(D.duelEnemyNaturePlus, D.duelEnemyNatureMinus);
+    renderPresetSelects();
+    
+    updateDamageModeUI();
+    updateDuelDamageModeUI();
+    setupEventListeners();
+    updateAll();
+    requestWindowFit();
+}
+
+init();

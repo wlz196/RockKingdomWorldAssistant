@@ -281,6 +281,60 @@ h1, h2, h3, .logo {
     flex: 1;
 }
 
+.sidebar-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-category {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 0.5rem 0.6rem 0.5rem;
+    margin-top: 0.5rem;
+    border-bottom: 2px solid #f1f5f9;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.sidebar-category:hover {
+    color: var(--accent-blue);
+    border-bottom-color: rgba(59, 130, 246, 0.2);
+}
+
+.sidebar-category .toggle-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.6;
+}
+
+.group-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+.sidebar-group.expanded .group-items {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 0.5rem;
+}
+
+.sidebar-group.expanded .toggle-icon {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
 .main-tab {
     width: 100%;
     display: flex;
@@ -1502,4 +1556,743 @@ h1, h2, h3, .logo {
     gap: 10px;
     justify-content: center;
     padding-top: 1rem;
+}
+
+
+/* ========================================= */
+/* SIMULATION & BATTLE LAYOUTS (PORTED) */
+/* ========================================= */
+.panel {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.panel h2 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--accent-blue);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.sim-layout {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 12px;
+    min-height: 0;
+}
+
+.sim-config,
+.sim-display {
+    min-width: 0;
+}
+
+.sim-config {
+    order: 1;
+}
+
+.sim-display {
+    order: 2;
+}
+
+.control-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 8px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--accent-blue);
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid var(--border-color);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    border-radius: 4px;
+    display: none;
+}
+
+.search-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.search-item:hover {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.pet-info {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.pet-info.hidden {
+    display: none;
+}
+
+.pet-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+}
+
+.pet-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.pet-meta h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.pet-info img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+}
+
+.base-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 520px) {
+    .pet-main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pet-meta {
+        width: 100%;
+    }
+
+    .pet-meta h3 {
+        text-align: center;
+    }
+
+    .base-stats {
+        justify-content: center;
+    }
+}
+
+.config-grid {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.quick-actions {
+    margin-bottom: 12px;
+}
+
+.quick-actions button {
+    width: 100%;
+    border: 1px solid var(--accent-blue);
+    background: rgba(79, 172, 254, 0.15);
+    color: var(--text-primary);
+    border-radius: 4px;
+    padding: 7px 8px;
+    cursor: pointer;
+}
+
+.input-group {
+    flex: 1;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+}
+
+.preset-box {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.preset-box.compact {
+    margin-bottom: 10px;
+}
+
+.preset-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.preset-actions button {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-primary);
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
+.preset-actions button:hover {
+    border-color: var(--accent-blue);
+}
+
+.iv-sliders {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.iv-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+}
+
+.iv-item input {
+    width: 50px;
+    padding: 4px;
+}
+
+.calc-results {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: auto;
+}
+
+.sim-range-box {
+    margin-top: 12px;
+}
+
+.sim-config .calc-results {
+    margin-top: 12px;
+}
+
+.sim-display .pet-info {
+    margin-bottom: 0;
+}
+
+.range-list {
+    display: grid;
+    gap: 6px;
+}
+
+.range-row {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px 6px;
+}
+
+.range-row strong {
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.range-row em {
+    font-style: normal;
+    color: var(--accent-blue);
+}
+
+.defender-panel .calc-results {
+    margin-top: 12px;
+}
+
+.attacker-panel .calc-results {
+    margin-top: 12px;
+}
+
+.calc-results h4 {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.stat-card {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.stat-card span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.stat-card strong {
+    font-size: 1.1rem;
+    color: var(--accent-blue);
+}
+
+.matrix-grid {
+    display: flex;
+    gap: 15px;
+}
+
+.matrix-col {
+    flex: 1;
+}
+
+.matrix-col h5 {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+}
+
+.matrix-item {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.matrix-item.plus strong { color: var(--plus-color); }
+.matrix-item.neutral strong { color: var(--neutral-color); }
+.matrix-item.minus strong { color: var(--minus-color); }
+
+.compact-range-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.compact-row {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.compact-title {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.compact-values {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.compact-values .matrix-item {
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    background: #f8fafc;
+    border-radius: 4px;
+    padding: 4px 6px;
+}
+
+.compact-gain {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.9;
+}
+
+.dmg-controls {
+    margin-bottom: 20px;
+}
+
+.battle-context {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.battle-actors {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.battle-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    min-height: 0;
+}
+
+.battle-left,
+.battle-right {
+    min-width: 0;
+}
+
+.battle-right .dmg-controls {
+    margin-bottom: 12px;
+}
+
+.context-card {
+    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.context-card h4 {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.context-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.context-grid strong {
+    color: var(--accent-blue);
+}
+
+.preset-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+}
+
+.context-grid.one-col {
+    grid-template-columns: 1fr;
+}
+
+.hp-detail-row {
+    display: grid;
+    grid-template-columns: 72px 1fr 1fr;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.83rem;
+}
+
+.hp-detail-row strong {
+    color: var(--accent-blue);
+}
+
+.dmg-detail-list {
+    margin-top: 8px;
+}
+
+.dmg-detail-row {
+    grid-template-columns: 72px 1fr 1fr;
+    background: rgba(0, 0, 0, 0.015);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 6px 8px;
+}
+
+body.mode-sim .battle-only {
+    display: none;
+}
+
+body.mode-sim .duel-only {
+    display: none;
+}
+
+body.mode-battle .sim-only {
+    display: none;
+}
+
+body.mode-battle .duel-only {
+    display: none;
+}
+
+body.mode-duel .sim-only,
+body.mode-duel .battle-only {
+    display: none;
+}
+
+.duel-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.1fr;
+    gap: 12px;
+    min-height: 0;
+}
+
+.duel-col,
+.duel-calc {
+    min-width: 0;
+}
+
+.duel-calc {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+}
+
+.duel-col .pet-info {
+    margin-bottom: 10px;
+}
+
+.duel-result-list {
+    margin-top: 8px;
+}
+
+.duel-final-grid {
+    margin-top: 8px;
+    gap: 6px;
+    font-size: 0.82rem;
+}
+
+.duel-final-grid > div {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 5px 6px;
+}
+
+.duel-calc .complex-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.complex-panel {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.inline-two .inline-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+}
+
+.formula-note.inline {
+    margin-top: 8px;
+    text-align: left;
+}
+
+.complex-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.complex-result {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: right;
+}
+
+.complex-result strong {
+    color: var(--accent-blue);
+    font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+    .sim-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .complex-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .battle-actors {
+        grid-template-columns: 1fr;
+    }
+
+    .battle-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .duel-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .duel-calc .complex-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .complex-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .duel-calc .complex-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.radio-group label {
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.large-input {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.dmg-results {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.dmg-overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(79, 172, 254, 0.12);
+    border: 1px solid rgba(79, 172, 254, 0.35);
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.dmg-overview span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.dmg-overview strong {
+    font-size: 1.2rem;
+    color: var(--accent-blue);
+}
+
+.dmg-cards {
+    display: grid;
+    gap: 8px;
+}
+
+.dmg-card {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.015);
+}
+
+.dmg-card.selected {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 1px rgba(79, 172, 254, 0.3) inset;
+}
+
+.dmg-card-title {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 3px;
+}
+
+.dmg-card-main {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.dmg-card-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    padding-top: 2px;
+}
+
+.dmg-card.plus .dmg-card-main { color: var(--plus-color); }
+.dmg-card.neutral .dmg-card-main { color: var(--neutral-color); }
+.dmg-card.minus .dmg-card-main { color: var(--minus-color); }
+
+.dmg-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dmg-row:last-child {
+    border-bottom: none;
+}
+
+.dmg-row.plus strong { color: var(--plus-color); font-size: 1.3rem; }
+.dmg-row.neutral strong { color: var(--neutral-color); font-size: 1.3rem; }
+.dmg-row.minus strong { color: var(--minus-color); font-size: 1.3rem; }
+
+.formula-note {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 20px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+/* Overrides for light theme simulation */
+.sim-layout, .battle-layout, .duel-layout { margin-top: 15px; }
+.panel { box-shadow: var(--glass-shadow); padding: 20px; }
+.iv-item input { border: 1px solid var(--border-color); border-radius: 4px; padding: 4px; outline: none; }
+.dmg-overview { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); }
+.preset-box { background: #f1f5f9; }
+.search-results { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--border-color); }
+.search-item:hover { background: var(--bg-secondary); color: var(--accent-blue); }
+:root {
+    --plus-color: #ef4444; /* red for attacks */
+    --neutral-color: #f59e0b; /* orange */
+    --minus-color: #10b981; /* green */
 }

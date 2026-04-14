@@ -19,39 +19,65 @@
             </div>
             
             <nav class="main-tabs">
-                <button class="main-tab active" data-tab="petView">
-                    <i class="fas fa-paw"></i> <span>精灵图鉴</span>
-                </button>
-                <button class="main-tab" data-tab="skillView">
-                    <i class="fas fa-bolt-lightning"></i> <span>技能图鉴</span>
-                </button>
-                <button class="main-tab" data-tab="bloodlineView">
-                    <i class="fas fa-dna"></i> <span>血脉库</span>
-                </button>
-                <button class="main-tab" data-tab="buffView">
-                    <i class="fas fa-sparkles"></i> <span>Buff 库</span>
-                </button>
-                <button class="main-tab" data-tab="natureView">
-                    <i class="fas fa-balance-scale"></i> <span>性格表</span>
-                </button>
-                <button class="main-tab" data-tab="talentView">
-                    <i class="fas fa-award"></i> <span>特长库</span>
-                </button>
-                <button class="main-tab" data-tab="typeView">
-                    <i class="fas fa-shield-alt"></i> <span>属性克制</span>
-                </button>
-                <button class="main-tab" data-tab="dimensionView">
-                    <i class="fas fa-ruler-combined"></i> <span>身高体重</span>
-                </button>
-                <button class="main-tab" data-tab="eggGroupView">
-                    <i class="fas fa-egg"></i> <span>蛋组查询</span>
-                </button>
-                <button class="main-tab" data-tab="statView">
-                    <i class="fas fa-calculator"></i> <span>能力模拟</span>
-                </button>
-                <button class="main-tab" data-tab="damageView">
-                    <i class="fas fa-crosshairs"></i> <span>伤害计算</span>
-                </button>
+                <div class="sidebar-group">
+                    <div class="sidebar-category" onclick="this.parentElement.classList.toggle('expanded')">
+                        <span>资料百科</span> <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="group-items">
+                        <button class="main-tab active" data-tab="petView">
+                            <i class="fas fa-paw"></i> <span>精灵图鉴</span>
+                        </button>
+                        <button class="main-tab" data-tab="skillView">
+                            <i class="fas fa-bolt-lightning"></i> <span>技能图鉴</span>
+                        </button>
+                        <button class="main-tab" data-tab="bloodlineView">
+                            <i class="fas fa-dna"></i> <span>血脉库</span>
+                        </button>
+                        <button class="main-tab" data-tab="buffView">
+                            <i class="fas fa-sparkles"></i> <span>Buff 库</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="sidebar-group">
+                    <div class="sidebar-category" onclick="this.parentElement.classList.toggle('expanded')">
+                        <span>培育与辅助</span> <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="group-items">
+                        <button class="main-tab" data-tab="natureView">
+                            <i class="fas fa-balance-scale"></i> <span>性格表</span>
+                        </button>
+                        <button class="main-tab" data-tab="talentView">
+                            <i class="fas fa-award"></i> <span>特长库</span>
+                        </button>
+                        <button class="main-tab" data-tab="typeView">
+                            <i class="fas fa-shield-alt"></i> <span>属性克制</span>
+                        </button>
+                        <button class="main-tab" data-tab="dimensionView">
+                            <i class="fas fa-ruler-combined"></i> <span>身高体重</span>
+                        </button>
+                        <button class="main-tab" data-tab="eggGroupView">
+                            <i class="fas fa-egg"></i> <span>蛋组查询</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-group">
+                    <div class="sidebar-category" onclick="this.parentElement.classList.toggle('expanded')">
+                        <span>战术模拟</span> <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="group-items">
+                        <button class="main-tab" data-tab="statView">
+                            <i class="fas fa-calculator"></i> <span>能力模拟</span>
+                        </button>
+                        <button class="main-tab" data-tab="damageView">
+                            <i class="fas fa-crosshairs"></i> <span>伤害计算</span>
+                        </button>
+                        <button class="main-tab" data-tab="duelView">
+                            <i class="fas fa-swords"></i> <span>模拟对战</span>
+                        </button>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -236,287 +262,483 @@
             </div>
 
             <div id="statView" class="tab-pane" style="display:none">
-                <div class="calculator-container">
-                    <header class="section-header">
-                        <h3><i class="fas fa-crosshairs"></i> 60级实战属性模拟器</h3>
-                        <p class="subtitle">支持星级倍率、性格联动与手动修正，实时模拟 60 级最终六维属性</p>
-                    </header>
-                    
-                    <div class="simulator-layout">
-                        <div class="sim-controls box-glass">
-                            <div class="sim-panel-header">
-                                <div>
-                                    <span class="panel-eyebrow">参数设置</span>
-                                    <h4>配置模拟条件</h4>
-                                </div>
-                                <span class="panel-badge">Lv.60</span>
-                            </div>
+<div class="calculator-container" style="max-width: 1200px; margin: 0 auto; background: transparent; box-shadow: none;">
 
-                            <div class="sim-form-card">
-                                <div class="control-row">
-                                    <label>选择精灵</label>
-                                    <div class="search-with-results">
-                                        <input type="text" id="simPetSearch" placeholder="输入名称搜索并选择..." class="input-modern">
-                                        <div id="simPetResults" class="results-popover"></div>
-                                    </div>
-                                </div>
-
-                                <div class="control-row">
-                                    <label>核心性格</label>
-                                    <select id="simNature" class="select-modern">
-                                        <option value="">加载中...</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="sim-form-card sim-modifier-card">
-                                <div class="talent-panel-header">
-                                    <div>
-                                        <span class="panel-eyebrow">修正设置</span>
-                                        <h4>星级与属性修正</h4>
-                                    </div>
-                                    <span class="talent-range-tip">星级 0-5</span>
-                                </div>
-
-                                <div class="modifier-grid">
-                                    <div class="control-row">
-                                        <label>星级</label>
-                                        <input type="number" id="simStarLevel" class="input-modern" min="0" max="5" step="1" value="5">
-                                    </div>
-                                    <div class="control-row">
-                                        <label>正面修正</label>
-                                        <select id="simPlusAttr" class="select-modern"></select>
-                                    </div>
-                                    <div class="control-row">
-                                        <label>负面修正</label>
-                                        <select id="simMinusAttr" class="select-modern"></select>
-                                    </div>
-                                    <div class="control-row">
-                                        <label>正面修正幅度</label>
-                                        <select id="simPlusRate" class="select-modern">
-                                            <option value="1.10">+10%</option>
-                                            <option value="1.12">+12%</option>
-                                            <option value="1.14">+14%</option>
-                                            <option value="1.16">+16%</option>
-                                            <option value="1.18">+18%</option>
-                                            <option value="1.20" selected>+20%</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="talent-panel">
-                                <div class="talent-panel-header">
-                                    <div>
-                                        <span class="panel-eyebrow">天分设置</span>
-                                        <h4>六维天分（可选三项 0-10，其余为 0）</h4>
-                                    </div>
-                                    <span class="talent-range-tip">天分 0-10</span>
-                                </div>
-
-                                <div class="talents-grid">
-                                    <div class="talent-item">
-                                        <label>精力天分 <span id="val_hp">10</span></label>
-                                        <input type="range" min="0" max="10" value="10" class="range-modern" id="iv_hp">
-                                    </div>
-                                    <div class="talent-item">
-                                        <label>攻击天分 <span id="val_atk">10</span></label>
-                                        <input type="range" min="0" max="10" value="10" class="range-modern" id="iv_atk">
-                                    </div>
-                                    <div class="talent-item">
-                                        <label>防御天分 <span id="val_def">10</span></label>
-                                        <input type="range" min="0" max="10" value="10" class="range-modern" id="iv_def">
-                                    </div>
-                                    <div class="talent-item">
-                                        <label>魔攻天分 <span id="val_mag_atk">0</span></label>
-                                        <input type="range" min="0" max="10" value="0" class="range-modern" id="iv_mag_atk">
-                                    </div>
-                                    <div class="talent-item">
-                                        <label>魔防天分 <span id="val_mag_def">0</span></label>
-                                        <input type="range" min="0" max="10" value="0" class="range-modern" id="iv_mag_def">
-                                    </div>
-                                    <div class="talent-item">
-                                        <label>速度天分 <span id="val_spd">0</span></label>
-                                        <input type="range" min="0" max="10" value="0" class="range-modern" id="iv_spd">
-                                    </div>
-                                </div>
-                            </div>
+            <h2>属性面板模拟</h2>
+            <div class="sim-layout">
+                <div class="sim-config">
+                    <div class="preset-box">
+                        <div class="input-group">
+                            <label>我的宠物模板</label>
+                            <select id="simPresetSelect">
+                                <option value="">未保存任何配置</option>
+                            </select>
                         </div>
+                        <div class="preset-actions">
+                            <button id="simPresetLoadBtn" type="button">加载</button>
+                            <button id="simPresetSaveBtn" type="button">保存当前</button>
+                            <button id="simPresetDeleteBtn" type="button">删除</button>
+                        </div>
+                    </div>
 
-                        <div class="sim-display box-glass">
-                            <div class="sim-panel-header sim-panel-header--display">
-                                <div>
-                                    <span class="panel-eyebrow">模拟结果</span>
-                                    <h4>最终能力面板</h4>
-                                </div>
-                                <span class="result-tip">选择精灵后实时刷新</span>
-                            </div>
-                            <div id="simSummary" class="sim-summary">
-                                当前配置：5星 / 正面修正 +20% / 负面修正 -10%
-                            </div>
-                            <div id="simBaseStats" class="sim-base-stats">
-                                <div class="sim-base-placeholder">选择宠物后展示种族值：精力 / 攻击 / 防御 / 魔攻 / 魔抗 / 速度</div>
-                            </div>
-                            <div id="simStatsResult" class="stats-result-grid">
-                                <!-- 动态渲染结果卡片 -->
-                                <div class="placeholder-text sim-placeholder">
-                                    <i class="fas fa-search"></i>
-                                    <span>请先搜索并选择精灵进行模拟</span>
-                                    <small>左侧设置性格与天赋后，这里会自动展示六维最终数值</small>
+                    <div class="control-group">
+                        <input type="text" id="simSearch" placeholder="搜索精灵名称..." autocomplete="off">
+                        <div id="simSearchResults" class="search-results"></div>
+                    </div>
+
+                    <div id="simPetInfo" class="pet-info hidden">
+                        <div class="pet-main">
+                            <img id="simPetImg" src="" alt="pet">
+                            <div class="pet-meta">
+                                <h3 id="simPetName">-</h3>
+                                <div class="base-stats">
+                                    <span>精力 <span id="simBaseHp">0</span></span>
+                                    <span>物攻 <span id="simBaseAtk">0</span></span>
+                                    <span>物防 <span id="simBaseDef">0</span></span>
+                                    <span>魔攻 <span id="simBaseMatk">0</span></span>
+                                    <span>魔抗 <span id="simBaseMdef">0</span></span>
+                                    <span>速度 <span id="simBaseSpd">0</span></span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="config-grid">
+                        <div class="input-group">
+                            <label>增益属性</label>
+                            <select id="simNaturePlus"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>减益属性</label>
+                            <select id="simNatureMinus"></select>
+                        </div>
+                    </div>
+
+                    <div class="iv-sliders">
+                        <div class="iv-item"><label>精</label><input type="number" id="simIvHp" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物攻</label><input type="number" id="simIvAtk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物防</label><input type="number" id="simIvDef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔攻</label><input type="number" id="simIvMatk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔抗</label><input type="number" id="simIvMdef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>速</label><input type="number" id="simIvSpd" min="0" max="10" value="0"></div>
+                    </div>
+                </div>
+
+                <div class="sim-display">
+                    <div class="calc-results">
+                        <h4>最终能力值</h4>
+                        <div class="stats-grid">
+                            <div class="stat-card"><span>精力</span><strong id="simFinalHp">0</strong></div>
+                            <div class="stat-card"><span>物攻</span><strong id="simFinalAtk">0</strong></div>
+                            <div class="stat-card"><span>物防</span><strong id="simFinalDef">0</strong></div>
+                            <div class="stat-card"><span>魔攻</span><strong id="simFinalMatk">0</strong></div>
+                            <div class="stat-card"><span>魔抗</span><strong id="simFinalMdef">0</strong></div>
+                            <div class="stat-card"><span>速度</span><strong id="simFinalSpd">0</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="calc-results sim-range-box">
+                        <h4>天分 0~10 区间预览（同当前性格）</h4>
+                        <div class="range-list">
+                            <div class="range-row"><span>精力</span><strong id="simRangeHp">0~0</strong><em id="simGapHp">+0.0</em></div>
+                            <div class="range-row"><span>物攻</span><strong id="simRangeAtk">0~0</strong><em id="simGapAtk">+0.0</em></div>
+                            <div class="range-row"><span>物防</span><strong id="simRangeDef">0~0</strong><em id="simGapDef">+0.0</em></div>
+                            <div class="range-row"><span>魔攻</span><strong id="simRangeMatk">0~0</strong><em id="simGapMatk">+0.0</em></div>
+                            <div class="range-row"><span>魔抗</span><strong id="simRangeMdef">0~0</strong><em id="simGapMdef">+0.0</em></div>
+                            <div class="range-row"><span>速度</span><strong id="simRangeSpd">0~0</strong><em id="simGapSpd">+0.0</em></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        
+</div>
+</div>
 
             <div id="damageView" class="tab-pane" style="display:none">
-                <div class="calculator-container">
-                    <header class="section-header">
-                        <h3><i class="fas fa-crosshairs"></i> 伤害计算器</h3>
-                        <p class="subtitle">正向伤害计算 / 反推防御值，支持能力等级、buff、本系加成与属性克制</p>
-                    </header>
+<div class="calculator-container" style="max-width: 1400px; margin: 0 auto; background: transparent; box-shadow: none;">
 
-                    <!-- 模式切换 -->
-                    <div class="dmg-mode-tabs">
-                        <button class="dmg-mode-btn active" data-mode="calc" onclick="switchDmgMode('calc')">正向计算</button>
-                        <button class="dmg-mode-btn" data-mode="reverse" onclick="switchDmgMode('reverse')">反推防御</button>
+            <h2>实战伤害测算</h2>
+
+            <div class="battle-layout">
+                <div class="battle-left">
+
+            <div class="battle-actors">
+                <div class="context-card">
+                    <h4>我方精灵</h4>
+                    <div class="control-group">
+                        <input type="text" id="battleAtkSearch" placeholder="搜索我方精灵..." autocomplete="off">
+                        <div id="battleAtkSearchResults" class="search-results"></div>
                     </div>
-
-                    <div class="dmg-layout">
-                        <!-- 第一行：攻击方 + 防御方 -->
-                        <div class="dmg-row">
-                            <!-- 攻击方 -->
-                            <div class="sim-form-card">
-                                <div class="sim-panel-header">
-                                    <div><span class="panel-eyebrow">攻击方</span><h4>能力值与技能</h4></div>
-                                </div>
-                                <div class="control-row">
-                                    <label>搜索精灵（加载技能）</label>
-                                    <div class="search-with-results">
-                                        <input type="text" id="dmgAtkPetSearch" placeholder="输入名称搜索..." class="input-modern">
-                                        <div id="dmgAtkPetResults" class="results-popover"></div>
-                                    </div>
-                                </div>
-                                <div class="control-row">
-                                    <label>攻击 / 魔攻能力值</label>
-                                    <div class="dmg-dual-input">
-                                        <input type="number" id="dmgAtkValue" placeholder="攻击" class="input-modern" value="">
-                                        <input type="number" id="dmgMagAtkValue" placeholder="魔攻" class="input-modern" value="">
-                                    </div>
-                                </div>
-                                <div class="control-row">
-                                    <label>选择技能</label>
-                                    <select id="dmgSkillSelect" class="select-modern">
-                                        <option value="">先搜索精灵加载技能...</option>
-                                    </select>
-                                </div>
-                                <div class="control-row">
-                                    <label>手动威力</label>
-                                    <input type="number" id="dmgManualPower" placeholder="留空用技能威力" class="input-modern" value="">
-                                </div>
-                                <div class="control-row">
-                                    <label>威力加成</label>
-                                    <input type="number" id="dmgPowerBonus" class="input-modern" value="0">
-                                </div>
-                                <div class="dmg-inline-row">
-                                    <div class="control-row">
-                                        <label>类型</label>
-                                        <select id="dmgDamageCategory" class="select-modern">
-                                            <option value="physical">物理</option>
-                                            <option value="magical">魔法</option>
-                                        </select>
-                                    </div>
-                                    <div class="control-row">
-                                        <label>攻升</label>
-                                        <input type="number" id="dmgAtkUp" class="input-modern" min="0" max="6" value="0">
-                                    </div>
-                                    <div class="control-row">
-                                        <label>攻降</label>
-                                        <input type="number" id="dmgAtkDown" class="input-modern" min="0" max="6" value="0">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 防御方 -->
-                            <div class="sim-form-card">
-                                <div class="sim-panel-header">
-                                    <div><span class="panel-eyebrow">防御方</span><h4>能力值与属性</h4></div>
-                                </div>
-                                <div class="control-row">
-                                    <label>搜索精灵（加载属性）</label>
-                                    <div class="search-with-results">
-                                        <input type="text" id="dmgDefPetSearch" placeholder="输入名称搜索..." class="input-modern">
-                                        <div id="dmgDefPetResults" class="results-popover"></div>
-                                    </div>
-                                </div>
-                                <div class="control-row">
-                                    <label>防御 / 魔防能力值</label>
-                                    <div class="dmg-dual-input">
-                                        <input type="number" id="dmgDefValue" placeholder="防御" class="input-modern" value="">
-                                        <input type="number" id="dmgMagDefValue" placeholder="魔防" class="input-modern" value="">
-                                    </div>
-                                </div>
-                                <div class="dmg-inline-row">
-                                    <div class="control-row">
-                                        <label>防升</label>
-                                        <input type="number" id="dmgDefUp" class="input-modern" min="0" max="6" value="0">
-                                    </div>
-                                    <div class="control-row">
-                                        <label>防降</label>
-                                        <input type="number" id="dmgDefDown" class="input-modern" min="0" max="6" value="0">
-                                    </div>
-                                </div>
-                                <div class="control-row">
-                                    <label>属性克制</label>
-                                    <select id="dmgTypeEffect" class="select-modern">
-                                        <option value="1">普通 (×1)</option>
-                                        <option value="2">克制 (×2)</option>
-                                        <option value="0.5">抵抗 (×0.5)</option>
-                                        <option value="4">强克 (×4)</option>
-                                        <option value="0.25">强抗 (×0.25)</option>
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="config-grid">
+                        <div class="input-group">
+                            <label>增益属性</label>
+                            <select id="battleNaturePlus"></select>
                         </div>
+                        <div class="input-group">
+                            <label>减益属性</label>
+                            <select id="battleNatureMinus"></select>
+                        </div>
+                    </div>
+                    <div class="preset-box compact">
+                        <div class="input-group">
+                            <label>套用模板</label>
+                            <select id="battlePresetSelect"><option value="">未保存任何配置</option></select>
+                        </div>
+                        <div class="preset-actions">
+                            <button id="battlePresetLoadBtn" type="button">加载模板</button>
+                        </div>
+                    </div>
+                    <div class="iv-sliders">
+                        <div class="iv-item"><label>精</label><input type="number" id="battleIvHp" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物攻</label><input type="number" id="battleIvAtk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物防</label><input type="number" id="battleIvDef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔攻</label><input type="number" id="battleIvMatk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔抗</label><input type="number" id="battleIvMdef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>速</label><input type="number" id="battleIvSpd" min="0" max="10" value="0"></div>
+                    </div>
+                </div>
 
-                        <!-- 第二行：修正参数 + 计算结果 -->
-                        <div class="dmg-row">
-                            <div class="sim-form-card">
-                                <div class="sim-panel-header">
-                                    <div><span class="panel-eyebrow">修正</span><h4>Buff / 本系</h4></div>
-                                </div>
-                                <div class="control-row">
-                                    <label>威力提升buff</label>
-                                    <input type="number" id="dmgPowerBuff" class="input-modern" step="0.1" value="1.0">
-                                </div>
-                                <div class="control-row">
-                                    <label>本系加成</label>
-                                    <select id="dmgStab" class="select-modern">
-                                        <option value="1.25">是 (×1.25)</option>
-                                        <option value="1">否 (×1)</option>
-                                    </select>
-                                </div>
-                                <div class="control-row" id="dmgReverseInput" style="display:none">
-                                    <label>实际伤害（反推用）</label>
-                                    <input type="number" id="dmgActualDamage" placeholder="输入实际伤害值" class="input-modern" value="">
-                                </div>
-                            </div>
-                            <div class="sim-form-card" style="flex:1">
-                                <div class="sim-panel-header">
-                                    <div><span class="panel-eyebrow">计算结果</span><h4 id="dmgResultTitle">伤害值</h4></div>
-                                </div>
-                                <div id="dmgResultArea" class="dmg-result-area">
-                                    <div class="placeholder-text sim-placeholder">
-                                        <i class="fas fa-crosshairs"></i>
-                                        <span>填写攻防能力值和技能威力后自动计算</span>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="context-card">
+                    <h4>敌方精灵</h4>
+                    <div class="control-group">
+                        <input type="text" id="battleDefSearch" placeholder="搜索敌方精灵..." autocomplete="off">
+                        <div id="battleDefSearchResults" class="search-results"></div>
+                    </div>
+                    <div class="formula-note inline">敌方无需填写天分/性格，系统自动给出生命范围。</div>
+                    <div class="context-grid one-col">
+                        <div>生命范围 <strong id="battleDefHpRange">0~0</strong></div>
+                        <div class="hp-detail-row">
+                            <span>不加生命</span>
+                            <span>0天分 <strong id="battleDefHpNeutral0">0</strong></span>
+                            <span>10天分 <strong id="battleDefHpNeutral10">0</strong></span>
+                        </div>
+                        <div class="hp-detail-row">
+                            <span>加生命</span>
+                            <span>0天分 <strong id="battleDefHpPlus0">0</strong></span>
+                            <span>10天分 <strong id="battleDefHpPlus10">0</strong></span>
+                        </div>
+                        <div class="hp-detail-row">
+                            <span>减生命</span>
+                            <span>0天分 <strong id="battleDefHpMinus0">0</strong></span>
+                            <span>10天分 <strong id="battleDefHpMinus10">0</strong></span>
                         </div>
                     </div>
                 </div>
             </div>
+
+                </div>
+
+                <div class="battle-right">
+
+            <div class="dmg-controls">
+                <div class="input-group">
+                    <label>计算模式</label>
+                    <div class="radio-group" id="dmgModeGroup">
+                        <label><input type="radio" name="dmgMode" value="simple" checked> 简易模式</label>
+                        <label><input type="radio" name="dmgMode" value="complex"> 复杂模式</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>伤害类型</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="dmgType" value="physical" checked> 物理伤害</label>
+                        <label><input type="radio" name="dmgType" value="magical"> 魔法伤害</label>
+                    </div>
+                </div>
+                <div class="input-group inline-two" id="simplePowerGroup">
+                    <label>技能展示威力 / 连击数</label>
+                    <div class="inline-fields">
+                        <input type="number" id="dmgPower" value="100">
+                        <input type="number" id="dmgHits" value="1" min="1" step="1">
+                    </div>
+                </div>
+            </div>
+            <div id="complexInputs" class="complex-panel hidden">
+                <div class="complex-grid">
+                    <div class="input-group"><label>技能本身威力</label><input type="number" id="cplSkillPower" value="100" min="0"></div>
+                    <div class="input-group"><label>应对倍率</label><input type="number" id="cplResponseMult" value="1" step="0.01" min="0"></div>
+                    <div class="input-group"><label>威力加成</label><input type="number" id="cplPowerBonus" value="0" step="0.1"></div>
+                    <div class="input-group"><label>我方攻击增益(%)</label><input type="number" id="cplAtkUp" value="0" step="1"></div>
+                    <div class="input-group"><label>敌方防御降低(%)</label><input type="number" id="cplDefDown" value="0" step="1"></div>
+                    <div class="input-group"><label>我方攻击降低(%)</label><input type="number" id="cplAtkDown" value="0" step="1"></div>
+                    <div class="input-group"><label>敌方防御提升(%)</label><input type="number" id="cplDefUp" value="0" step="1"></div>
+                    <div class="input-group"><label>本系加成</label><input type="number" id="cplStab" value="1.25" step="0.01" min="0"></div>
+                    <div class="input-group"><label>克制关系</label><input type="number" id="cplTypeEff" value="1" step="0.01" min="0"></div>
+                    <div class="input-group"><label>天气影响</label><input type="number" id="cplWeather" value="1" step="0.01" min="0"></div>
+                    <div class="input-group"><label>减伤(%)</label><input type="number" id="cplMitigation" value="0" step="1" min="0" max="100"></div>
+                </div>
+                <div class="complex-result">折算展示威力: <strong id="cplFinalPower">0.0</strong></div>
+            </div>
+
+            <div class="dmg-results">
+                <h3>预估伤害</h3>
+                <div class="dmg-overview">
+                    <span>全组合范围</span>
+                    <strong id="resDmgAll">0~0</strong>
+                </div>
+                <div class="context-grid one-col dmg-detail-list">
+                    <div class="hp-detail-row dmg-detail-row">
+                        <span>减抗性格</span>
+                        <span>0天分 <strong id="resDmgMinus0">0 (0%)</strong></span>
+                        <span>10天分 <strong id="resDmgMinus10">0 (0%)</strong></span>
+                    </div>
+                    <div class="hp-detail-row dmg-detail-row">
+                        <span>中性性格</span>
+                        <span>0天分 <strong id="resDmgNeutral0">0 (0%)</strong></span>
+                        <span>10天分 <strong id="resDmgNeutral10">0 (0%)</strong></span>
+                    </div>
+                    <div class="hp-detail-row dmg-detail-row">
+                        <span>加抗性格</span>
+                        <span>0天分 <strong id="resDmgPlus0">0 (0%)</strong></span>
+                        <span>10天分 <strong id="resDmgPlus10">0 (0%)</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="formula-note">
+                计算公式: floor( (攻击能力值 / 敌方防御能力值) × 0.9 × 展示威力 )
+            </div>
+
+            <div class="formula-note">
+                由于游戏内威力进行了取整展示，所以实际伤害可能会相差几点。
+            </div>
+
+            <div class="formula-note">
+                复杂模式折算威力(不含减伤): (技能威力×应对倍率+威力加成)×(1+我方攻增+敌方防降)/(1+我方攻降+敌方防升)×本系加成×克制关系×天气影响
+            </div>
+
+            <div class="formula-note">
+                最终总伤害 = 单次伤害 × (1-减伤) × 连击数
+            </div>
+
+                </div>
+            </div>
+        
+</div>
+</div>
+
+            <div id="duelView" class="tab-pane" style="display:none">
+<div class="calculator-container" style="max-width: 1600px; margin: 0 auto; background: transparent; box-shadow: none;">
+
+            <h2>模拟对战</h2>
+            <div class="duel-layout">
+                <div class="context-card duel-col">
+                    <h4>我方精灵</h4>
+                    <div class="control-group">
+                        <input type="text" id="duelMySearch" placeholder="搜索我方精灵..." autocomplete="off">
+                        <div id="duelMySearchResults" class="search-results"></div>
+                    </div>
+                    <div id="duelMyPetInfo" class="pet-info hidden">
+                        <div class="pet-main">
+                            <img id="duelMyImg" src="" alt="my-pet">
+                            <div class="pet-meta">
+                                <h3 id="duelMyName">-</h3>
+                                <div class="base-stats">
+                                    <span>精力 <span id="duelMyBaseHp">0</span></span>
+                                    <span>物攻 <span id="duelMyBaseAtk">0</span></span>
+                                    <span>物防 <span id="duelMyBaseDef">0</span></span>
+                                    <span>魔攻 <span id="duelMyBaseMatk">0</span></span>
+                                    <span>魔抗 <span id="duelMyBaseMdef">0</span></span>
+                                    <span>速度 <span id="duelMyBaseSpd">0</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preset-box compact">
+                        <div class="input-group">
+                            <label>套用模板</label>
+                            <select id="duelMyPresetSelect"><option value="">未保存任何配置</option></select>
+                        </div>
+                        <div class="preset-actions">
+                            <button id="duelMyPresetLoadBtn" type="button">加载模板</button>
+                        </div>
+                    </div>
+                    <div class="config-grid">
+                        <div class="input-group">
+                            <label>增益属性</label>
+                            <select id="duelMyNaturePlus"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>减益属性</label>
+                            <select id="duelMyNatureMinus"></select>
+                        </div>
+                    </div>
+                    <div class="iv-sliders">
+                        <div class="iv-item"><label>精</label><input type="number" id="duelMyIvHp" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物攻</label><input type="number" id="duelMyIvAtk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物防</label><input type="number" id="duelMyIvDef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔攻</label><input type="number" id="duelMyIvMatk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔抗</label><input type="number" id="duelMyIvMdef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>速</label><input type="number" id="duelMyIvSpd" min="0" max="10" value="0"></div>
+                    </div>
+                    <div class="context-grid duel-final-grid">
+                        <div>精力 <strong id="duelMyFinalHp">0.0</strong></div>
+                        <div>物攻 <strong id="duelMyFinalAtk">0.0</strong></div>
+                        <div>物防 <strong id="duelMyFinalDef">0.0</strong></div>
+                        <div>魔攻 <strong id="duelMyFinalMatk">0.0</strong></div>
+                        <div>魔抗 <strong id="duelMyFinalMdef">0.0</strong></div>
+                        <div>速度 <strong id="duelMyFinalSpd">0.0</strong></div>
+                    </div>
+                </div>
+
+                <div class="context-card duel-col">
+                    <h4>敌方精灵</h4>
+                    <div class="control-group">
+                        <input type="text" id="duelEnemySearch" placeholder="搜索敌方精灵..." autocomplete="off">
+                        <div id="duelEnemySearchResults" class="search-results"></div>
+                    </div>
+                    <div id="duelEnemyPetInfo" class="pet-info hidden">
+                        <div class="pet-main">
+                            <img id="duelEnemyImg" src="" alt="enemy-pet">
+                            <div class="pet-meta">
+                                <h3 id="duelEnemyName">-</h3>
+                                <div class="base-stats">
+                                    <span>精力 <span id="duelEnemyBaseHp">0</span></span>
+                                    <span>物攻 <span id="duelEnemyBaseAtk">0</span></span>
+                                    <span>物防 <span id="duelEnemyBaseDef">0</span></span>
+                                    <span>魔攻 <span id="duelEnemyBaseMatk">0</span></span>
+                                    <span>魔抗 <span id="duelEnemyBaseMdef">0</span></span>
+                                    <span>速度 <span id="duelEnemyBaseSpd">0</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preset-box compact">
+                        <div class="input-group">
+                            <label>套用模板</label>
+                            <select id="duelEnemyPresetSelect"><option value="">未保存任何配置</option></select>
+                        </div>
+                        <div class="preset-actions">
+                            <button id="duelEnemyPresetLoadBtn" type="button">加载模板</button>
+                        </div>
+                    </div>
+                    <div class="config-grid">
+                        <div class="input-group">
+                            <label>增益属性</label>
+                            <select id="duelEnemyNaturePlus"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>减益属性</label>
+                            <select id="duelEnemyNatureMinus"></select>
+                        </div>
+                    </div>
+                    <div class="iv-sliders">
+                        <div class="iv-item"><label>精</label><input type="number" id="duelEnemyIvHp" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物攻</label><input type="number" id="duelEnemyIvAtk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>物防</label><input type="number" id="duelEnemyIvDef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔攻</label><input type="number" id="duelEnemyIvMatk" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>魔抗</label><input type="number" id="duelEnemyIvMdef" min="0" max="10" value="0"></div>
+                        <div class="iv-item"><label>速</label><input type="number" id="duelEnemyIvSpd" min="0" max="10" value="0"></div>
+                    </div>
+                    <div class="context-grid duel-final-grid">
+                        <div>精力 <strong id="duelEnemyFinalHp">0.0</strong></div>
+                        <div>物攻 <strong id="duelEnemyFinalAtk">0.0</strong></div>
+                        <div>物防 <strong id="duelEnemyFinalDef">0.0</strong></div>
+                        <div>魔攻 <strong id="duelEnemyFinalMatk">0.0</strong></div>
+                        <div>魔抗 <strong id="duelEnemyFinalMdef">0.0</strong></div>
+                        <div>速度 <strong id="duelEnemyFinalSpd">0.0</strong></div>
+                    </div>
+                </div>
+
+                <div class="duel-calc">
+                    <div class="context-card">
+                        <h4>伤害计算（我方 -> 敌方）</h4>
+                        <div class="input-group">
+                            <label>计算模式</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="duelMyToEnemyMode" value="simple" checked> 简易模式</label>
+                                <label><input type="radio" name="duelMyToEnemyMode" value="complex"> 复杂模式</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>伤害类型</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="duelMyToEnemyType" value="physical" checked> 物理伤害</label>
+                                <label><input type="radio" name="duelMyToEnemyType" value="magical"> 魔法伤害</label>
+                            </div>
+                        </div>
+                        <div class="input-group inline-two" id="duelMySimplePowerGroup">
+                            <label>技能展示威力 / 连击数</label>
+                            <div class="inline-fields">
+                                <input type="number" id="duelMyToEnemyPower" value="100" min="0">
+                                <input type="number" id="duelMyToEnemyHits" value="1" min="1" step="1">
+                            </div>
+                        </div>
+                        <div id="duelMyComplexInputs" class="complex-panel hidden">
+                            <div class="complex-grid">
+                                <div class="input-group"><label>技能本身威力</label><input type="number" id="duelMyCplSkillPower" value="100" min="0"></div>
+                                <div class="input-group"><label>应对倍率</label><input type="number" id="duelMyCplResponseMult" value="1" step="0.01" min="0"></div>
+                                <div class="input-group"><label>威力加成</label><input type="number" id="duelMyCplPowerBonus" value="0" step="0.1"></div>
+                                <div class="input-group"><label>我方攻击增益(%)</label><input type="number" id="duelMyCplAtkUp" value="0" step="1"></div>
+                                <div class="input-group"><label>敌方防御降低(%)</label><input type="number" id="duelMyCplDefDown" value="0" step="1"></div>
+                                <div class="input-group"><label>我方攻击降低(%)</label><input type="number" id="duelMyCplAtkDown" value="0" step="1"></div>
+                                <div class="input-group"><label>敌方防御提升(%)</label><input type="number" id="duelMyCplDefUp" value="0" step="1"></div>
+                                <div class="input-group"><label>本系加成</label><input type="number" id="duelMyCplStab" value="1.25" step="0.01" min="0"></div>
+                                <div class="input-group"><label>克制关系</label><input type="number" id="duelMyCplTypeEff" value="1" step="0.01" min="0"></div>
+                                <div class="input-group"><label>天气影响</label><input type="number" id="duelMyCplWeather" value="1" step="0.01" min="0"></div>
+                                <div class="input-group"><label>减伤(%)</label><input type="number" id="duelMyCplMitigation" value="0" step="1" min="0" max="100"></div>
+                            </div>
+                            <div class="complex-result">折算展示威力: <strong id="duelMyCplFinalPower">0.0</strong></div>
+                        </div>
+                        <div class="context-grid one-col duel-result-list">
+                            <div>单次伤害 <strong id="duelMyToEnemySingle">0.0</strong></div>
+                            <div>总伤害 <strong id="duelMyToEnemyTotal">0.0</strong></div>
+                            <div>占敌方生命 <strong id="duelMyToEnemyPct">0.0%</strong></div>
+                            <div>预计击倒 <strong id="duelMyToEnemyTurns">-</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="context-card">
+                        <h4>伤害计算（敌方 -> 我方）</h4>
+                        <div class="input-group">
+                            <label>计算模式</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="duelEnemyToMyMode" value="simple" checked> 简易模式</label>
+                                <label><input type="radio" name="duelEnemyToMyMode" value="complex"> 复杂模式</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>伤害类型</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="duelEnemyToMyType" value="physical" checked> 物理伤害</label>
+                                <label><input type="radio" name="duelEnemyToMyType" value="magical"> 魔法伤害</label>
+                            </div>
+                        </div>
+                        <div class="input-group inline-two" id="duelEnemySimplePowerGroup">
+                            <label>技能展示威力 / 连击数</label>
+                            <div class="inline-fields">
+                                <input type="number" id="duelEnemyToMyPower" value="100" min="0">
+                                <input type="number" id="duelEnemyToMyHits" value="1" min="1" step="1">
+                            </div>
+                        </div>
+                        <div id="duelEnemyComplexInputs" class="complex-panel hidden">
+                            <div class="complex-grid">
+                                <div class="input-group"><label>技能本身威力</label><input type="number" id="duelEnemyCplSkillPower" value="100" min="0"></div>
+                                <div class="input-group"><label>应对倍率</label><input type="number" id="duelEnemyCplResponseMult" value="1" step="0.01" min="0"></div>
+                                <div class="input-group"><label>威力加成</label><input type="number" id="duelEnemyCplPowerBonus" value="0" step="0.1"></div>
+                                <div class="input-group"><label>我方攻击增益(%)</label><input type="number" id="duelEnemyCplAtkUp" value="0" step="1"></div>
+                                <div class="input-group"><label>敌方防御降低(%)</label><input type="number" id="duelEnemyCplDefDown" value="0" step="1"></div>
+                                <div class="input-group"><label>我方攻击降低(%)</label><input type="number" id="duelEnemyCplAtkDown" value="0" step="1"></div>
+                                <div class="input-group"><label>敌方防御提升(%)</label><input type="number" id="duelEnemyCplDefUp" value="0" step="1"></div>
+                                <div class="input-group"><label>本系加成</label><input type="number" id="duelEnemyCplStab" value="1.25" step="0.01" min="0"></div>
+                                <div class="input-group"><label>克制关系</label><input type="number" id="duelEnemyCplTypeEff" value="1" step="0.01" min="0"></div>
+                                <div class="input-group"><label>天气影响</label><input type="number" id="duelEnemyCplWeather" value="1" step="0.01" min="0"></div>
+                                <div class="input-group"><label>减伤(%)</label><input type="number" id="duelEnemyCplMitigation" value="0" step="1" min="0" max="100"></div>
+                            </div>
+                            <div class="complex-result">折算展示威力: <strong id="duelEnemyCplFinalPower">0.0</strong></div>
+                        </div>
+                        <div class="context-grid one-col duel-result-list">
+                            <div>单次伤害 <strong id="duelEnemyToMySingle">0.0</strong></div>
+                            <div>总伤害 <strong id="duelEnemyToMyTotal">0.0</strong></div>
+                            <div>占我方生命 <strong id="duelEnemyToMyPct">0.0%</strong></div>
+                            <div>预计击倒 <strong id="duelEnemyToMyTurns">-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+</div>
+</div>
 
             <!-- 身高体重查询 -->
             <div id="dimensionView" class="tab-pane" style="display:none">
