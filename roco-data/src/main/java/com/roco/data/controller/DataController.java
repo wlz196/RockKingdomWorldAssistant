@@ -511,4 +511,9 @@ public class DataController {
         result.put("relations", jdbcTemplate.queryForList("SELECT * FROM type_relations"));
         return result;
     }
+    @PostMapping("/pets/{petId}/skills/{skillId}/common/toggle")
+    public Map<String, Object> toggleCommonSkill(@PathVariable Integer petId, @PathVariable Integer skillId) {
+        dataService.toggleCommonSkill(petId, skillId);
+        return Map.of("success", true);
+    }
 }

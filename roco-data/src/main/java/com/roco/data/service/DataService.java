@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 @Service
 public class DataService {
@@ -90,10 +92,16 @@ public class DataService {
             typeMap.put(rs.getInt("id"), rs.getString("name").replace("系", ""));
         });
 
-        // 技能加载（按来源分类）—— 使用 jdbcTemplate 直接查询，与技能图鉴逻辑完全一致
-        // 避免 JPA SkillInfo 实体字段映射可能导致 skill_dam_type 读取错误的问题
+        // 获取该精灵已标记的常用技能 ID 集合
+        Set<Integer> commonSkillIds = new HashSet<>();
+        jdbcTemplate.query("SELECT skill_id FROM pet_common_skills WHERE pet_id = ?", (rs) -> {
+            commonSkillIds.add(rs.getInt("skill_id"));
+        }, id);
+
+        // 技能加载（按来源分类）
         List<PetSkillMapping> mappings = mappingRepository.findByPetId(id);
         Map<String, List<Map<String, Object>>> categorizedSkills = new HashMap<>();
+        categorizedSkills.put("常用", new ArrayList<>());
         categorizedSkills.put("自学", new ArrayList<>());
         categorizedSkills.put("技能石", new ArrayList<>());
         categorizedSkills.put("血脉", new ArrayList<>());
@@ -105,49 +113,38 @@ public class DataService {
             }
             final String finalSource = source;
             jdbcTemplate.query("SELECT * FROM skill_conf_main WHERE id = ?", (rs) -> {
-                Map<String, Object> skillMap = new HashMap<>();
-                skillMap.put("id", rs.getInt("id"));
-                skillMap.put("name", rs.getString("name"));
-                skillMap.put("description", rs.getString("desc"));
-                skillMap.put("icon", formatSkillIcon(rs.getString("icon")));
-                skillMap.put("type", rs.getInt("type"));
-
-                // 直接从 SQL 结果读取 skill_dam_type，与技能图鉴完全一致
-                int skillDamType = rs.getInt("skill_dam_type");
-                skillMap.put("attribute", typeMap.getOrDefault(skillDamType, "无别"));
-
-                int logicType = rs.getInt("type");
-                int damageCategory = rs.getInt("damage_type");
-                int skillClass = rs.getInt("skill_type");
-                if (logicType == 2) {
-                    skillMap.put("category", "特性");
-                } else {
-                    skillMap.put("category", switch (damageCategory) {
-                        case 2 -> "物理";
-                        case 3 -> "魔法";
-                        case 4 -> "特殊";
-                        default -> (skillClass == 3) ? "变化" : "常规";
-                    });
-                }
-
-                String damPara = rs.getString("dam_para");
-                skillMap.put("power", damPara != null ? damPara : "0");
-
-                String energyCost = rs.getString("energy_cost");
-                try {
-                    skillMap.put("energyConsumption", energyCost != null
-                        ? Integer.parseInt(energyCost.replace("[", "").replace("]", ""))
-                        : 0);
-                } catch (Exception e) {
-                    skillMap.put("energyConsumption", 0);
-                }
-
-                skillMap.put("priority", rs.getInt("skill_priority"));
+                Map<String, Object> skillMap = mapSkillRow(rs, typeMap);
+                skillMap.put("isCommon", commonSkillIds.contains(skillMap.get("id")));
 
                 if (categorizedSkills.containsKey(finalSource)) {
                     categorizedSkills.get(finalSource).add(skillMap);
                 }
+                
+                // 如果是常用技能，也添加到“常用”分类中（避免重复查询）
+                if (commonSkillIds.contains(skillMap.get("id"))) {
+                    // 检查是否已经加入过常用（有些技能可能通过多个途径获得，这里只加一次）
+                    boolean alreadyInCommon = categorizedSkills.get("常用").stream()
+                        .anyMatch(s -> s.get("id").equals(skillMap.get("id")));
+                    if (!alreadyInCommon) {
+                        categorizedSkills.get("常用").add(skillMap);
+                    }
+                }
             }, m.getSkillId());
+        }
+
+        // 补全那些不在 level_skills 中但被标记为常用的技能（如果有的话）
+        for (Integer csId : commonSkillIds) {
+            boolean alreadyLoaded = categorizedSkills.values().stream()
+                .flatMap(List::stream)
+                .anyMatch(s -> s.get("id").equals(csId));
+            
+            if (!alreadyLoaded) {
+                jdbcTemplate.query("SELECT * FROM skill_conf_main WHERE id = ?", (rs) -> {
+                    Map<String, Object> skillMap = mapSkillRow(rs, typeMap);
+                    skillMap.put("isCommon", true);
+                    categorizedSkills.get("常用").add(skillMap);
+                }, csId);
+            }
         }
         details.put("skills", categorizedSkills);
         details.put("evolutionChain", getEvolutionChain(id));
@@ -299,5 +296,58 @@ public class DataService {
     public String getNatureRecommendation(Pet p) {
         if (p == null) return "数据缺失";
         return "【" + p.getName() + "】系统正在对当前竞技场环境进行深度建模，性格推荐与战术分析模块正在迭代中，敬请期待 AI 战术智库的深度评析。";
+    }
+
+    private Map<String, Object> mapSkillRow(java.sql.ResultSet rs, Map<Integer, String> typeMap) throws java.sql.SQLException {
+        Map<String, Object> skillMap = new HashMap<>();
+        skillMap.put("id", rs.getInt("id"));
+        skillMap.put("name", rs.getString("name"));
+        skillMap.put("description", rs.getString("desc"));
+        skillMap.put("icon", formatSkillIcon(rs.getString("icon")));
+        skillMap.put("type", rs.getInt("type"));
+
+        int skillDamType = rs.getInt("skill_dam_type");
+        skillMap.put("attribute", typeMap.getOrDefault(skillDamType, "无别"));
+
+        int logicType = rs.getInt("type");
+        int damageCategory = rs.getInt("damage_type");
+        int skillClass = rs.getInt("skill_type");
+        if (logicType == 2) {
+            skillMap.put("category", "特性");
+        } else {
+            skillMap.put("category", switch (damageCategory) {
+                case 2 -> "物理";
+                case 3 -> "魔法";
+                case 4 -> "特殊";
+                default -> (skillClass == 3) ? "变化" : "常规";
+            });
+        }
+
+        String damPara = rs.getString("dam_para");
+        skillMap.put("power", damPara != null ? damPara : "0");
+
+        String energyCost = rs.getString("energy_cost");
+        try {
+            skillMap.put("energyConsumption", energyCost != null
+                ? Integer.parseInt(energyCost.replace("[", "").replace("]", ""))
+                : 0);
+        } catch (Exception e) {
+            skillMap.put("energyConsumption", 0);
+        }
+
+        skillMap.put("priority", rs.getInt("skill_priority"));
+        return skillMap;
+    }
+
+    public void toggleCommonSkill(Integer petId, Integer skillId) {
+        Integer count = jdbcTemplate.queryForObject(
+            "SELECT count(*) FROM pet_common_skills WHERE pet_id = ? AND skill_id = ?",
+            Integer.class, petId, skillId
+        );
+        if (count != null && count > 0) {
+            jdbcTemplate.update("DELETE FROM pet_common_skills WHERE pet_id = ? AND skill_id = ?", petId, skillId);
+        } else {
+            jdbcTemplate.update("INSERT INTO pet_common_skills (pet_id, skill_id) VALUES (?, ?)", petId, skillId);
+        }
     }
 }

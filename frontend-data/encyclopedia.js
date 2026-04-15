@@ -430,8 +430,11 @@ async function showDetail(id) {
 
             <div class="tabs-container">
                 <div class="tabs-nav">
-                    <button class="tab-link active" onclick="switchTab(event, 'skill-self')">
-                        <i class="fas fa-book"></i> <span>自学技能</span>
+                    <button class="tab-link active" onclick="switchTab(event, 'skill-common')">
+                        <i class="fas fa-star"></i> <span>常用</span>
+                    </button>
+                    <button class="tab-link" onclick="switchTab(event, 'skill-self')">
+                        <i class="fas fa-book"></i> <span>自学</span>
                     </button>
                     <button class="tab-link" onclick="switchTab(event, 'skill-stone')">
                         <i class="fas fa-gem"></i> <span>技能石</span>
@@ -440,7 +443,8 @@ async function showDetail(id) {
                         <i class="fas fa-dna"></i> <span>血脉库</span>
                     </button>
                 </div>
-                <div id="skill-self" class="tab-content">${renderSkillsList(d.skills['自学'])}</div>
+                <div id="skill-common" class="tab-content">${renderSkillsList(d.skills['常用'] || [])}</div>
+                <div id="skill-self" class="tab-content" style="display:none">${renderSkillsList(d.skills['自学'])}</div>
                 <div id="skill-stone" class="tab-content" style="display:none">${renderSkillsList(d.skills['技能石'])}</div>
                 <div id="skill-bloodline" class="tab-content" style="display:none">${renderSkillsList(d.skills['血脉'])}</div>
             </div>
@@ -466,63 +470,79 @@ function renderSkillsList(skills) {
     return `<div class="skill-list-v2" style="margin-top:1rem">
         ${skills.map(s => {
             const attrColor = getTypeColorByName(s.attribute);
-            const categoryIcon = s.category === '物理' ? 'fa-khanda' : (s.category === '魔法' ? 'fa-wand-sparkles' : 'fa-bolt-lightning');
+            const categoryShort = s.category === '物理' ? '物' : (s.category === '魔法' ? '魔' : '变');
+            const categoryColor = s.category === '物理' ? '#ef4444' : (s.category === '魔法' ? '#3b82f6' : '#8b5cf6');
+            const isCommon = s.isCommon || false;
             
             return `
-                <div class="skill-item" style="border-left-color: ${attrColor}">
-                    <!-- Top section: Icon, Info, and Stats -->
-                    <div class="skill-header-v2">
-                        <div class="skill-icon-wrapper">
+                <div class="skill-item ultra-compact" style="border-left-color: ${attrColor}" data-skill-id="${s.id}">
+                    <div class="skill-main-info">
+                        <div class="skill-icon-mini-wrapper">
                             <img src="${MEDIA_BASE}${s.icon || 'skills/' + s.id + '_png.png'}" 
                                  alt="${s.name}" 
-                                 class="skill-icon"
+                                 class="skill-icon-mini"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="pet-img-placeholder" style="display:none; width:100%; height:100%; font-size:1rem; border-radius:50%; background:${attrColor}22; color:${attrColor}; align-items:center; justify-content:center;">
+                            <div class="pet-img-placeholder" style="display:none; width:24px; height:24px; font-size:0.6rem; border-radius:50%; background:${attrColor}22; color:${attrColor}; align-items:center; justify-content:center;">
                                 <i class="fas fa-certificate"></i>
                             </div>
                         </div>
-                        
-                        <div class="skill-info-meta">
-                            <div class="skill-name">${s.name}</div>
-                            <div class="skill-labels-row">
-                                <span class="skill-tag" style="background: ${attrColor}15; color: ${attrColor}; border: 1px solid ${attrColor}33; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;">
-                                    <i class="fas fa-certificate"></i> ${s.attribute}
-                                </span>
-                                <span class="skill-tag" style="background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;">
-                                    <i class="fas ${categoryIcon}"></i> ${s.category}
-                                </span>
+                        <div class="skill-middle-meta">
+                            <div class="skill-name-mini" title="${s.name}">${s.name}</div>
+                            <div class="skill-attr-row">
+                                <span style="color:${attrColor}">${s.attribute}</span>
+                                <span style="color:${categoryColor}; background:${categoryColor}15; padding:0 2px; border-radius:2px;">${categoryShort}</span>
+                                <span class="stat-mini-inline">🔥${s.power && s.power !== '0' ? s.power : '--'}</span>
+                                <span class="stat-mini-inline">🔋${s.energyConsumption}</span>
                             </div>
                         </div>
-
-                        <div class="skill-stats-v2">
-                            <div class="skill-stat-badge-v2">
-                                <span class="label">威力</span>
-                                <span class="value" style="color: ${s.power && s.power !== '0' ? '#ef4444' : '#94a3b8'}">
-                                    ${s.power === '0' || !s.power ? '--' : s.power}
-                                </span>
-                            </div>
-                            <div class="skill-stat-badge-v2">
-                                <span class="label">PP</span>
-                                <span class="value">${s.energyConsumption}</span>
-                            </div>
-                            <div class="skill-stat-badge-v2" style="background: ${s.priority > 0 ? 'rgba(59, 130, 246, 0.1)' : 'transparent'}">
-                                <span class="label">优先</span>
-                                <span class="value" style="color: ${s.priority > 0 ? '#3b82f6' : '#94a3b8'}">
-                                    ${s.priority > 0 ? '+' + s.priority : '0'}
-                                </span>
-                            </div>
+                        <div class="skill-common-toggle ${isCommon ? 'active' : ''}" onclick="toggleCommonSkill(event, ${s.id})">
+                            <i class="${isCommon ? 'fas' : 'far'} fa-bookmark"></i>
                         </div>
                     </div>
-
-                    <!-- Bottom section: Description -->
-                    <div class="skill-desc-v2">
-                        ${s.description || '该技能能量流转稳定，暂无特殊效果描述。'}
+                    <div class="skill-desc-mini">
+                        ${s.description || '暂无描述'}
                     </div>
                 </div>
             `;
         }).join('')}
     </div>`;
 }
+
+window.toggleCommonSkill = async function(event, skillId) {
+    event.stopPropagation();
+    if (!currentDetailData || !currentDetailData.id) return;
+    
+    const petId = currentDetailData.id;
+    try {
+        const response = await fetch(`${API_BASE}/pets/${petId}/skills/${skillId}/common/toggle`, {
+            method: 'POST'
+        });
+        const result = await response.json();
+        if (result.success) {
+            // 刷新详情数据以同步状态
+            const refreshRes = await fetch(`${API_BASE}/pets/${petId}/details`);
+            currentDetailData = await refreshRes.json();
+            
+            // 映射关系
+            const idToCategory = {
+                'skill-common': '常用',
+                'skill-self': '自学',
+                'skill-stone': '技能石',
+                'skill-bloodline': '血脉'
+            };
+
+            // 重新渲染所有 Tab 内容，确保状态同步
+            Object.keys(idToCategory).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.innerHTML = renderSkillsList(currentDetailData.skills[idToCategory[id]] || []);
+                }
+            });
+        }
+    } catch (e) {
+        console.error('Toggle common skill failed:', e);
+    }
+};
 
 window.updateDetailForm = function(isBoss, bossIndex = 0) {
     const d = currentDetailData;
@@ -2459,3 +2479,57 @@ function init() {
 }
 
 init();
+
+// ===== 移动端交互与 PWA 注册 =====
+function initMobileNavigation() {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('drawerOverlay');
+    const navItems = document.querySelectorAll('.main-tab');
+
+    if (!menuToggle || !sidebar || !overlay) return;
+
+    const toggleMenu = () => {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    };
+
+    menuToggle.onclick = (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    };
+
+    overlay.onclick = toggleMenu;
+
+    // 点击导航项后自动关闭菜单（仅在移动端模式）
+    navItems.forEach(item => {
+        const originalOnClick = item.onclick;
+        item.onclick = (e) => {
+            if (originalOnClick) originalOnClick(e);
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('active')) {
+                toggleMenu();
+            }
+        };
+    });
+}
+
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(reg => console.log('Service Worker registered successfully:', reg.scope))
+                .catch(err => console.log('Service Worker registration failed:', err));
+        });
+    }
+}
+
+// 在页面加载完成后初始化
+window.addEventListener('DOMContentLoaded', () => {
+    initMobileNavigation();
+    registerServiceWorker();
+    
+    // 初始化时默认展开第一个分组
+    const firstGroup = document.querySelector('.sidebar-group');
+    if (firstGroup) firstGroup.classList.add('expanded');
+});
