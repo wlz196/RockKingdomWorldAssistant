@@ -21,9 +21,6 @@ public class DataService {
     private PetRepository petRepository;
 
     @Autowired
-    private SkillInfoRepository skillRepository;
-
-    @Autowired
     private PetSkillMappingRepository mappingRepository;
 
     @Autowired
@@ -93,7 +90,8 @@ public class DataService {
             typeMap.put(rs.getInt("id"), rs.getString("name").replace("系", ""));
         });
 
-        // 技能加载（按来源分类）
+        // 技能加载（按来源分类）—— 使用 jdbcTemplate 直接查询，与技能图鉴逻辑完全一致
+        // 避免 JPA SkillInfo 实体字段映射可能导致 skill_dam_type 读取错误的问题
         List<PetSkillMapping> mappings = mappingRepository.findByPetId(id);
         Map<String, List<Map<String, Object>>> categorizedSkills = new HashMap<>();
         categorizedSkills.put("自学", new ArrayList<>());
@@ -105,18 +103,22 @@ public class DataService {
             if (!categorizedSkills.containsKey(source)) {
                 categorizedSkills.put(source, new ArrayList<>());
             }
-            skillRepository.findById(m.getSkillId()).ifPresent(si -> {
+            final String finalSource = source;
+            jdbcTemplate.query("SELECT * FROM skill_conf_main WHERE id = ?", (rs) -> {
                 Map<String, Object> skillMap = new HashMap<>();
-                skillMap.put("id", si.getId());
-                skillMap.put("name", si.getName());
-                skillMap.put("description", si.getDescription());
-                skillMap.put("icon", formatSkillIcon(si.getIcon()));
-                skillMap.put("type", si.getType());
-                skillMap.put("attribute", typeMap.getOrDefault(si.getSkillDamType(), "普通"));
-                
-                int logicType = si.getType() != null ? si.getType() : 0;
-                int damageCategory = si.getDamageType() != null ? si.getDamageType() : 0;
-                int skillClass = si.getSkillType() != null ? si.getSkillType() : 0;
+                skillMap.put("id", rs.getInt("id"));
+                skillMap.put("name", rs.getString("name"));
+                skillMap.put("description", rs.getString("desc"));
+                skillMap.put("icon", formatSkillIcon(rs.getString("icon")));
+                skillMap.put("type", rs.getInt("type"));
+
+                // 直接从 SQL 结果读取 skill_dam_type，与技能图鉴完全一致
+                int skillDamType = rs.getInt("skill_dam_type");
+                skillMap.put("attribute", typeMap.getOrDefault(skillDamType, "无别"));
+
+                int logicType = rs.getInt("type");
+                int damageCategory = rs.getInt("damage_type");
+                int skillClass = rs.getInt("skill_type");
                 if (logicType == 2) {
                     skillMap.put("category", "特性");
                 } else {
@@ -127,17 +129,25 @@ public class DataService {
                         default -> (skillClass == 3) ? "变化" : "常规";
                     });
                 }
-                skillMap.put("power", si.getPower());
-                skillMap.put("energyConsumption", si.getEnergyConsumption());
 
-                // 从 skill_conf_main 获取优先级
-                jdbcTemplate.query("SELECT skill_priority FROM skill_conf_main WHERE id = ?", (rs) -> {
-                    skillMap.put("priority", rs.getInt("skill_priority"));
-                }, si.getId());
-                if (!skillMap.containsKey("priority")) skillMap.put("priority", 0);
+                String damPara = rs.getString("dam_para");
+                skillMap.put("power", damPara != null ? damPara : "0");
 
-                categorizedSkills.get(source).add(skillMap);
-            });
+                String energyCost = rs.getString("energy_cost");
+                try {
+                    skillMap.put("energyConsumption", energyCost != null
+                        ? Integer.parseInt(energyCost.replace("[", "").replace("]", ""))
+                        : 0);
+                } catch (Exception e) {
+                    skillMap.put("energyConsumption", 0);
+                }
+
+                skillMap.put("priority", rs.getInt("skill_priority"));
+
+                if (categorizedSkills.containsKey(finalSource)) {
+                    categorizedSkills.get(finalSource).add(skillMap);
+                }
+            }, m.getSkillId());
         }
         details.put("skills", categorizedSkills);
         details.put("evolutionChain", getEvolutionChain(id));

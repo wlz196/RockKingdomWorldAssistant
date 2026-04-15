@@ -241,7 +241,7 @@ public class DataController {
                 map.put("name", rs.getString("name"));
                 map.put("desc", rs.getString("desc"));
                 map.put("icon", dataService.formatSkillIcon(rs.getString("icon")));
-                map.put("attribute", typeMap.getOrDefault(rs.getInt("skill_dam_type"), "无"));
+                map.put("attribute", typeMap.getOrDefault(rs.getInt("skill_dam_type"), "无别"));
                 map.put("power", rs.getString("dam_para") != null ? rs.getString("dam_para") : "0");
                 map.put("priority", rs.getInt("skill_priority"));
 

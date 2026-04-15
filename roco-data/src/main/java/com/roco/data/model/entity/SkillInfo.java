@@ -78,28 +78,29 @@ public class SkillInfo {
     public String getSkillTypeName() {
         if (skillType == null) return "常规";
         return switch (skillType) {
-            case 1 -> "物攻";
-            case 2 -> "变化";
-            case 3 -> "防御";
+            case 1 -> "攻击型";
+            case 2 -> "防御/辅助";
+            case 3 -> "变化型";
             default -> "常规";
         };
     }
 
     public String getDamageTypeName() {
-        if (damageType == null) return "普通";
+        if (damageType == null) return "物理";
         return switch (damageType) {
-            case 1 -> "普通"; case 2 -> "草"; case 3 -> "火"; case 4 -> "水";
-            case 5 -> "石"; case 6 -> "土"; case 7 -> "毒"; case 8 -> "虫";
-            case 9 -> "翼"; case 10 -> "幽灵"; case 11 -> "萌"; case 12 -> "电";
-            case 13 -> "冰"; case 14 -> "龙"; case 15 -> "恶魔"; case 16 -> "武";
-            case 17 -> "机械"; case 18 -> "光"; case 19 -> "神"; case 20 -> "灵";
-            default -> "未知";
+            case 2 -> "物理";
+            case 3 -> "魔法";
+            case 4 -> "特殊";
+            default -> "物理";
         };
     }
 
     // Compatibility methods for frontend
-    public String getAttribute() { return getDamageTypeName(); }
-    public String getCategory() { return getSkillTypeName(); }
+    public String getAttribute() { return "使用 skill_dam_type 映射"; }
+    public String getCategory() { 
+        if (type != null && type == 2) return "特性";
+        return getDamageTypeName();
+    }
     public String getPower() { return damPara != null ? damPara : "0"; }
     public Integer getEnergyConsumption() {
         try {
