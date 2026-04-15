@@ -1,10 +1,10 @@
 spring:
   datasource:
-    url: jdbc:sqlite:/Users/wanglianzuo/project/RockKingdomWorldAssistant/roco_encyclopedia.db
+    url: jdbc:sqlite:../roco_encyclopedia.db
 
 roco:
-  media-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/media/
-  frontend-path: /Users/wanglianzuo/project/RockKingdomWorldAssistant/frontend-data/
+  media-path: ../media/
+  frontend-path: ../frontend-data/
 
 logging:
   level:
