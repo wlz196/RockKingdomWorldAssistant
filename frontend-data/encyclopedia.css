@@ -2581,8 +2581,8 @@ body.mode-duel .battle-only {
 /* --- Compact Skill List Layout --- */
 .skill-list-v2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
 }
 
 .skill-item {
@@ -2644,12 +2644,8 @@ body.mode-duel .battle-only {
     height: 2.8em; /* Force height for alignment */
 }
 
+/* Mobile specific adjustments remain for font size, but grid layout is now handled by default auto-fill */
 @media (max-width: 600px) {
-    .skill-list-v2 {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-    
     .skill-name {
         font-size: 0.9rem !important;
     }
@@ -2735,12 +2731,7 @@ body.mode-duel .battle-only {
     margin-top: 2px;
 }
 
-@media (max-width: 600px) {
-    .skill-list-v2 {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 6px !important;
-    }
-}
+
 
 /* --- Skill Common Toggle Styles --- */
 .skill-common-toggle {
