@@ -2726,15 +2726,7 @@ body.mode-duel .battle-only {
     height: 2.5em; /* Exactly 2 lines */
 }
 
-.skill-attr-row {
-    font-size: 0.55rem;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-}
+
 
 
 
@@ -2790,9 +2782,9 @@ body.mode-duel .battle-only {
     font-size: 0.55rem;
     display: flex;
     align-items: center;
-    gap: 3px;
-    font-weight: 600;
-    white-space: nowrap;
+    gap: 3.5px;
+    font-weight: 700;
+    white-space: nowrap !important;
     overflow: hidden;
     flex-wrap: nowrap !important;
 }
