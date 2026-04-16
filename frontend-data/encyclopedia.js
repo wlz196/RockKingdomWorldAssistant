@@ -415,8 +415,7 @@ async function showDetail(id) {
                     <div class="bio-tag" title="身高"><i class="fas fa-ruler-vertical"></i> ${d.height}</div>
                     <div class="bio-tag" title="体重"><i class="fas fa-weight-hanging"></i> ${d.weight}</div>
                     <div class="bio-tag" title="蛋组"><i class="fas fa-egg"></i> ${d.eggGroups && d.eggGroups.length > 0 ? d.eggGroups.join(' / ') : '未知蛋组'}</div>
-                    <div class="bio-tag" title="行走方式"><i class="fas fa-shoe-prints"></i> ${d.moveType}</div>
-                    <div class="bio-tag score-tag" title="战力评分"><i class="fas fa-chart-line"></i> 战力:${d.petScore}</div>
+
                 </div>
                 ${renderStatsBars(d)}
             </div>

@@ -113,14 +113,7 @@ public class Pet {
     @Column(name = "pet_feature")
     private Integer petFeature;
 
-    @Column(name = "move_type")
-    private String moveType;
 
-    @Column(name = "pet_score")
-    private Integer petScore;
-
-    @Column(name = "habitat_id")
-    private Integer habitatId;
 
     @Transient
     private String height;
@@ -132,14 +125,7 @@ public class Pet {
     public Integer getPetFeature() { return petFeature; }
     public void setPetFeature(Integer petFeature) { this.petFeature = petFeature; }
 
-    public String getMoveType() { return moveType; }
-    public void setMoveType(String moveType) { this.moveType = moveType; }
 
-    public Integer getPetScore() { return petScore; }
-    public void setPetScore(Integer petScore) { this.petScore = petScore; }
-
-    public Integer getHabitatId() { return habitatId; }
-    public void setHabitatId(Integer habitatId) { this.habitatId = habitatId; }
 
     public String getHeight() { return height; }
     public void setHeight(String height) { this.height = height; }

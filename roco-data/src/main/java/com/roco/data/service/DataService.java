@@ -73,8 +73,6 @@ public class DataService {
         details.put("height", p.getHeight() != null ? p.getHeight() : "未知");
         details.put("weight", p.getWeight() != null ? p.getWeight() : "未知");
         details.put("eggGroups", p.getEggGroups());
-        details.put("moveType", p.getMoveType() != null ? p.getMoveType() : "行走");
-        details.put("petScore", p.getPetScore() != null ? p.getPetScore() : 0);
 
         // 特性名称和描述
         details.put("featureName", "暂无特性");
