@@ -2581,7 +2581,7 @@ body.mode-duel .battle-only {
 /* --- Compact Skill List Layout --- */
 .skill-list-v2 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
