@@ -2697,13 +2697,7 @@ body.mode-duel .battle-only {
     line-height: 1.1;
 }
 
-.skill-attr-row {
-    font-size: 0.65rem;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 600;
-}
+
 
 .skill-right-stats {
     flex: 0 0 auto;
@@ -2793,6 +2787,12 @@ body.mode-duel .battle-only {
 }
 
 .skill-attr-row {
-    flex-wrap: wrap; /* Ensure they can wrap if too many on small devices */
-    row-gap: 2px;
+    font-size: 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-wrap: nowrap !important;
 }
