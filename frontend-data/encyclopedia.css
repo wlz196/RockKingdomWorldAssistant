@@ -2581,8 +2581,8 @@ body.mode-duel .battle-only {
 /* --- Compact Skill List Layout --- */
 .skill-list-v2 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 6px;
 }
 
 .skill-item {
@@ -2688,13 +2688,13 @@ body.mode-duel .battle-only {
 }
 
 .skill-name-mini {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 800;
     color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 .skill-attr-row {
@@ -2721,14 +2721,14 @@ body.mode-duel .battle-only {
 }
 
 .skill-desc-mini {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: var(--text-secondary);
-    line-height: 1.3;
+    line-height: 1.2;
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* Ultimate compression: only 1 line */
+    -webkit-line-clamp: 1; 
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 
@@ -2774,8 +2774,9 @@ body.mode-duel .battle-only {
 
 /* --- Skill Stats Inline Adjustment --- */
 .stat-mini-inline {
-    margin-left: 4px;
+    margin-left: 2px;
     color: #475569;
+    font-size: 0.55rem;
     font-weight: 700;
     white-space: nowrap;
 }
