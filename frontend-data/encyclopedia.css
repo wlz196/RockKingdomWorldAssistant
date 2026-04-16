@@ -2723,12 +2723,23 @@ body.mode-duel .battle-only {
 .skill-desc-mini {
     font-size: 0.6rem;
     color: var(--text-secondary);
-    line-height: 1.2;
+    line-height: 1.25;
     display: -webkit-box;
-    -webkit-line-clamp: 1; 
+    -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-top: 1px;
+    height: 2.5em; /* Exactly 2 lines */
+}
+
+.skill-attr-row {
+    font-size: 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 
