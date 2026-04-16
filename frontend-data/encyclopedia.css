@@ -809,9 +809,9 @@ h1, h2, h3, .logo {
 
 .drawer-content {
     position: absolute;
-    right: -640px;
+    right: -800px;
     top: 0;
-    width: 640px;
+    width: 800px;
     height: 100%;
     background: white;
     box-shadow: -20px 0 50px rgba(0,0,0,0.15);
