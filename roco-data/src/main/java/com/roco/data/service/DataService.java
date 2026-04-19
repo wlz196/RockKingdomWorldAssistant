@@ -68,6 +68,8 @@ public class DataService {
         details.put("speed", p.getSpeed());
         details.put("description", p.getDescription());
         details.put("imageUrl", formatImageUrl(p.getImageUrl(), p.getName()));
+        details.put("form", p.getForm());
+        details.put("totalStats", p.getTotalStats());
 
         // 扩展字段
         details.put("height", p.getHeight() != null ? p.getHeight() : "未知");
@@ -146,6 +148,18 @@ public class DataService {
         }
         details.put("skills", categorizedSkills);
         details.put("evolutionChain", getEvolutionChain(id));
+
+        // 获取 AI 战术评述
+        String aiReview = null;
+        try {
+            aiReview = jdbcTemplate.queryForObject(
+                "SELECT review_content FROM pet_ai_reviews WHERE pet_id = ?",
+                String.class, id
+            );
+        } catch (Exception e) {
+            // 如果没有评述则为空
+        }
+        details.put("aiReview", aiReview);
         details.put("natureRecommendation", getNatureRecommendation(p));
 
         // 关联形态（Boss 形态）

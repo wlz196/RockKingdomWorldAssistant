@@ -8,7 +8,7 @@ let currentSkillSearch = '';
 let currentBloodlineSearch = '';
 let currentNatureSearch = '';
 let currentTalentSearch = '';
-let currentCategory = 'all';
+let currentCategory = 'book';
 let currentHasFeature = null;
 let currentHasSkill = null;
 let currentDetailData = null;
@@ -16,11 +16,14 @@ let currentMainTab = 'petView';
 let activeMode = 'pets';
 let lastTypeData = null;
 let currentSkillPage = 0;
-var skillLogicType = '';
+var skillLogicType = '1';
 var skillAttrId = '';
 var skillClassId = '';
 var skillDamageId = '';
-var skillHasOwner = '';
+var skillHasOwner = '1';
+var currentFeatureSearch = '';
+var currentFeaturePage = 0;
+var featureAttrId = ''; // 改为 var 以确保 window['featureAttrId'] 可直接访问
 
 // ===== 初始化与 Tab 路由 =====
 function initMainTabs() {
@@ -45,8 +48,14 @@ function initMainTabs() {
                 initSkillFilters();
                 loadSkillsGallery();
             }
+            if (target === 'featureView') {
+                activeMode = 'features';
+                initFeatureFilters();
+                loadFeaturesGallery();
+            }
             if (target === 'bloodlineView') loadBloodlines();
             if (target === 'buffView') loadBuffs();
+            if (target === 'benchmarkView') loadBenchmarks();
             if (target === 'natureView') loadNatures();
             if (target === 'talentView') loadTalents();
             if (target === 'typeView') loadTypeMatrix();
@@ -69,7 +78,7 @@ function initMainTabs() {
 // ===== 技能筛选器 =====
 function initSkillFilters() {
     console.log('Initializing Skill Filters...');
-    const renderFilterRow = (containerId, items, stateKey) => {
+    const renderFilterRow = (containerId, items, stateKey, showAll = true) => {
         const container = document.getElementById(containerId);
         if (!container) {
             console.error(`Filter container not found: ${containerId}`);
@@ -78,22 +87,24 @@ function initSkillFilters() {
         container.innerHTML = '';
         
         // Add "All" button
-        const allBtn = document.createElement('button');
-        const currentState = window[stateKey] || '';
-        allBtn.className = `type-btn ${currentState === '' ? 'active' : ''}`;
-        allBtn.innerHTML = `<span>全部</span>`;
-        allBtn.onclick = () => {
-            window[stateKey] = '';
-            currentSkillPage = 0;
-            initSkillFilters();
-            loadSkillsGallery();
-        };
-        container.appendChild(allBtn);
+        if (showAll) {
+            const allBtn = document.createElement('button');
+            const currentState = window[stateKey] || '';
+            allBtn.className = `type-btn ${currentState === '' ? 'active' : ''}`;
+            allBtn.innerHTML = `<span>全部</span>`;
+            allBtn.onclick = () => {
+                window[stateKey] = '';
+                currentSkillPage = 0;
+                initSkillFilters();
+                loadSkillsGallery();
+            };
+            container.appendChild(allBtn);
+        }
 
         items.forEach(item => {
             const btn = document.createElement('button');
             const itemId = String(item.id);
-            const isActive = currentState === itemId;
+            const isActive = window[stateKey] === itemId;
             btn.className = `type-btn ${isActive ? 'active' : ''}`;
             
             if (isActive && item.color) {
@@ -108,21 +119,16 @@ function initSkillFilters() {
             btn.innerHTML = content;
 
             btn.onclick = () => {
-                window[stateKey] = isActive ? '' : itemId;
+                const newState = isActive ? (showAll ? '' : itemId) : itemId;
+                window[stateKey] = newState;
                 currentSkillPage = 0;
                 initSkillFilters();
                 loadSkillsGallery();
             };
             container.appendChild(btn);
         });
-        console.log(`Rendered ${items.length + 1} items for ${containerId}`);
+        console.log(`Rendered ${items.length + (showAll?1:0)} items for ${containerId}`);
     };
-
-    // Row 1: Logic
-    renderFilterRow('skillLogicFilters', [
-        { id: 1, name: '主动' },
-        { id: 2, name: '被动/特性' }
-    ], 'skillLogicType');
 
     // Row 2: Attribute
     renderFilterRow('skillAttrFilters', types, 'skillAttrId');
@@ -141,11 +147,62 @@ function initSkillFilters() {
         { id: 4, name: '特殊' }
     ], 'skillDamageId');
 
-    // Row 5: Has Owner
+    // Row 5: Has Owner -> Implementation Status
     renderFilterRow('skillOwnerFilters', [
-        { id: 1, name: '有精灵拥有' },
-        { id: 0, name: '无精灵拥有' }
-    ], 'skillHasOwner');
+        { id: 1, name: '已实装' },
+        { id: 0, name: '未实装' }
+    ], 'skillHasOwner', false);
+}
+
+// ===== 特性筛选器 =====
+function initFeatureFilters() {
+    const renderFilterRow = (containerId, items, stateKey, showAll = true) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
+        
+        if (showAll) {
+            const allBtn = document.createElement('button');
+            const currentState = window[stateKey] || '';
+            allBtn.className = `type-btn ${currentState === '' ? 'active' : ''}`;
+            allBtn.innerHTML = `<span>全部</span>`;
+            allBtn.onclick = () => {
+                window[stateKey] = '';
+                currentFeaturePage = 0;
+                initFeatureFilters();
+                loadFeaturesGallery();
+            };
+            container.appendChild(allBtn);
+        }
+
+        items.forEach(item => {
+            const btn = document.createElement('button');
+            const itemId = String(item.id);
+            const isActive = window[stateKey] === itemId;
+            btn.className = `type-btn ${isActive ? 'active' : ''}`;
+            
+            if (isActive && item.color) {
+                btn.style.background = item.color;
+                btn.style.color = 'white';
+            }
+
+            let content = `<span>${item.name}</span>`;
+            if (item.color) {
+                content = `<span class="type-dot" style="background: ${item.color}"></span>` + content;
+            }
+            btn.innerHTML = content;
+
+            btn.onclick = () => {
+                window[stateKey] = isActive ? '' : itemId;
+                currentFeaturePage = 0;
+                initFeatureFilters();
+                loadFeaturesGallery();
+            };
+            container.appendChild(btn);
+        });
+    };
+
+    renderFilterRow('featureAttrFilters', types, 'featureAttrId');
 }
 
 function initSidebar() {
@@ -161,11 +218,9 @@ function initSidebar() {
             btn.classList.add('active');
             currentCategory = btn.getAttribute('data-cat');
             currentPage = 0;
-            // 显示/隐藏暂未收录子筛选
+            // 移除暂未收录子筛选显示逻辑，保持界面简洁
             const subFilters = document.getElementById('nonBookSubFilters');
-            if (subFilters) {
-                subFilters.style.display = currentCategory === 'non-book' ? 'flex' : 'none';
-            }
+            if (subFilters) subFilters.style.display = 'none';
             // 重置子筛选状态
             currentHasFeature = null;
             currentHasSkill = null;
@@ -192,6 +247,34 @@ function initSidebar() {
             loadPets();
         };
     });
+
+    // 特性图典搜索
+    const featureSearchInput = document.getElementById('featureSearch');
+    if (featureSearchInput) {
+        featureSearchInput.addEventListener('input', (e) => {
+            currentFeatureSearch = e.target.value;
+            currentFeaturePage = 0;
+            loadFeaturesGallery();
+        });
+    }
+
+    // 特性图典翻页
+    const prevFeatureBtn = document.getElementById('prevFeaturePage');
+    if (prevFeatureBtn) {
+        prevFeatureBtn.onclick = () => {
+            if (currentFeaturePage > 0) {
+                currentFeaturePage--;
+                loadFeaturesGallery();
+            }
+        };
+    }
+    const nextFeatureBtn = document.getElementById('nextFeaturePage');
+    if (nextFeatureBtn) {
+        nextFeatureBtn.onclick = () => {
+            currentFeaturePage++;
+            loadFeaturesGallery();
+        };
+    }
     
     // Fetch total count
     fetch(`${API_BASE}/pets/count`)
@@ -323,6 +406,348 @@ function renderSkillGalleryCards(skills) {
 
 // getTypeColorByName, getTypeColor, getTypeName 已提取到 js/constants.js
 
+// ===== 战力大盘分析 (Combat Benchmarks) =====
+let benchmarkData = [];
+let benchmarkSortKey = 'speed';
+
+async function loadBenchmarks() {
+    const globalContainer = document.getElementById('globalBenchmarksList');
+    const tableBody = document.getElementById('typeBenchmarkBody');
+    if (!globalContainer || !tableBody) return;
+
+    globalContainer.innerHTML = '<div style="grid-column: 1/-1; text-align:center;">读取全局基准中...</div>';
+    tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 20px;">读取排行数据中...</td></tr>';
+
+    try {
+        // 1. 加载全局基准
+        const globalRes = await fetch(`${API_BASE}/benchmarks/global`);
+        const globalStats = await globalRes.json();
+        
+        const statNameMap = {
+            'hp': '精力', 'attack': '攻击', 'defense': '防御',
+            'magic_attack': '魔攻', 'magic_defense': '魔抗', 'speed': '速度',
+            'total_stats': '种族总和'
+        };
+
+        globalContainer.innerHTML = '';
+        globalStats.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'glass';
+            card.style.padding = '20px';
+            card.style.borderRadius = '20px';
+            card.style.border = '1px solid rgba(0,0,0,0.05)';
+            card.innerHTML = `
+                <div style="font-weight: 800; color: #1e293b; margin-bottom: 15px; display: flex; justify-content: space-between;">
+                    ${statNameMap[s.statKey] || s.statKey} 
+                    <span style="font-size: 0.8rem; color: #64748b; font-weight: normal;">样本: ${s.dataCount}</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: rgba(0,0,0,0.03); padding: 10px; border-radius: 12px; text-align: center;">
+                        <div style="font-size: 0.7rem; color: #64748b;">P50 (平均)</div>
+                        <div style="font-weight: 800; color: #6366f1;">${s.p50}</div>
+                    </div>
+                    <div style="background: rgba(245, 158, 11, 0.05); padding: 10px; border-radius: 12px; text-align: center; border: 1px solid rgba(245, 158, 11, 0.1);">
+                        <div style="font-size: 0.7rem; color: #f59e0b;">P80 (优秀)</div>
+                        <div style="font-weight: 800; color: #f59e0b;">${s.p80}</div>
+                    </div>
+                    <div style="background: rgba(239, 68, 68, 0.05); padding: 10px; border-radius: 12px; text-align: center; border: 1px solid rgba(239, 68, 68, 0.1);">
+                        <div style="font-size: 0.7rem; color: #ef4444;">P95 (顶尖)</div>
+                        <div style="font-weight: 800; color: #ef4444;">${s.p95}</div>
+                    </div>
+                    <div style="background: #1e293b; padding: 10px; border-radius: 12px; text-align: center; color: white;">
+                        <div style="font-size: 0.7rem; color: rgba(255,255,255,0.6);">MAX (天花板)</div>
+                        <div style="font-weight: 800;">${s.maxVal}</div>
+                    </div>
+                </div>
+            `;
+            globalContainer.appendChild(card);
+        });
+
+        // 2. 加载系别排行
+        const typeRes = await fetch(`${API_BASE}/benchmarks/types`);
+        const typeStats = await typeRes.json();
+        
+        // Pivot data: 把扁平的指标按 typeId 聚合
+        const pivoted = {};
+        typeStats.forEach(item => {
+            if (!pivoted[item.typeId]) {
+                pivoted[item.typeId] = {
+                    id: item.typeId,
+                    name: item.typeName,
+                    stats: {}
+                };
+            }
+            pivoted[item.typeId].stats[item.statKey] = {
+                p80: item.p80,
+                rank: item.rank80
+            };
+        });
+        
+        benchmarkData = Object.values(pivoted);
+        renderBenchmarkTable();
+
+        // 3. 注册排序监听
+        document.querySelectorAll('#typeBenchmarkTable th.sortable').forEach(th => {
+            th.onclick = () => {
+                benchmarkSortKey = th.getAttribute('data-stat');
+                renderBenchmarkTable();
+            };
+        });
+
+    } catch (e) {
+        console.error(e);
+        globalContainer.innerHTML = '<div style="color:red">加载失败。</div>';
+    }
+}
+
+function renderBenchmarkTable() {
+    const tableBody = document.getElementById('typeBenchmarkBody');
+    if (!tableBody) return;
+
+    // 按选定指标排序
+    benchmarkData.sort((a, b) => {
+        const valA = (a.stats[benchmarkSortKey] || {p80: 0}).p80;
+        const valB = (b.stats[benchmarkSortKey] || {p80: 0}).p80;
+        return valB - valA;
+    });
+
+    tableBody.innerHTML = '';
+    benchmarkData.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #f1f5f9';
+        
+        // 计算定位标签 (根据排名)
+        let positioning = '<span style="color:#64748b">综合均衡</span>';
+        const bestStat = Object.keys(row.stats).reduce((a, b) => row.stats[a].rank < row.stats[b].rank ? a : b);
+        if (row.stats[bestStat].rank === 1) {
+            const map = {'speed':'极速领跑','defense':'坚不可摧','attack':'物理尖兵','magic_attack':'魔法炮台','total_stats':'高位族谱','hp':'后勤保障'};
+            positioning = `<span style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; padding: 4px 8px; border-radius: 6px; font-weight: bold;">${map[bestStat] || '王者'}</span>`;
+        } else if (row.stats[bestStat].rank <= 3) {
+            positioning = '<span style="color:#6366f1">强势属性</span>';
+        }
+
+        const getRankHtml = (statKey) => {
+            const s = row.stats[statKey];
+            if (!s) return '--';
+            let medal = '';
+            if (s.rank === 1) medal = '🥇';
+            else if (s.rank === 2) medal = '🥈';
+            else if (s.rank === 3) medal = '🥉';
+            return `<div style="text-align:center;">
+                        <div style="font-weight:800; color:#1e293b;">${s.p80}</div>
+                        <div style="font-size:0.7rem; color:${s.rank <=3 ? '#f59e0b' : '#94a3b8'}">${medal} Rank ${s.rank}</div>
+                    </div>`;
+        };
+
+        tr.innerHTML = `
+            <td style="padding: 15px; display: flex; align-items: center; gap: 10px;">
+                <span class="type-tag" style="background: ${getTypeColorByName(row.name)}; cursor: pointer; transition: transform 0.2s;" onclick="showTypeDetail(${row.id})" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">${row.name}</span>
+            </td>
+            <td style="padding: 15px; text-align: center;">${positioning}</td>
+            <td style="padding: 15px;">${getRankHtml('speed')}</td>
+            <td style="padding: 15px;">${getRankHtml('attack')}</td>
+            <td style="padding: 15px;">${getRankHtml('magic_attack')}</td>
+            <td style="padding: 15px;">${getRankHtml('defense')}</td>
+            <td style="padding: 15px;">${getRankHtml('total_stats')}</td>
+        `;
+        tableBody.appendChild(tr);
+    });
+}
+
+async function showTypeDetail(typeId) {
+    const modal = document.getElementById('typeDetailModal');
+    const grid = document.getElementById('typeDetailStatsGrid');
+    if (!modal || !grid) return;
+
+    grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center;">正在拉取全息画像...</div>';
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // 禁止背景滚动
+
+    try {
+        const res = await fetch(`${API_BASE}/benchmarks/types/${typeId}`);
+        const data = await res.json();
+        if (!data || data.length === 0) return;
+
+        const first = data[0];
+        document.getElementById('typeDetailTag').innerHTML = `
+            <span class="type-tag" style="background: ${getTypeColorByName(first.typeName)}; font-size: 1.2rem; padding: 6px 15px;">${first.typeName}</span>
+        `;
+        
+        // 计算核心特色
+        const bestStat = data.reduce((a, b) => a.rank80 < b.rank80 ? a : b);
+        const map = {'speed':'极速领跑','defense':'坚不可摧','attack':'物理尖兵','magic_attack':'魔法炮台','total_stats':'高位族谱','hp':'后勤保障'};
+        document.getElementById('typeDetailSummary').innerText = `核心定位：${map[bestStat.statKey] || '全能均衡'} (Rank 1 属性)`;
+
+        const statNameMap = {
+            'hp': '精力 (HP)', 'attack': '物理攻击', 'defense': '物理防御',
+            'magic_attack': '魔法攻击', 'magic_defense': '魔法防御', 'speed': '速度',
+            'total_stats': '种族值总和'
+        };
+
+        grid.innerHTML = '';
+        data.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'glass';
+            card.style.padding = '20px';
+            card.style.borderRadius = '20px';
+            card.innerHTML = `
+                <div style="font-weight: 800; color: #1e293b; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>${statNameMap[s.statKey] || s.statKey}</span>
+                    <span style="background: ${s.rank80 <= 3 ? 'rgba(245,158,11,0.1)' : 'rgba(0,0,0,0.05)'}; 
+                               color: ${s.rank80 <= 3 ? '#f59e0b' : '#64748b'}; 
+                               padding: 2px 8px; border-radius: 6px; font-size: 0.8rem;">
+                        Rank #${s.rank80}
+                    </span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <span style="color: #64748b;">P50 (平均)</span>
+                        <span style="font-weight: 700; color: #6366f1;">${s.p50}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <span style="color: #64748b;">P80 (优秀线)</span>
+                        <span style="font-weight: 800; color: #f59e0b;">${s.p80}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <span style="color: #64748b;">P95 (顶尖线)</span>
+                        <span style="font-weight: 800; color: #ef4444;">${s.p95}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; border-top: 1px dashed #e2e8f0; pt: 5px; margin-top: 5px;">
+                        <span style="color: #1e293b; font-weight: bold;">MAX 天花板</span>
+                        <span style="font-weight: 900; color: #1e293b;">${s.maxVal}</span>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // 复制按钮逻辑
+        document.getElementById('copyTypeAI').onclick = () => {
+            let txt = `以下是《洛克王国》${first.typeName}的深度战力报告：\n`;
+            data.forEach(s => {
+                txt += `- ${statNameMap[s.statKey] || s.statKey}: P80=${s.p80} (排名#${s.rank80}), P95=${s.p95}, MAX=${s.maxVal}\n`;
+            });
+            navigator.clipboard.writeText(txt).then(() => {
+                const b = document.getElementById('copyTypeAI');
+                const old = b.innerHTML;
+                b.innerHTML = '<i class="fas fa-check"></i> 复制成功';
+                setTimeout(() => b.innerHTML = old, 2000);
+            });
+        };
+
+    } catch (e) {
+        console.error(e);
+        grid.innerHTML = '<div style="color:red">加载画像失败。</div>';
+    }
+}
+
+function copyAISummary() {
+    if (!benchmarkData || benchmarkData.length === 0) {
+        alert("暂无数据可供导出");
+        return;
+    }
+
+    let summary = "以下是《洛克王国》当前版本的系别战力排名数据（基于正式最终形态精灵 P80 基准）。请根据这些排名分析各系别的定位特色、当前的属性环境平衡性，并指出哪些系别是当前版本的‘环境优选’：\n\n";
+    
+    const sortedData = [...benchmarkData].sort((a, b) => (a.stats.total_stats?.rank || 99) - (b.stats.total_stats?.rank || 99));
+
+    sortedData.forEach(row => {
+        const s = row.stats;
+        summary += `${row.name}: `;
+        const details = [];
+        if (s.speed) details.push(`速度#${s.speed.rank}`);
+        if (s.attack) details.push(`攻击#${s.attack.rank}`);
+        if (s.magic_attack) details.push(`魔攻#${s.magic_attack.rank}`);
+        if (s.defense) details.push(`防御#${s.defense.rank}`);
+        if (s.total_stats) details.push(`总和#${s.total_stats.rank}`);
+        summary += details.join(", ") + "\n";
+    });
+
+    navigator.clipboard.writeText(summary).then(() => {
+        const btn = document.querySelector('button[onclick="copyAISummary()"]');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> 复制成功';
+        setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+    }).catch(err => {
+        console.error('无法复制数据: ', err);
+        alert("复制失败，请手动选择表格内容。");
+    });
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // 恢复滚动
+    }
+}
+
+// 统一点击遮罩关闭逻辑 (兼容未来更多弹窗)
+window.addEventListener('click', (event) => {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// ===== 特性图鉴加载 =====
+async function loadFeaturesGallery() {
+    const grid = document.getElementById('featureGrid');
+    if (!grid) return;
+    grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 2rem;">加载中...</div>';
+
+    try {
+        const url = `${API_BASE}/features?keyword=${encodeURIComponent(currentFeatureSearch)}&skillDamType=${featureAttrId}&page=${currentFeaturePage}&size=20`;
+        const response = await fetch(url);
+        const features = await response.json();
+        
+        grid.innerHTML = '';
+        if (features.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 2rem;">未找到相关特性</div>';
+            return;
+        }
+
+        features.forEach(f => {
+            const card = document.createElement('div');
+            card.className = 'pet-card'; // 对齐技能图鉴的卡片样式
+            
+            const attrName = getTypeName(f.skillDamType) || '无别';
+            const attrColor = getTypeColorByName(attrName);
+            
+            card.innerHTML = `
+                <div class="pet-id">ID: ${f.id}</div>
+                <div class="pet-image-container" style="height: 120px;">
+                    <img src="${MEDIA_BASE}${f.icon || 'skills/' + f.id + '_png.png'}" 
+                          alt="${f.name}" 
+                          class="pet-image" 
+                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                     <div class="paw-icon" style="display:none; font-size: 3rem;"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="pet-name">${f.name}</div>
+                <div class="pet-types" style="margin-bottom: 10px;">
+                    <span class="type-tag" style="background:${attrColor}">${attrName}</span>
+                    <span class="type-tag" style="background:#f59e0b">特性</span>
+                </div>
+                <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px; line-height: 1.4; height: 3em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                    ${f.desc || '无详细描述'}
+                </p>
+                <div style="margin-top: 10px; text-align: right;">
+                    <button class="btn-detail" style="font-size: 0.7rem; padding: 4px 10px; background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 6px;">
+                        查看使用者 <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            `;
+            card.style.cursor = 'pointer';
+            card.onclick = () => showSkillDetail(f.id); 
+            grid.appendChild(card);
+        });
+        document.getElementById('featureCount').innerText = features.length;
+        document.getElementById('featurePageInfo').innerText = `第 ${currentFeaturePage + 1} 页`;
+    } catch (e) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color:red;">加载失败: ${e.message}</div>`;
+    }
+}
+
 // ===== 精灵列表与分页 =====
 async function loadPets() {
     const grid = document.getElementById('petGrid');
@@ -359,7 +784,10 @@ async function loadPets() {
                           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                      <div class="paw-icon" style="display:none;"><i class="fas fa-paw"></i></div>
                 </div>
-                <div class="pet-name">${p.name}</div>
+                <div class="pet-name">
+                    ${p.name}${p.form ? ` (${p.form})` : ''}
+                    ${p.isBoss === 1 ? '<span class="boss-badge">BOSS</span>' : ''}
+                </div>
                 <div class="pet-types">
                     <span class="type-tag" style="background:${primaryColor}">${getTypeName(p.type1)}</span>
                     ${p.type2 ? `<span class="type-tag" style="background:${getTypeColor(p.type2)}">${getTypeName(p.type2)}</span>` : ''}
@@ -402,7 +830,7 @@ async function showDetail(id) {
                 </div>
                 <div class="detail-info">
                     <div class="pet-id">#${d.bookId && d.bookId > 0 ? d.bookId : d.id}</div>
-                    <h2>${d.name}</h2>
+                    <h2>${d.name}${d.form ? ` (${d.form})` : ''}</h2>
                     <div class="pet-types">
                         <span class="type-tag" style="background:${getTypeColor(d.type1)}">${getTypeName(d.type1)}</span>
                         ${d.type2 ? `<span class="type-tag" style="background:${getTypeColor(d.type2)}">${getTypeName(d.type2)}</span>` : ''}
@@ -448,13 +876,22 @@ async function showDetail(id) {
                 <div id="skill-bloodline" class="tab-content" style="display:none">${renderSkillsList(d.skills['血脉'])}</div>
             </div>
 
-            <div class="ai-review-box">
-                <h3><i class="fas fa-microchip"></i> AI 战术智库 (性格模拟)</h3>
-                <div style="font-size:0.9rem; line-height:1.8;">
-                    ${d.natureRecommendation ? d.natureRecommendation.replace(/\n/g, '<br>') : '暂无分析数据'}
+            ${d.aiReview ? `
+            <div class="ai-review-box master-review">
+                <h3><i class="fas fa-brain"></i> AI 顶级战术对标专家 (V5.4)</h3>
+                <div class="review-status-row">
+                    <span class="review-badge"><i class="fas fa-check-circle"></i> 深度语义分析已就绪</span>
                 </div>
-                <div style="margin-top:1rem; font-size:0.75rem; color: #666; border-top: 1px solid #ccc; padding-top:0.5rem;">
-                    * 以上分析基于当前数据库种族值修正算法生成。
+                <div class="review-text-content">
+                    ${d.aiReview.replace(/\n/g, '<br>')}
+                </div>
+            </div>
+            ` : ''}
+
+            <div class="ai-review-box">
+                <h3><i class="fas fa-microchip"></i> 战术前瞻 (数值修正)</h3>
+                <div style="font-size:0.9rem; line-height:1.8; color: #64748b;">
+                    ${d.natureRecommendation ? d.natureRecommendation.replace(/\n/g, '<br>') : '暂无分析数据'}
                 </div>
             </div>
         `;
@@ -1162,17 +1599,27 @@ async function loadEggGroupPets(groupId) {
         const countEl = document.getElementById('eggGroupPetCount');
         if (countEl) countEl.textContent = `共 ${data.length} 只精灵`;
         grid.innerHTML = data.map(p => {
+            const displayId = p.bookId && p.bookId > 0 ? p.bookId : p.petId;
             const type1Name = getTypeName(p.type1);
             const type1Color = getTypeColor(p.type1);
-            const imgSrc = p.imageUrl ? `${MEDIA_BASE}${p.imageUrl}` : '';
+            const type2Name = p.type2 ? getTypeName(p.type2) : null;
+            const type2Color = p.type2 ? getTypeColor(p.type2) : null;
+            const finalImageUrl = p.imageUrl || `pets/JL_${p.name}.png`;
+            
             return `
-                <div class="pet-card" onclick="openDetail(${p.petId})" style="cursor:pointer">
-                    <div class="pet-card-img">
-                        ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
+                <div class="pet-card" onclick="showDetail(${p.petId})">
+                    <div class="pet-id">#${displayId}</div>
+                    <div class="pet-image-container" style="height: 120px;">
+                        <img src="${MEDIA_BASE}${finalImageUrl}" 
+                              alt="${p.name}" 
+                              class="pet-image" 
+                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="paw-icon" style="display:none;"><i class="fas fa-paw"></i></div>
                     </div>
-                    <div class="pet-card-info">
-                        <h4>${p.name}</h4>
-                        <span class="type-badge" style="background:${type1Color}">${type1Name}</span>
+                    <div class="pet-name" style="font-size: 1rem; margin-bottom: 0.5rem;">${p.name}</div>
+                    <div class="pet-types">
+                        <span class="type-tag" style="background:${type1Color}; padding: 0.2rem 0.6rem; font-size: 0.65rem;">${type1Name}</span>
+                        ${type2Color ? `<span class="type-tag" style="background:${type2Color}; padding: 0.2rem 0.6rem; font-size: 0.65rem;">${type2Name}</span>` : ''}
                     </div>
                 </div>`;
         }).join('');

@@ -10,8 +10,14 @@ public class Pet {
 
     private String name;
 
+    @Column(name = "form")
+    private String form;
+
     @Column(name = "is_boss")
     private Integer isBoss;
+
+    @Column(name = "boss_id")
+    private Integer bossId;
 
     @Column(name = "main_type_id")
     private Integer mainTypeId;
@@ -29,7 +35,14 @@ public class Pet {
     @Column(name = "magic_defense")
     private Integer magicDefense;
 
+    @Column(name = "speed")
     private Integer speed;
+
+    @Column(name = "total_stats")
+    private Integer totalStats;
+
+    @Column(name = "feature_id")
+    private Integer featureId;
 
     @Column(name = "book_id")
     private Integer bookId;
@@ -42,7 +55,13 @@ public class Pet {
 
     private Integer completeness;
 
+    @Column(name = "is_official")
+    private Integer isOfficial;
+
     // Getters and Setters
+    public Integer getIsOfficial() { return isOfficial; }
+    public void setIsOfficial(Integer isOfficial) { this.isOfficial = isOfficial; }
+
     public Integer getCompleteness() { return completeness; }
     public void setCompleteness(Integer completeness) { this.completeness = completeness; }
     public Integer getId() { return id; }
@@ -50,6 +69,10 @@ public class Pet {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public String getForm() { return form; }
+    public void setForm(String form) { this.form = form; }
+    
 
     public Integer getMainTypeId() { return mainTypeId; }
     public void setMainTypeId(Integer mainTypeId) { this.mainTypeId = mainTypeId; }
@@ -110,21 +133,19 @@ public class Pet {
     public Integer getIsBoss() { return isBoss; }
     public void setIsBoss(Integer isBoss) { this.isBoss = isBoss; }
 
-    @Column(name = "pet_feature")
-    private Integer petFeature;
+    public Integer getTotalStats() { return totalStats; }
+    public void setTotalStats(Integer totalStats) { this.totalStats = totalStats; }
 
+    public Integer getFeatureId() { return featureId; }
+    public void setFeatureId(Integer featureId) { this.featureId = featureId; }
 
-
-    @Transient
+    public Integer getPetFeature() { return featureId; }
+    public void setPetFeature(Integer featureId) { this.featureId = featureId; }    @Transient
     private String height;
     @Transient
     private String weight;
     @Transient
     private java.util.List<String> eggGroups;
-
-    public Integer getPetFeature() { return petFeature; }
-    public void setPetFeature(Integer petFeature) { this.petFeature = petFeature; }
-
 
 
     public String getHeight() { return height; }
@@ -135,4 +156,7 @@ public class Pet {
 
     public java.util.List<String> getEggGroups() { return eggGroups; }
     public void setEggGroups(java.util.List<String> eggGroups) { this.eggGroups = eggGroups; }
+
+    public Integer getBossId() { return bossId; }
+    public void setBossId(Integer bossId) { this.bossId = bossId; }
 }

@@ -1,48 +1,22 @@
-# Dependencies
-node_modules/
+# Java
+*.class
 target/
+*.jar
+*.war
+*.ear
 
-# Build outputs
+# Vite / Node
+node_modules/
 dist/
-build/
-
-# IDE
-.idea/
+dist-ssr/
+*.local
 .vscode/
-*.iml
 
-# OS
+# Project Specific
+*.db.pre_reimport_bk
+all_descriptions.txt
+skill_only_descriptions.txt
+startup_*.log
+nohup.out
 .DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Database
-*.db
-*.sqlite
-
-# Maven
-.mvn/
-mvnw
-mvnw.cmd
-
-# Python
-__pycache__/
-*.pyc
-.pytest_cache/
-venv/
-.venv/
-
-# Temporary files
 *.tmp
-*.swp
-*~
-
-# Parser output
-parser/output/
-
-# Backup
-backup/
-

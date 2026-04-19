@@ -9,7 +9,8 @@ export default {
       input: {
         main: resolve(__dirname, 'index.html'),
         encyclopedia: resolve(__dirname, 'encyclopedia.html'),
-        query: resolve(__dirname, 'query.html')
+        query: resolve(__dirname, 'query.html'),
+        tagger: resolve(__dirname, 'tagger.html')
       }
     }
   }

@@ -605,6 +605,23 @@ h1, h2, h3, .logo {
     font-size: 1.15rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.boss-badge {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
 }
 
 .pet-types {
@@ -2787,4 +2804,137 @@ body.mode-duel .battle-only {
     white-space: nowrap !important;
     overflow: hidden;
     flex-wrap: nowrap !important;
+}
+
+/* --- Modal (Pop-up) Styles --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    animation: fadeInModal 0.3s ease;
+}
+
+.modal-content {
+    margin: 5% auto;
+    background: white;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.close {
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.close:hover {
+    color: #ef4444;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* AI 战术对标专家 (V5.4) 专用样式 */
+.ai-review-box.master-review {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(217, 70, 239, 0.08));
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-review-box.master-review h3 {
+    color: #8b5cf6;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.review-status-row {
+    margin-bottom: 1rem;
+}
+
+.review-badge {
+    font-size: 0.75rem;
+    background: #8b5cf6;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.review-text-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #334155;
+    font-weight: 500;
+}
+
+.ai-review-box.master-review::after {
+    content: 'TOP TACTICAL MODEL V5.4';
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    font-family: 'Outfit';
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(139, 92, 246, 0.03);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* --- AI & System Management Styles --- */
+.admin-group {
+    border-top: 1px solid rgba(255, 255, 255, 0.08); /* Distinct separator */
+    padding-top: 1.25rem;
+    margin-top: 1rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+    color: #a78bfa; /* Distinct purple shade for admin tools */
+}
+
+.sidebar-link:hover {
+    background: rgba(167, 139, 250, 0.1);
+    color: #a78bfa;
+    transform: translateX(4px);
+}
+
+.sidebar-link:active {
+    transform: scale(0.98);
 }

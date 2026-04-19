@@ -1,0 +1,11586 @@
+[
+  {
+    "ref_id": 1,
+    "name": "迪莫",
+    "hp": 120,
+    "attack": 80,
+    "magic_attack": 80,
+    "defense": 105,
+    "magic_defense": 105,
+    "speed": 92,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 2,
+    "name": "圣光迪莫",
+    "hp": 120,
+    "attack": 80,
+    "magic_attack": 80,
+    "defense": 105,
+    "magic_defense": 105,
+    "speed": 92,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 3,
+    "name": "喵喵",
+    "hp": 65,
+    "attack": 66,
+    "magic_attack": 66,
+    "defense": 49,
+    "magic_defense": 91,
+    "speed": 33,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 4,
+    "name": "喵呜",
+    "hp": 86,
+    "attack": 87,
+    "magic_attack": 87,
+    "defense": 65,
+    "magic_defense": 121,
+    "speed": 44,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 5,
+    "name": "魔力猫",
+    "hp": 108,
+    "attack": 109,
+    "magic_attack": 109,
+    "defense": 81,
+    "magic_defense": 151,
+    "speed": 55,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 6,
+    "name": "叶冕魔力猫",
+    "hp": 108,
+    "attack": 127,
+    "magic_attack": 127,
+    "defense": 81,
+    "magic_defense": 151,
+    "speed": 55,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 7,
+    "name": "火花",
+    "hp": 70,
+    "attack": 84,
+    "magic_attack": 37,
+    "defense": 56,
+    "magic_defense": 43,
+    "speed": 78,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 8,
+    "name": "焰火",
+    "hp": 93,
+    "attack": 111,
+    "magic_attack": 49,
+    "defense": 75,
+    "magic_defense": 58,
+    "speed": 104,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 9,
+    "name": "火神",
+    "hp": 117,
+    "attack": 139,
+    "magic_attack": 61,
+    "defense": 94,
+    "magic_defense": 72,
+    "speed": 130,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 10,
+    "name": "烈火战神",
+    "hp": 117,
+    "attack": 175,
+    "magic_attack": 84,
+    "defense": 94,
+    "magic_defense": 72,
+    "speed": 130,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 11,
+    "name": "水蓝蓝",
+    "hp": 75,
+    "attack": 35,
+    "magic_attack": 76,
+    "defense": 56,
+    "magic_defense": 79,
+    "speed": 51,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 12,
+    "name": "波波拉",
+    "hp": 100,
+    "attack": 46,
+    "magic_attack": 102,
+    "defense": 75,
+    "magic_defense": 106,
+    "speed": 68,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 13,
+    "name": "水灵",
+    "hp": 125,
+    "attack": 58,
+    "magic_attack": 127,
+    "defense": 94,
+    "magic_defense": 132,
+    "speed": 85,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 14,
+    "name": "圣水守护",
+    "hp": 125,
+    "attack": 67,
+    "magic_attack": 141,
+    "defense": 104,
+    "magic_defense": 145,
+    "speed": 85,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 15,
+    "name": "鸭吉吉",
+    "hp": 136,
+    "attack": 95,
+    "magic_attack": 35,
+    "defense": 55,
+    "magic_defense": 45,
+    "speed": 105,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 16,
+    "name": "鸭吉吉",
+    "hp": 136,
+    "attack": 35,
+    "magic_attack": 95,
+    "defense": 45,
+    "magic_defense": 55,
+    "speed": 105,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 17,
+    "name": "鸭吉吉",
+    "hp": 107,
+    "attack": 53,
+    "magic_attack": 125,
+    "defense": 80,
+    "magic_defense": 113,
+    "speed": 100,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 18,
+    "name": "鸭吉吉国王",
+    "hp": 149,
+    "attack": 202,
+    "magic_attack": 83,
+    "defense": 86,
+    "magic_defense": 70,
+    "speed": 105,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 19,
+    "name": "鸭吉吉国王",
+    "hp": 149,
+    "attack": 83,
+    "magic_attack": 202,
+    "defense": 70,
+    "magic_defense": 86,
+    "speed": 105,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 20,
+    "name": "鸭吉吉国王",
+    "hp": 117,
+    "attack": 88,
+    "magic_attack": 192,
+    "defense": 88,
+    "magic_defense": 123,
+    "speed": 100,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 21,
+    "name": "板板壳",
+    "hp": 67,
+    "attack": 28,
+    "magic_attack": 72,
+    "defense": 64,
+    "magic_defense": 81,
+    "speed": 45,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 22,
+    "name": "板板壳",
+    "hp": 88,
+    "attack": 24,
+    "magic_attack": 72,
+    "defense": 56,
+    "magic_defense": 59,
+    "speed": 48,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 23,
+    "name": "咔咔壳",
+    "hp": 90,
+    "attack": 37,
+    "magic_attack": 96,
+    "defense": 85,
+    "magic_defense": 107,
+    "speed": 60,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 24,
+    "name": "咔咔壳",
+    "hp": 117,
+    "attack": 31,
+    "magic_attack": 96,
+    "defense": 75,
+    "magic_defense": 79,
+    "speed": 64,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 25,
+    "name": "水泡壳",
+    "hp": 112,
+    "attack": 46,
+    "magic_attack": 120,
+    "defense": 107,
+    "magic_defense": 134,
+    "speed": 75,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 26,
+    "name": "水泡壳",
+    "hp": 146,
+    "attack": 39,
+    "magic_attack": 121,
+    "defense": 93,
+    "magic_defense": 98,
+    "speed": 80,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 27,
+    "name": "锥尾羊",
+    "hp": 67,
+    "attack": 66,
+    "magic_attack": 29,
+    "defense": 72,
+    "magic_defense": 49,
+    "speed": 66,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 28,
+    "name": "铃兰羊",
+    "hp": 89,
+    "attack": 89,
+    "magic_attack": 39,
+    "defense": 96,
+    "magic_defense": 65,
+    "speed": 88,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 29,
+    "name": "花影羚羊",
+    "hp": 112,
+    "attack": 111,
+    "magic_attack": 48,
+    "defense": 120,
+    "magic_defense": 81,
+    "speed": 110,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 30,
+    "name": "雪绒鸟",
+    "hp": 54,
+    "attack": 77,
+    "magic_attack": 33,
+    "defense": 65,
+    "magic_defense": 44,
+    "speed": 69,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 31,
+    "name": "雪绒鸟",
+    "hp": 59,
+    "attack": 80,
+    "magic_attack": 32,
+    "defense": 58,
+    "magic_defense": 41,
+    "speed": 69,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 32,
+    "name": "雪绒鸟",
+    "hp": 54,
+    "attack": 76,
+    "magic_attack": 25,
+    "defense": 59,
+    "magic_defense": 51,
+    "speed": 69,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 33,
+    "name": "雪绒鸟",
+    "hp": 56,
+    "attack": 77,
+    "magic_attack": 26,
+    "defense": 58,
+    "magic_defense": 49,
+    "speed": 69,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 34,
+    "name": "冬羽雀",
+    "hp": 72,
+    "attack": 103,
+    "magic_attack": 44,
+    "defense": 86,
+    "magic_defense": 59,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 35,
+    "name": "冬羽雀",
+    "hp": 79,
+    "attack": 107,
+    "magic_attack": 43,
+    "defense": 77,
+    "magic_defense": 55,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 36,
+    "name": "冬羽雀",
+    "hp": 72,
+    "attack": 102,
+    "magic_attack": 34,
+    "defense": 78,
+    "magic_defense": 68,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 37,
+    "name": "冬羽雀",
+    "hp": 75,
+    "attack": 103,
+    "magic_attack": 35,
+    "defense": 78,
+    "magic_defense": 65,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 38,
+    "name": "岚鸟",
+    "hp": 90,
+    "attack": 128,
+    "magic_attack": 55,
+    "defense": 108,
+    "magic_defense": 74,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 39,
+    "name": "岚鸟",
+    "hp": 99,
+    "attack": 133,
+    "magic_attack": 54,
+    "defense": 96,
+    "magic_defense": 69,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 40,
+    "name": "岚鸟",
+    "hp": 90,
+    "attack": 127,
+    "magic_attack": 42,
+    "defense": 98,
+    "magic_defense": 85,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 41,
+    "name": "岚鸟",
+    "hp": 93,
+    "attack": 128,
+    "magic_attack": 44,
+    "defense": 97,
+    "magic_defense": 81,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 42,
+    "name": "霜翼领主",
+    "hp": 90,
+    "attack": 142,
+    "magic_attack": 63,
+    "defense": 108,
+    "magic_defense": 74,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 43,
+    "name": "霜翼领主",
+    "hp": 90,
+    "attack": 142,
+    "magic_attack": 63,
+    "defense": 108,
+    "magic_defense": 74,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 44,
+    "name": "霜翼领主",
+    "hp": 90,
+    "attack": 142,
+    "magic_attack": 63,
+    "defense": 108,
+    "magic_defense": 74,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 45,
+    "name": "霜翼领主",
+    "hp": 90,
+    "attack": 142,
+    "magic_attack": 63,
+    "defense": 108,
+    "magic_defense": 74,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 46,
+    "name": "小灵菇",
+    "hp": 67,
+    "attack": 59,
+    "magic_attack": 59,
+    "defense": 62,
+    "magic_defense": 82,
+    "speed": 45,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 47,
+    "name": "幻灵菇",
+    "hp": 89,
+    "attack": 79,
+    "magic_attack": 79,
+    "defense": 83,
+    "magic_defense": 109,
+    "speed": 60,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 48,
+    "name": "幻影灵菇",
+    "hp": 111,
+    "attack": 98,
+    "magic_attack": 98,
+    "defense": 103,
+    "magic_defense": 136,
+    "speed": 75,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 49,
+    "name": "石肤蜥",
+    "hp": 69,
+    "attack": 54,
+    "magic_attack": 53,
+    "defense": 65,
+    "magic_defense": 45,
+    "speed": 57,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 50,
+    "name": "石肤蜥",
+    "hp": 68,
+    "attack": 54,
+    "magic_attack": 53,
+    "defense": 64,
+    "magic_defense": 44,
+    "speed": 60,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 51,
+    "name": "石刺蜥",
+    "hp": 92,
+    "attack": 72,
+    "magic_attack": 71,
+    "defense": 87,
+    "magic_defense": 60,
+    "speed": 76,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 52,
+    "name": "石刺蜥",
+    "hp": 91,
+    "attack": 72,
+    "magic_attack": 71,
+    "defense": 85,
+    "magic_defense": 59,
+    "speed": 80,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 53,
+    "name": "石冠王蜥",
+    "hp": 115,
+    "attack": 89,
+    "magic_attack": 89,
+    "defense": 109,
+    "magic_defense": 75,
+    "speed": 95,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 54,
+    "name": "石冠王蜥",
+    "hp": 113,
+    "attack": 90,
+    "magic_attack": 89,
+    "defense": 106,
+    "magic_defense": 74,
+    "speed": 100,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 55,
+    "name": "布是石",
+    "hp": 72,
+    "attack": 81,
+    "magic_attack": 29,
+    "defense": 95,
+    "magic_defense": 90,
+    "speed": 42,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 56,
+    "name": "布是岩",
+    "hp": 96,
+    "attack": 108,
+    "magic_attack": 39,
+    "defense": 127,
+    "magic_defense": 120,
+    "speed": 56,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 57,
+    "name": "布克棱岩",
+    "hp": 120,
+    "attack": 135,
+    "magic_attack": 49,
+    "defense": 159,
+    "magic_defense": 150,
+    "speed": 70,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 58,
+    "name": "迷嶂布莱克",
+    "hp": 125,
+    "attack": 139,
+    "magic_attack": 52,
+    "defense": 164,
+    "magic_defense": 154,
+    "speed": 70,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 59,
+    "name": "恶魔叮",
+    "hp": 86,
+    "attack": 112,
+    "magic_attack": 44,
+    "defense": 58,
+    "magic_defense": 43,
+    "speed": 84,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 60,
+    "name": "叮叮恶魔",
+    "hp": 108,
+    "attack": 140,
+    "magic_attack": 55,
+    "defense": 73,
+    "magic_defense": 54,
+    "speed": 105,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 61,
+    "name": "毛毛",
+    "hp": 32,
+    "attack": 28,
+    "magic_attack": 28,
+    "defense": 40,
+    "magic_defense": 40,
+    "speed": 60,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 62,
+    "name": "爬爬",
+    "hp": 42,
+    "attack": 37,
+    "magic_attack": 37,
+    "defense": 53,
+    "magic_defense": 53,
+    "speed": 80,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 63,
+    "name": "化蝶",
+    "hp": 53,
+    "attack": 46,
+    "magic_attack": 46,
+    "defense": 66,
+    "magic_defense": 66,
+    "speed": 100,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 64,
+    "name": "化蝶",
+    "hp": 43,
+    "attack": 42,
+    "magic_attack": 42,
+    "defense": 67,
+    "magic_defense": 70,
+    "speed": 105,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 65,
+    "name": "化蝶",
+    "hp": 49,
+    "attack": 47,
+    "magic_attack": 41,
+    "defense": 67,
+    "magic_defense": 67,
+    "speed": 95,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 66,
+    "name": "化蝶",
+    "hp": 55,
+    "attack": 46,
+    "magic_attack": 44,
+    "defense": 62,
+    "magic_defense": 65,
+    "speed": 90,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 67,
+    "name": "幽影树",
+    "hp": 111,
+    "attack": 96,
+    "magic_attack": 96,
+    "defense": 65,
+    "magic_defense": 123,
+    "speed": 80,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 68,
+    "name": "幻影荆棘",
+    "hp": 125,
+    "attack": 96,
+    "magic_attack": 96,
+    "defense": 72,
+    "magic_defense": 134,
+    "speed": 80,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 69,
+    "name": "小鼠獭",
+    "hp": 73,
+    "attack": 57,
+    "magic_attack": 57,
+    "defense": 60,
+    "magic_defense": 60,
+    "speed": 48,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 70,
+    "name": "燕尾獭",
+    "hp": 97,
+    "attack": 77,
+    "magic_attack": 77,
+    "defense": 81,
+    "magic_defense": 81,
+    "speed": 64,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 71,
+    "name": "卷胡巨獭",
+    "hp": 121,
+    "attack": 96,
+    "magic_attack": 96,
+    "defense": 101,
+    "magic_defense": 101,
+    "speed": 80,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 72,
+    "name": "矿晶虫",
+    "hp": 79,
+    "attack": 77,
+    "magic_attack": 81,
+    "defense": 102,
+    "magic_defense": 75,
+    "speed": 52,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 73,
+    "name": "晶石蜗",
+    "hp": 99,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 128,
+    "magic_defense": 94,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 74,
+    "name": "晶石蜗",
+    "hp": 94,
+    "attack": 97,
+    "magic_attack": 101,
+    "defense": 137,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 75,
+    "name": "晶石蜗",
+    "hp": 97,
+    "attack": 101,
+    "magic_attack": 101,
+    "defense": 128,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 76,
+    "name": "晶石蜗",
+    "hp": 97,
+    "attack": 97,
+    "magic_attack": 101,
+    "defense": 132,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 77,
+    "name": "晶石蜗",
+    "hp": 99,
+    "attack": 97,
+    "magic_attack": 107,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 78,
+    "name": "晶石蜗",
+    "hp": 95,
+    "attack": 97,
+    "magic_attack": 102,
+    "defense": 130,
+    "magic_defense": 91,
+    "speed": 70,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 79,
+    "name": "钻石蜗",
+    "hp": 93,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 80,
+    "name": "钻石蜗",
+    "hp": 93,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 81,
+    "name": "钻石蜗",
+    "hp": 93,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 82,
+    "name": "钻石蜗",
+    "hp": 93,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 83,
+    "name": "钻石蜗",
+    "hp": 93,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 84,
+    "name": "钻石蜗",
+    "hp": 93,
+    "attack": 96,
+    "magic_attack": 101,
+    "defense": 124,
+    "magic_defense": 91,
+    "speed": 65,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 85,
+    "name": "奇丽草",
+    "hp": 67,
+    "attack": 69,
+    "magic_attack": 69,
+    "defense": 73,
+    "magic_defense": 57,
+    "speed": 48,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 86,
+    "name": "奇丽叶",
+    "hp": 90,
+    "attack": 92,
+    "magic_attack": 92,
+    "defense": 97,
+    "magic_defense": 76,
+    "speed": 64,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 87,
+    "name": "奇丽花",
+    "hp": 112,
+    "attack": 115,
+    "magic_attack": 115,
+    "defense": 121,
+    "magic_defense": 95,
+    "speed": 80,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 88,
+    "name": "奇丽果",
+    "hp": 112,
+    "attack": 128,
+    "magic_attack": 128,
+    "defense": 133,
+    "magic_defense": 105,
+    "speed": 80,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 89,
+    "name": "丢丢",
+    "hp": 44,
+    "attack": 45,
+    "magic_attack": 12,
+    "defense": 49,
+    "magic_defense": 40,
+    "speed": 78,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 90,
+    "name": "丢丢",
+    "hp": 44,
+    "attack": 42,
+    "magic_attack": 12,
+    "defense": 55,
+    "magic_defense": 43,
+    "speed": 75,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 91,
+    "name": "丢丢",
+    "hp": 46,
+    "attack": 41,
+    "magic_attack": 8,
+    "defense": 48,
+    "magic_defense": 44,
+    "speed": 81,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 92,
+    "name": "卡卡虫",
+    "hp": 59,
+    "attack": 60,
+    "magic_attack": 16,
+    "defense": 65,
+    "magic_defense": 53,
+    "speed": 104,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 93,
+    "name": "卡卡虫",
+    "hp": 58,
+    "attack": 56,
+    "magic_attack": 16,
+    "defense": 74,
+    "magic_defense": 57,
+    "speed": 100,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 94,
+    "name": "卡卡虫",
+    "hp": 62,
+    "attack": 54,
+    "magic_attack": 11,
+    "defense": 64,
+    "magic_defense": 58,
+    "speed": 108,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 95,
+    "name": "卡瓦重",
+    "hp": 74,
+    "attack": 75,
+    "magic_attack": 20,
+    "defense": 81,
+    "magic_defense": 67,
+    "speed": 130,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 96,
+    "name": "卡瓦重",
+    "hp": 73,
+    "attack": 70,
+    "magic_attack": 20,
+    "defense": 92,
+    "magic_defense": 71,
+    "speed": 125,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 97,
+    "name": "卡瓦重",
+    "hp": 77,
+    "attack": 68,
+    "magic_attack": 14,
+    "defense": 79,
+    "magic_defense": 73,
+    "speed": 135,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 98,
+    "name": "护主犬",
+    "hp": 68,
+    "attack": 103,
+    "magic_attack": 37,
+    "defense": 81,
+    "magic_defense": 66,
+    "speed": 96,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 99,
+    "name": "音速犬",
+    "hp": 85,
+    "attack": 128,
+    "magic_attack": 46,
+    "defense": 101,
+    "magic_defense": 82,
+    "speed": 120,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 100,
+    "name": "风暴战犬",
+    "hp": 85,
+    "attack": 128,
+    "magic_attack": 46,
+    "defense": 101,
+    "magic_defense": 82,
+    "speed": 120,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 101,
+    "name": "绿耳松鼠",
+    "hp": 69,
+    "attack": 50,
+    "magic_attack": 47,
+    "defense": 67,
+    "magic_defense": 52,
+    "speed": 48,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 102,
+    "name": "抱枕松鼠",
+    "hp": 92,
+    "attack": 67,
+    "magic_attack": 63,
+    "defense": 89,
+    "magic_defense": 70,
+    "speed": 64,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 103,
+    "name": "蹦床松鼠",
+    "hp": 114,
+    "attack": 84,
+    "magic_attack": 79,
+    "defense": 111,
+    "magic_defense": 87,
+    "speed": 80,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 104,
+    "name": "嘟嘟煲",
+    "hp": 110,
+    "attack": 29,
+    "magic_attack": 82,
+    "defense": 71,
+    "magic_defense": 83,
+    "speed": 84,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 105,
+    "name": "嘟嘟锅",
+    "hp": 137,
+    "attack": 36,
+    "magic_attack": 102,
+    "defense": 89,
+    "magic_defense": 104,
+    "speed": 105,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 106,
+    "name": "小灵面",
+    "hp": 55,
+    "attack": 30,
+    "magic_attack": 72,
+    "defense": 59,
+    "magic_defense": 81,
+    "speed": 69,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 107,
+    "name": "暗影灵面",
+    "hp": 84,
+    "attack": 30,
+    "magic_attack": 96,
+    "defense": 83,
+    "magic_defense": 88,
+    "speed": 92,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 108,
+    "name": "暗影灵面",
+    "hp": 74,
+    "attack": 40,
+    "magic_attack": 96,
+    "defense": 78,
+    "magic_defense": 108,
+    "speed": 92,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 109,
+    "name": "幽冥眼",
+    "hp": 105,
+    "attack": 38,
+    "magic_attack": 120,
+    "defense": 104,
+    "magic_defense": 110,
+    "speed": 115,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 110,
+    "name": "幽冥眼",
+    "hp": 92,
+    "attack": 50,
+    "magic_attack": 120,
+    "defense": 98,
+    "magic_defense": 135,
+    "speed": 115,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 111,
+    "name": "梦游",
+    "hp": 90,
+    "attack": 40,
+    "magic_attack": 106,
+    "defense": 60,
+    "magic_defense": 74,
+    "speed": 92,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 112,
+    "name": "梦游",
+    "hp": 90,
+    "attack": 40,
+    "magic_attack": 106,
+    "defense": 60,
+    "magic_defense": 74,
+    "speed": 92,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 113,
+    "name": "梦悠悠",
+    "hp": 113,
+    "attack": 50,
+    "magic_attack": 133,
+    "defense": 75,
+    "magic_defense": 93,
+    "speed": 115,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 114,
+    "name": "梦悠悠",
+    "hp": 113,
+    "attack": 50,
+    "magic_attack": 133,
+    "defense": 75,
+    "magic_defense": 93,
+    "speed": 115,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 115,
+    "name": "兽花蕾",
+    "hp": 70,
+    "attack": 79,
+    "magic_attack": 82,
+    "defense": 70,
+    "magic_defense": 97,
+    "speed": 115,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 116,
+    "name": "仪使者",
+    "hp": 64,
+    "attack": 54,
+    "magic_attack": 57,
+    "defense": 69,
+    "magic_defense": 71,
+    "speed": 51,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 117,
+    "name": "仪式之星",
+    "hp": 85,
+    "attack": 72,
+    "magic_attack": 76,
+    "defense": 92,
+    "magic_defense": 95,
+    "speed": 68,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 118,
+    "name": "仪式巨像",
+    "hp": 106,
+    "attack": 90,
+    "magic_attack": 95,
+    "defense": 115,
+    "magic_defense": 119,
+    "speed": 85,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 119,
+    "name": "祭礼巨像",
+    "hp": 106,
+    "attack": 105,
+    "magic_attack": 111,
+    "defense": 115,
+    "magic_defense": 119,
+    "speed": 85,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 120,
+    "name": "蹦蹦种子",
+    "hp": 60,
+    "attack": 64,
+    "magic_attack": 66,
+    "defense": 44,
+    "magic_defense": 63,
+    "speed": 51,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 121,
+    "name": "蹦蹦种子",
+    "hp": 62,
+    "attack": 61,
+    "magic_attack": 66,
+    "defense": 44,
+    "magic_defense": 63,
+    "speed": 51,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 122,
+    "name": "蹦蹦种子",
+    "hp": 57,
+    "attack": 62,
+    "magic_attack": 66,
+    "defense": 48,
+    "magic_defense": 67,
+    "speed": 48,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 123,
+    "name": "蹦蹦种子",
+    "hp": 59,
+    "attack": 60,
+    "magic_attack": 66,
+    "defense": 44,
+    "magic_defense": 63,
+    "speed": 54,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 124,
+    "name": "蹦蹦草",
+    "hp": 80,
+    "attack": 85,
+    "magic_attack": 88,
+    "defense": 59,
+    "magic_defense": 84,
+    "speed": 68,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 125,
+    "name": "蹦蹦草",
+    "hp": 83,
+    "attack": 81,
+    "magic_attack": 87,
+    "defense": 59,
+    "magic_defense": 84,
+    "speed": 68,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 126,
+    "name": "蹦蹦草",
+    "hp": 76,
+    "attack": 82,
+    "magic_attack": 87,
+    "defense": 64,
+    "magic_defense": 90,
+    "speed": 64,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 127,
+    "name": "蹦蹦草",
+    "hp": 79,
+    "attack": 80,
+    "magic_attack": 88,
+    "defense": 59,
+    "magic_defense": 84,
+    "speed": 72,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 128,
+    "name": "蹦蹦花",
+    "hp": 100,
+    "attack": 107,
+    "magic_attack": 110,
+    "defense": 73,
+    "magic_defense": 105,
+    "speed": 85,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 129,
+    "name": "蹦蹦花",
+    "hp": 103,
+    "attack": 101,
+    "magic_attack": 109,
+    "defense": 73,
+    "magic_defense": 105,
+    "speed": 85,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 130,
+    "name": "蹦蹦花",
+    "hp": 95,
+    "attack": 103,
+    "magic_attack": 109,
+    "defense": 80,
+    "magic_defense": 112,
+    "speed": 80,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 131,
+    "name": "蹦蹦花",
+    "hp": 99,
+    "attack": 100,
+    "magic_attack": 110,
+    "defense": 73,
+    "magic_defense": 106,
+    "speed": 90,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 132,
+    "name": "蹦蹦果",
+    "hp": 100,
+    "attack": 87,
+    "magic_attack": 90,
+    "defense": 73,
+    "magic_defense": 105,
+    "speed": 85,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 133,
+    "name": "蹦蹦果",
+    "hp": 100,
+    "attack": 87,
+    "magic_attack": 90,
+    "defense": 73,
+    "magic_defense": 105,
+    "speed": 85,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 134,
+    "name": "蹦蹦果",
+    "hp": 100,
+    "attack": 87,
+    "magic_attack": 90,
+    "defense": 73,
+    "magic_defense": 105,
+    "speed": 85,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 135,
+    "name": "蹦蹦果",
+    "hp": 100,
+    "attack": 87,
+    "magic_attack": 90,
+    "defense": 73,
+    "magic_defense": 105,
+    "speed": 85,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 136,
+    "name": "电咩咩",
+    "hp": 47,
+    "attack": 49,
+    "magic_attack": 49,
+    "defense": 55,
+    "magic_defense": 57,
+    "speed": 75,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 137,
+    "name": "粉咩咩",
+    "hp": 62,
+    "attack": 66,
+    "magic_attack": 66,
+    "defense": 73,
+    "magic_defense": 76,
+    "speed": 100,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 138,
+    "name": "电球咩咩",
+    "hp": 78,
+    "attack": 82,
+    "magic_attack": 82,
+    "defense": 91,
+    "magic_defense": 95,
+    "speed": 125,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 139,
+    "name": "蒲公英",
+    "hp": 89,
+    "attack": 99,
+    "magic_attack": 94,
+    "defense": 103,
+    "magic_defense": 78,
+    "speed": 52,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 140,
+    "name": "蒲公英娃娃",
+    "hp": 111,
+    "attack": 123,
+    "magic_attack": 117,
+    "defense": 129,
+    "magic_defense": 97,
+    "speed": 65,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 141,
+    "name": "伊贝儿",
+    "hp": 85,
+    "attack": 73,
+    "magic_attack": 71,
+    "defense": 76,
+    "magic_defense": 76,
+    "speed": 72,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 142,
+    "name": "伊贝粉粉",
+    "hp": 106,
+    "attack": 91,
+    "magic_attack": 89,
+    "defense": 95,
+    "magic_defense": 95,
+    "speed": 90,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 143,
+    "name": "白发懒人",
+    "hp": 86,
+    "attack": 94,
+    "magic_attack": 38,
+    "defense": 81,
+    "magic_defense": 66,
+    "speed": 45,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 144,
+    "name": "动力猿",
+    "hp": 115,
+    "attack": 125,
+    "magic_attack": 51,
+    "defense": 108,
+    "magic_defense": 88,
+    "speed": 60,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 145,
+    "name": "瞌睡王",
+    "hp": 144,
+    "attack": 157,
+    "magic_attack": 64,
+    "defense": 135,
+    "magic_defense": 110,
+    "speed": 75,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 146,
+    "name": "海盔虫",
+    "hp": 71,
+    "attack": 25,
+    "magic_attack": 59,
+    "defense": 46,
+    "magic_defense": 66,
+    "speed": 60,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 147,
+    "name": "海盔虫",
+    "hp": 70,
+    "attack": 25,
+    "magic_attack": 60,
+    "defense": 44,
+    "magic_defense": 64,
+    "speed": 63,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 148,
+    "name": "刺盔虫",
+    "hp": 94,
+    "attack": 33,
+    "magic_attack": 79,
+    "defense": 61,
+    "magic_defense": 88,
+    "speed": 80,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 149,
+    "name": "刺盔虫",
+    "hp": 94,
+    "attack": 33,
+    "magic_attack": 80,
+    "defense": 59,
+    "magic_defense": 85,
+    "speed": 84,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 150,
+    "name": "千棘盔",
+    "hp": 118,
+    "attack": 41,
+    "magic_attack": 99,
+    "defense": 76,
+    "magic_defense": 111,
+    "speed": 100,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 151,
+    "name": "千棘盔",
+    "hp": 117,
+    "attack": 41,
+    "magic_attack": 100,
+    "defense": 74,
+    "magic_defense": 107,
+    "speed": 105,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 152,
+    "name": "千棘海针",
+    "hp": 118,
+    "attack": 32,
+    "magic_attack": 85,
+    "defense": 94,
+    "magic_defense": 133,
+    "speed": 100,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 153,
+    "name": "千棘海针",
+    "hp": 118,
+    "attack": 32,
+    "magic_attack": 85,
+    "defense": 94,
+    "magic_defense": 133,
+    "speed": 100,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 154,
+    "name": "菊花梨",
+    "hp": 106,
+    "attack": 49,
+    "magic_attack": 116,
+    "defense": 77,
+    "magic_defense": 115,
+    "speed": 60,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 155,
+    "name": "咔咔羽毛",
+    "hp": 58,
+    "attack": 68,
+    "magic_attack": 66,
+    "defense": 61,
+    "magic_defense": 53,
+    "speed": 72,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 156,
+    "name": "咔咔雀",
+    "hp": 78,
+    "attack": 91,
+    "magic_attack": 88,
+    "defense": 81,
+    "magic_defense": 71,
+    "speed": 96,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 157,
+    "name": "咔咔鸟",
+    "hp": 97,
+    "attack": 114,
+    "magic_attack": 110,
+    "defense": 101,
+    "magic_defense": 89,
+    "speed": 120,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 158,
+    "name": "小星光",
+    "hp": 60,
+    "attack": 81,
+    "magic_attack": 85,
+    "defense": 72,
+    "magic_defense": 88,
+    "speed": 108,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 159,
+    "name": "小星光",
+    "hp": 64,
+    "attack": 76,
+    "magic_attack": 85,
+    "defense": 72,
+    "magic_defense": 96,
+    "speed": 100,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 160,
+    "name": "星光狮",
+    "hp": 75,
+    "attack": 101,
+    "magic_attack": 106,
+    "defense": 90,
+    "magic_defense": 110,
+    "speed": 135,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 161,
+    "name": "星光狮",
+    "hp": 80,
+    "attack": 95,
+    "magic_attack": 107,
+    "defense": 90,
+    "magic_defense": 120,
+    "speed": 125,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 162,
+    "name": "一窝蜂",
+    "hp": 87,
+    "attack": 32,
+    "magic_attack": 29,
+    "defense": 27,
+    "magic_defense": 27,
+    "speed": 26,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 163,
+    "name": "黄蜂后",
+    "hp": 116,
+    "attack": 43,
+    "magic_attack": 39,
+    "defense": 36,
+    "magic_defense": 36,
+    "speed": 35,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 164,
+    "name": "花魁蜂后",
+    "hp": 145,
+    "attack": 54,
+    "magic_attack": 49,
+    "defense": 45,
+    "magic_defense": 45,
+    "speed": 44,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 165,
+    "name": "女王蜂",
+    "hp": 145,
+    "attack": 50,
+    "magic_attack": 45,
+    "defense": 42,
+    "magic_defense": 42,
+    "speed": 40,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 166,
+    "name": "小夜",
+    "hp": 60,
+    "attack": 69,
+    "magic_attack": 63,
+    "defense": 62,
+    "magic_defense": 51,
+    "speed": 69,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 167,
+    "name": "紫夜",
+    "hp": 80,
+    "attack": 92,
+    "magic_attack": 84,
+    "defense": 83,
+    "magic_defense": 68,
+    "speed": 92,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 168,
+    "name": "朔夜伊芙",
+    "hp": 100,
+    "attack": 115,
+    "magic_attack": 105,
+    "defense": 104,
+    "magic_defense": 85,
+    "speed": 115,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 169,
+    "name": "伏地兽",
+    "hp": 95,
+    "attack": 56,
+    "magic_attack": 25,
+    "defense": 70,
+    "magic_defense": 41,
+    "speed": 51,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 170,
+    "name": "贪食鼹",
+    "hp": 126,
+    "attack": 74,
+    "magic_attack": 33,
+    "defense": 94,
+    "magic_defense": 54,
+    "speed": 68,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 171,
+    "name": "巨噬针鼹",
+    "hp": 158,
+    "attack": 93,
+    "magic_attack": 41,
+    "defense": 117,
+    "magic_defense": 68,
+    "speed": 85,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 172,
+    "name": "乖乖鹄",
+    "hp": 75,
+    "attack": 57,
+    "magic_attack": 52,
+    "defense": 83,
+    "magic_defense": 58,
+    "speed": 69,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 173,
+    "name": "蓝珠天鹅",
+    "hp": 100,
+    "attack": 76,
+    "magic_attack": 69,
+    "defense": 110,
+    "magic_defense": 78,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 174,
+    "name": "翠顶夫人",
+    "hp": 125,
+    "attack": 95,
+    "magic_attack": 86,
+    "defense": 138,
+    "magic_defense": 97,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 175,
+    "name": "黑羽夫人",
+    "hp": 132,
+    "attack": 93,
+    "magic_attack": 87,
+    "defense": 130,
+    "magic_defense": 90,
+    "speed": 120,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 176,
+    "name": "锤头鹳",
+    "hp": 111,
+    "attack": 67,
+    "magic_attack": 65,
+    "defense": 91,
+    "magic_defense": 72,
+    "speed": 105,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 177,
+    "name": "绿草精灵",
+    "hp": 79,
+    "attack": 35,
+    "magic_attack": 89,
+    "defense": 87,
+    "magic_defense": 111,
+    "speed": 72,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 178,
+    "name": "魔草巫灵",
+    "hp": 99,
+    "attack": 43,
+    "magic_attack": 112,
+    "defense": 109,
+    "magic_defense": 139,
+    "speed": 90,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 179,
+    "name": "记忆石",
+    "hp": 112,
+    "attack": 108,
+    "magic_attack": 97,
+    "defense": 141,
+    "magic_defense": 79,
+    "speed": 70,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 180,
+    "name": "小黑猫",
+    "hp": 121,
+    "attack": 72,
+    "magic_attack": 130,
+    "defense": 54,
+    "magic_defense": 95,
+    "speed": 56,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 181,
+    "name": "黑猫巫师",
+    "hp": 152,
+    "attack": 91,
+    "magic_attack": 163,
+    "defense": 67,
+    "magic_defense": 119,
+    "speed": 70,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 182,
+    "name": "黑猫密探",
+    "hp": 152,
+    "attack": 107,
+    "magic_attack": 186,
+    "defense": 67,
+    "magic_defense": 119,
+    "speed": 70,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 183,
+    "name": "小草虫",
+    "hp": 73,
+    "attack": 40,
+    "magic_attack": 43,
+    "defense": 50,
+    "magic_defense": 57,
+    "speed": 60,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 184,
+    "name": "草衣虫",
+    "hp": 97,
+    "attack": 53,
+    "magic_attack": 57,
+    "defense": 67,
+    "magic_defense": 75,
+    "speed": 80,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 185,
+    "name": "花衣蝶",
+    "hp": 122,
+    "attack": 67,
+    "magic_attack": 72,
+    "defense": 84,
+    "magic_defense": 94,
+    "speed": 100,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 186,
+    "name": "绿翼鸟",
+    "hp": 52,
+    "attack": 68,
+    "magic_attack": 20,
+    "defense": 56,
+    "magic_defense": 53,
+    "speed": 81,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 187,
+    "name": "魔翼鸟",
+    "hp": 70,
+    "attack": 91,
+    "magic_attack": 27,
+    "defense": 75,
+    "magic_defense": 70,
+    "speed": 108,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 188,
+    "name": "魔眷鸟",
+    "hp": 87,
+    "attack": 113,
+    "magic_attack": 34,
+    "defense": 94,
+    "magic_defense": 88,
+    "speed": 135,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 189,
+    "name": "阿米亚特",
+    "hp": 64,
+    "attack": 95,
+    "magic_attack": 47,
+    "defense": 67,
+    "magic_defense": 42,
+    "speed": 45,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 190,
+    "name": "阿米樱",
+    "hp": 86,
+    "attack": 127,
+    "magic_attack": 62,
+    "defense": 89,
+    "magic_defense": 56,
+    "speed": 60,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 191,
+    "name": "罗隐",
+    "hp": 107,
+    "attack": 159,
+    "magic_attack": 78,
+    "defense": 112,
+    "magic_defense": 70,
+    "speed": 75,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 192,
+    "name": "风铃鲨",
+    "hp": 54,
+    "attack": 46,
+    "magic_attack": 46,
+    "defense": 63,
+    "magic_defense": 63,
+    "speed": 75,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 193,
+    "name": "蓝蝶鲨",
+    "hp": 72,
+    "attack": 61,
+    "magic_attack": 61,
+    "defense": 84,
+    "magic_defense": 84,
+    "speed": 100,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 194,
+    "name": "彩蝶鲨",
+    "hp": 90,
+    "attack": 77,
+    "magic_attack": 77,
+    "defense": 105,
+    "magic_defense": 105,
+    "speed": 125,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 195,
+    "name": "神谕鲨",
+    "hp": 90,
+    "attack": 77,
+    "magic_attack": 77,
+    "defense": 105,
+    "magic_defense": 105,
+    "speed": 125,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 196,
+    "name": "石石",
+    "hp": 76,
+    "attack": 79,
+    "magic_attack": 79,
+    "defense": 101,
+    "magic_defense": 56,
+    "speed": 76,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 197,
+    "name": "巨灵石",
+    "hp": 95,
+    "attack": 99,
+    "magic_attack": 99,
+    "defense": 126,
+    "magic_defense": 70,
+    "speed": 95,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 198,
+    "name": "小独角兽",
+    "hp": 79,
+    "attack": 48,
+    "magic_attack": 129,
+    "defense": 62,
+    "magic_defense": 74,
+    "speed": 84,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 199,
+    "name": "白金独角兽",
+    "hp": 99,
+    "attack": 61,
+    "magic_attack": 161,
+    "defense": 77,
+    "magic_defense": 92,
+    "speed": 105,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 200,
+    "name": "彩虹独角兽",
+    "hp": 99,
+    "attack": 78,
+    "magic_attack": 192,
+    "defense": 77,
+    "magic_defense": 92,
+    "speed": 105,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 201,
+    "name": "旋叶虫",
+    "hp": 56,
+    "attack": 15,
+    "magic_attack": 65,
+    "defense": 63,
+    "magic_defense": 55,
+    "speed": 72,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 202,
+    "name": "旋叶虫",
+    "hp": 57,
+    "attack": 15,
+    "magic_attack": 67,
+    "defense": 61,
+    "magic_defense": 52,
+    "speed": 72,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 203,
+    "name": "蓬叶虫",
+    "hp": 74,
+    "attack": 19,
+    "magic_attack": 87,
+    "defense": 84,
+    "magic_defense": 73,
+    "speed": 96,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 204,
+    "name": "蓬叶虫",
+    "hp": 76,
+    "attack": 20,
+    "magic_attack": 89,
+    "defense": 82,
+    "magic_defense": 70,
+    "speed": 96,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 205,
+    "name": "风滚暮虫",
+    "hp": 93,
+    "attack": 24,
+    "magic_attack": 109,
+    "defense": 105,
+    "magic_defense": 91,
+    "speed": 120,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 206,
+    "name": "风滚暮虫",
+    "hp": 95,
+    "attack": 25,
+    "magic_attack": 111,
+    "defense": 102,
+    "magic_defense": 87,
+    "speed": 120,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 207,
+    "name": "忽幽狸",
+    "hp": 78,
+    "attack": 87,
+    "magic_attack": 84,
+    "defense": 84,
+    "magic_defense": 56,
+    "speed": 104,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 208,
+    "name": "影狸",
+    "hp": 97,
+    "attack": 109,
+    "magic_attack": 105,
+    "defense": 105,
+    "magic_defense": 70,
+    "speed": 130,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 209,
+    "name": "多多",
+    "hp": 47,
+    "attack": 53,
+    "magic_attack": 53,
+    "defense": 82,
+    "magic_defense": 66,
+    "speed": 54,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 210,
+    "name": "多啦多",
+    "hp": 63,
+    "attack": 70,
+    "magic_attack": 70,
+    "defense": 109,
+    "magic_defense": 88,
+    "speed": 72,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 211,
+    "name": "古啦多",
+    "hp": 79,
+    "attack": 88,
+    "magic_attack": 88,
+    "defense": 136,
+    "magic_defense": 110,
+    "speed": 90,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 212,
+    "name": "哭哭菇",
+    "hp": 74,
+    "attack": 38,
+    "magic_attack": 41,
+    "defense": 30,
+    "magic_defense": 60,
+    "speed": 36,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 213,
+    "name": "怖须菇",
+    "hp": 99,
+    "attack": 50,
+    "magic_attack": 55,
+    "defense": 40,
+    "magic_defense": 80,
+    "speed": 48,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 214,
+    "name": "怖哭菇",
+    "hp": 124,
+    "attack": 63,
+    "magic_attack": 69,
+    "defense": 50,
+    "magic_defense": 100,
+    "speed": 60,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 215,
+    "name": "恶魔狼",
+    "hp": 115,
+    "attack": 114,
+    "magic_attack": 45,
+    "defense": 91,
+    "magic_defense": 63,
+    "speed": 120,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 216,
+    "name": "恶魔狼王",
+    "hp": 115,
+    "attack": 121,
+    "magic_attack": 50,
+    "defense": 91,
+    "magic_defense": 63,
+    "speed": 120,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 217,
+    "name": "小电企鹅",
+    "hp": 75,
+    "attack": 45,
+    "magic_attack": 101,
+    "defense": 59,
+    "magic_defense": 87,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 218,
+    "name": "电企鹅",
+    "hp": 94,
+    "attack": 56,
+    "magic_attack": 126,
+    "defense": 73,
+    "magic_defense": 109,
+    "speed": 125,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 219,
+    "name": "雪豆丁",
+    "hp": 97,
+    "attack": 104,
+    "magic_attack": 47,
+    "defense": 83,
+    "magic_defense": 62,
+    "speed": 36,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 220,
+    "name": "雪蛮人",
+    "hp": 130,
+    "attack": 139,
+    "magic_attack": 63,
+    "defense": 111,
+    "magic_defense": 83,
+    "speed": 48,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 221,
+    "name": "雪巨人",
+    "hp": 162,
+    "attack": 174,
+    "magic_attack": 79,
+    "defense": 139,
+    "magic_defense": 104,
+    "speed": 60,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 222,
+    "name": "呼呼猪",
+    "hp": 98,
+    "attack": 95,
+    "magic_attack": 33,
+    "defense": 88,
+    "magic_defense": 81,
+    "speed": 68,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 223,
+    "name": "獠牙猪",
+    "hp": 123,
+    "attack": 119,
+    "magic_attack": 41,
+    "defense": 110,
+    "magic_defense": 101,
+    "speed": 85,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 224,
+    "name": "雪娃娃",
+    "hp": 56,
+    "attack": 67,
+    "magic_attack": 67,
+    "defense": 63,
+    "magic_defense": 63,
+    "speed": 69,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 225,
+    "name": "冰封怨灵",
+    "hp": 75,
+    "attack": 90,
+    "magic_attack": 90,
+    "defense": 84,
+    "magic_defense": 84,
+    "speed": 92,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 226,
+    "name": "雪灵",
+    "hp": 94,
+    "attack": 112,
+    "magic_attack": 112,
+    "defense": 105,
+    "magic_defense": 105,
+    "speed": 115,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 227,
+    "name": "大耳帽兜",
+    "hp": 78,
+    "attack": 62,
+    "magic_attack": 59,
+    "defense": 39,
+    "magic_defense": 78,
+    "speed": 54,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 228,
+    "name": "帽兜娃娃",
+    "hp": 104,
+    "attack": 83,
+    "magic_attack": 78,
+    "defense": 52,
+    "magic_defense": 104,
+    "speed": 72,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 229,
+    "name": "雪影娃娃",
+    "hp": 130,
+    "attack": 103,
+    "magic_attack": 98,
+    "defense": 66,
+    "magic_defense": 130,
+    "speed": 90,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 230,
+    "name": "雪影冰灵",
+    "hp": 130,
+    "attack": 120,
+    "magic_attack": 114,
+    "defense": 66,
+    "magic_defense": 130,
+    "speed": 90,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 231,
+    "name": "权杖-II",
+    "hp": 82,
+    "attack": 84,
+    "magic_attack": 78,
+    "defense": 109,
+    "magic_defense": 109,
+    "speed": 60,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 232,
+    "name": "权杖-V",
+    "hp": 103,
+    "attack": 105,
+    "magic_attack": 97,
+    "defense": 136,
+    "magic_defense": 136,
+    "speed": 75,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 233,
+    "name": "灵狐",
+    "hp": 69,
+    "attack": 52,
+    "magic_attack": 52,
+    "defense": 50,
+    "magic_defense": 64,
+    "speed": 60,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 234,
+    "name": "九尾狐",
+    "hp": 92,
+    "attack": 70,
+    "magic_attack": 70,
+    "defense": 67,
+    "magic_defense": 86,
+    "speed": 80,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 235,
+    "name": "尖嘴狐仙",
+    "hp": 115,
+    "attack": 87,
+    "magic_attack": 87,
+    "defense": 84,
+    "magic_defense": 107,
+    "speed": 100,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 236,
+    "name": "里奥",
+    "hp": 79,
+    "attack": 65,
+    "magic_attack": 65,
+    "defense": 77,
+    "magic_defense": 50,
+    "speed": 75,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 237,
+    "name": "灵羽勇士",
+    "hp": 105,
+    "attack": 87,
+    "magic_attack": 87,
+    "defense": 102,
+    "magic_defense": 66,
+    "speed": 100,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 238,
+    "name": "圣羽翼王",
+    "hp": 132,
+    "attack": 109,
+    "magic_attack": 109,
+    "defense": 128,
+    "magic_defense": 83,
+    "speed": 125,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 239,
+    "name": "松仔",
+    "hp": 63,
+    "attack": 83,
+    "magic_attack": 34,
+    "defense": 77,
+    "magic_defense": 60,
+    "speed": 63,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 240,
+    "name": "松叶羊",
+    "hp": 84,
+    "attack": 111,
+    "magic_attack": 46,
+    "defense": 102,
+    "magic_defense": 80,
+    "speed": 84,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 241,
+    "name": "针叶巡林",
+    "hp": 105,
+    "attack": 139,
+    "magic_attack": 57,
+    "defense": 128,
+    "magic_defense": 100,
+    "speed": 105,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 242,
+    "name": "小勇狮",
+    "hp": 82,
+    "attack": 31,
+    "magic_attack": 66,
+    "defense": 53,
+    "magic_defense": 78,
+    "speed": 48,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 243,
+    "name": "炽焰狮",
+    "hp": 110,
+    "attack": 41,
+    "magic_attack": 89,
+    "defense": 70,
+    "magic_defense": 104,
+    "speed": 64,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 244,
+    "name": "炽心勇狮",
+    "hp": 137,
+    "attack": 51,
+    "magic_attack": 111,
+    "defense": 88,
+    "magic_defense": 130,
+    "speed": 80,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 245,
+    "name": "水滴蛇",
+    "hp": 63,
+    "attack": 66,
+    "magic_attack": 62,
+    "defense": 62,
+    "magic_defense": 62,
+    "speed": 63,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 246,
+    "name": "水蛇锁",
+    "hp": 84,
+    "attack": 88,
+    "magic_attack": 83,
+    "defense": 83,
+    "magic_defense": 83,
+    "speed": 84,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 247,
+    "name": "游蛇魔使",
+    "hp": 105,
+    "attack": 110,
+    "magic_attack": 104,
+    "defense": 103,
+    "magic_defense": 103,
+    "speed": 105,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 248,
+    "name": "公平鸽",
+    "hp": 113,
+    "attack": 93,
+    "magic_attack": 93,
+    "defense": 125,
+    "magic_defense": 125,
+    "speed": 100,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 249,
+    "name": "小怂猫",
+    "hp": 74,
+    "attack": 106,
+    "magic_attack": 101,
+    "defense": 89,
+    "magic_defense": 76,
+    "speed": 76,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 250,
+    "name": "怒目怂猫",
+    "hp": 92,
+    "attack": 132,
+    "magic_attack": 126,
+    "defense": 111,
+    "magic_defense": 95,
+    "speed": 95,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 251,
+    "name": "小狮鹫",
+    "hp": 61,
+    "attack": 69,
+    "magic_attack": 39,
+    "defense": 64,
+    "magic_defense": 33,
+    "speed": 72,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 252,
+    "name": "小狮鹫",
+    "hp": 62,
+    "attack": 66,
+    "magic_attack": 32,
+    "defense": 62,
+    "magic_defense": 36,
+    "speed": 75,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 253,
+    "name": "神圣狮鹫",
+    "hp": 82,
+    "attack": 92,
+    "magic_attack": 51,
+    "defense": 86,
+    "magic_defense": 44,
+    "speed": 96,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 254,
+    "name": "神圣狮鹫",
+    "hp": 83,
+    "attack": 88,
+    "magic_attack": 42,
+    "defense": 82,
+    "magic_defense": 48,
+    "speed": 100,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 255,
+    "name": "皇家狮鹫",
+    "hp": 102,
+    "attack": 116,
+    "magic_attack": 64,
+    "defense": 107,
+    "magic_defense": 55,
+    "speed": 120,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 256,
+    "name": "皇家狮鹫",
+    "hp": 103,
+    "attack": 110,
+    "magic_attack": 53,
+    "defense": 103,
+    "magic_defense": 60,
+    "speed": 125,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 257,
+    "name": "圆眼蜘蛛",
+    "hp": 55,
+    "attack": 37,
+    "magic_attack": 37,
+    "defense": 55,
+    "magic_defense": 55,
+    "speed": 66,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 258,
+    "name": "尖角蜘蛛",
+    "hp": 74,
+    "attack": 49,
+    "magic_attack": 49,
+    "defense": 73,
+    "magic_defense": 73,
+    "speed": 88,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 259,
+    "name": "芋香巨角蛛",
+    "hp": 92,
+    "attack": 61,
+    "magic_attack": 61,
+    "defense": 91,
+    "magic_defense": 91,
+    "speed": 110,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 260,
+    "name": "波波螺",
+    "hp": 67,
+    "attack": 59,
+    "magic_attack": 59,
+    "defense": 87,
+    "magic_defense": 66,
+    "speed": 42,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 261,
+    "name": "消波螺",
+    "hp": 89,
+    "attack": 78,
+    "magic_attack": 78,
+    "defense": 116,
+    "magic_defense": 88,
+    "speed": 56,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 262,
+    "name": "嗜波螺",
+    "hp": 112,
+    "attack": 98,
+    "magic_attack": 98,
+    "defense": 146,
+    "magic_defense": 110,
+    "speed": 70,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 263,
+    "name": "菇菇丁",
+    "hp": 89,
+    "attack": 61,
+    "magic_attack": 57,
+    "defense": 70,
+    "magic_defense": 57,
+    "speed": 42,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 264,
+    "name": "多菇丁",
+    "hp": 119,
+    "attack": 81,
+    "magic_attack": 76,
+    "defense": 93,
+    "magic_defense": 76,
+    "speed": 56,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 265,
+    "name": "九幽菇",
+    "hp": 149,
+    "attack": 102,
+    "magic_attack": 95,
+    "defense": 116,
+    "magic_defense": 95,
+    "speed": 70,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 266,
+    "name": "斑斑",
+    "hp": 71,
+    "attack": 90,
+    "magic_attack": 90,
+    "defense": 71,
+    "magic_defense": 80,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 267,
+    "name": "斑枭",
+    "hp": 89,
+    "attack": 112,
+    "magic_attack": 112,
+    "defense": 89,
+    "magic_defense": 100,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 268,
+    "name": "伊雷龙",
+    "hp": 90,
+    "attack": 73,
+    "magic_attack": 152,
+    "defense": 55,
+    "magic_defense": 79,
+    "speed": 72,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 269,
+    "name": "伊兰亚龙",
+    "hp": 112,
+    "attack": 91,
+    "magic_attack": 190,
+    "defense": 69,
+    "magic_defense": 99,
+    "speed": 90,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 270,
+    "name": "伊兰龙",
+    "hp": 112,
+    "attack": 91,
+    "magic_attack": 190,
+    "defense": 69,
+    "magic_defense": 99,
+    "speed": 90,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 271,
+    "name": "草头鸭",
+    "hp": 92,
+    "attack": 79,
+    "magic_attack": 24,
+    "defense": 66,
+    "magic_defense": 50,
+    "speed": 92,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 272,
+    "name": "卷毛鸭",
+    "hp": 116,
+    "attack": 98,
+    "magic_attack": 29,
+    "defense": 83,
+    "magic_defense": 63,
+    "speed": 115,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 273,
+    "name": "海豹战士",
+    "hp": 72,
+    "attack": 91,
+    "magic_attack": 87,
+    "defense": 89,
+    "magic_defense": 62,
+    "speed": 80,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 274,
+    "name": "海豹船长",
+    "hp": 90,
+    "attack": 113,
+    "magic_attack": 109,
+    "defense": 111,
+    "magic_defense": 77,
+    "speed": 100,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 275,
+    "name": "号儿鱼",
+    "hp": 109,
+    "attack": 27,
+    "magic_attack": 76,
+    "defense": 76,
+    "magic_defense": 88,
+    "speed": 84,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 276,
+    "name": "圆号鱼",
+    "hp": 136,
+    "attack": 34,
+    "magic_attack": 95,
+    "defense": 95,
+    "magic_defense": 110,
+    "speed": 105,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 277,
+    "name": "甜田螺",
+    "hp": 68,
+    "attack": 61,
+    "magic_attack": 64,
+    "defense": 49,
+    "magic_defense": 74,
+    "speed": 54,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 278,
+    "name": "壳乙螺",
+    "hp": 91,
+    "attack": 81,
+    "magic_attack": 86,
+    "defense": 66,
+    "magic_defense": 99,
+    "speed": 72,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 279,
+    "name": "卡洛儿",
+    "hp": 114,
+    "attack": 102,
+    "magic_attack": 107,
+    "defense": 82,
+    "magic_defense": 124,
+    "speed": 90,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 280,
+    "name": "书魔虫",
+    "hp": 67,
+    "attack": 75,
+    "magic_attack": 75,
+    "defense": 48,
+    "magic_defense": 73,
+    "speed": 57,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 281,
+    "name": "书卷守护",
+    "hp": 89,
+    "attack": 100,
+    "magic_attack": 100,
+    "defense": 64,
+    "magic_defense": 98,
+    "speed": 76,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 282,
+    "name": "古卷执政官",
+    "hp": 111,
+    "attack": 125,
+    "magic_attack": 125,
+    "defense": 80,
+    "magic_defense": 122,
+    "speed": 95,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 283,
+    "name": "古卷匣魔像",
+    "hp": 114,
+    "attack": 109,
+    "magic_attack": 109,
+    "defense": 134,
+    "magic_defense": 89,
+    "speed": 95,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 284,
+    "name": "奔波鼠",
+    "hp": 72,
+    "attack": 37,
+    "magic_attack": 93,
+    "defense": 67,
+    "magic_defense": 90,
+    "speed": 92,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 285,
+    "name": "流浪鼠",
+    "hp": 90,
+    "attack": 46,
+    "magic_attack": 116,
+    "defense": 84,
+    "magic_defense": 112,
+    "speed": 115,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 286,
+    "name": "棋棋",
+    "hp": 72,
+    "attack": 100,
+    "magic_attack": 36,
+    "defense": 70,
+    "magic_defense": 56,
+    "speed": 100,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 287,
+    "name": "棋棋",
+    "hp": 66,
+    "attack": 97,
+    "magic_attack": 35,
+    "defense": 67,
+    "magic_defense": 53,
+    "speed": 100,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 288,
+    "name": "棋骑士",
+    "hp": 90,
+    "attack": 126,
+    "magic_attack": 45,
+    "defense": 88,
+    "magic_defense": 69,
+    "speed": 125,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 289,
+    "name": "棋骑士",
+    "hp": 83,
+    "attack": 121,
+    "magic_attack": 43,
+    "defense": 84,
+    "magic_defense": 66,
+    "speed": 125,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 290,
+    "name": "棋齐垒",
+    "hp": 89,
+    "attack": 94,
+    "magic_attack": 38,
+    "defense": 116,
+    "magic_defense": 77,
+    "speed": 75,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 291,
+    "name": "棋齐垒",
+    "hp": 89,
+    "attack": 94,
+    "magic_attack": 38,
+    "defense": 116,
+    "magic_defense": 77,
+    "speed": 75,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 292,
+    "name": "棋祈督",
+    "hp": 126,
+    "attack": 87,
+    "magic_attack": 87,
+    "defense": 90,
+    "magic_defense": 72,
+    "speed": 85,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 293,
+    "name": "棋祈督",
+    "hp": 126,
+    "attack": 87,
+    "magic_attack": 87,
+    "defense": 90,
+    "magic_defense": 72,
+    "speed": 85,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 294,
+    "name": "棋绮后",
+    "hp": 93,
+    "attack": 84,
+    "magic_attack": 84,
+    "defense": 82,
+    "magic_defense": 75,
+    "speed": 90,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 295,
+    "name": "棋绮后",
+    "hp": 93,
+    "attack": 84,
+    "magic_attack": 84,
+    "defense": 82,
+    "magic_defense": 75,
+    "speed": 90,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 296,
+    "name": "棋契陛下",
+    "hp": 90,
+    "attack": 200,
+    "magic_attack": 91,
+    "defense": 140,
+    "magic_defense": 115,
+    "speed": 125,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 297,
+    "name": "棋契陛下",
+    "hp": 90,
+    "attack": 200,
+    "magic_attack": 91,
+    "defense": 140,
+    "magic_defense": 115,
+    "speed": 125,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 298,
+    "name": "棋契陛下",
+    "hp": 129,
+    "attack": 220,
+    "magic_attack": 112,
+    "defense": 205,
+    "magic_defense": 146,
+    "speed": 75,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 299,
+    "name": "棋契陛下",
+    "hp": 129,
+    "attack": 220,
+    "magic_attack": 112,
+    "defense": 205,
+    "magic_defense": 146,
+    "speed": 75,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 300,
+    "name": "棋契陛下",
+    "hp": 162,
+    "attack": 189,
+    "magic_attack": 189,
+    "defense": 136,
+    "magic_defense": 113,
+    "speed": 85,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 301,
+    "name": "棋契陛下",
+    "hp": 162,
+    "attack": 189,
+    "magic_attack": 189,
+    "defense": 136,
+    "magic_defense": 113,
+    "speed": 85,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 302,
+    "name": "棋契陛下",
+    "hp": 108,
+    "attack": 150,
+    "magic_attack": 150,
+    "defense": 130,
+    "magic_defense": 120,
+    "speed": 90,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 303,
+    "name": "棋契陛下",
+    "hp": 108,
+    "attack": 150,
+    "magic_attack": 150,
+    "defense": 130,
+    "magic_defense": 120,
+    "speed": 90,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 304,
+    "name": "呆小路",
+    "hp": 52,
+    "attack": 60,
+    "magic_attack": 64,
+    "defense": 68,
+    "magic_defense": 79,
+    "speed": 57,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 305,
+    "name": "舞动路路",
+    "hp": 69,
+    "attack": 80,
+    "magic_attack": 86,
+    "defense": 91,
+    "magic_defense": 105,
+    "speed": 76,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 306,
+    "name": "白发路路",
+    "hp": 86,
+    "attack": 100,
+    "magic_attack": 107,
+    "defense": 113,
+    "magic_defense": 132,
+    "speed": 95,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 307,
+    "name": "逗逗",
+    "hp": 48,
+    "attack": 70,
+    "magic_attack": 64,
+    "defense": 68,
+    "magic_defense": 68,
+    "speed": 66,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 308,
+    "name": "气球猫",
+    "hp": 64,
+    "attack": 93,
+    "magic_attack": 86,
+    "defense": 90,
+    "magic_defense": 90,
+    "speed": 88,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 309,
+    "name": "梦想三三",
+    "hp": 81,
+    "attack": 117,
+    "magic_attack": 107,
+    "defense": 113,
+    "magic_defense": 113,
+    "speed": 110,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 310,
+    "name": "奇梦咪",
+    "hp": 81,
+    "attack": 128,
+    "magic_attack": 119,
+    "defense": 123,
+    "magic_defense": 123,
+    "speed": 110,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 311,
+    "name": "花怨鳗",
+    "hp": 232,
+    "attack": 73,
+    "magic_attack": 73,
+    "defense": 110,
+    "magic_defense": 90,
+    "speed": 52,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 312,
+    "name": "鳗尾兽",
+    "hp": 290,
+    "attack": 91,
+    "magic_attack": 91,
+    "defense": 138,
+    "magic_defense": 113,
+    "speed": 65,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 313,
+    "name": "圣剑侍从",
+    "hp": 139,
+    "attack": 116,
+    "magic_attack": 111,
+    "defense": 139,
+    "magic_defense": 139,
+    "speed": 52,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 314,
+    "name": "圣剑-X",
+    "hp": 174,
+    "attack": 144,
+    "magic_attack": 139,
+    "defense": 173,
+    "magic_defense": 173,
+    "speed": 65,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 315,
+    "name": "圣剑骑士",
+    "hp": 187,
+    "attack": 154,
+    "magic_attack": 148,
+    "defense": 183,
+    "magic_defense": 183,
+    "speed": 65,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 316,
+    "name": "拉特",
+    "hp": 67,
+    "attack": 80,
+    "magic_attack": 80,
+    "defense": 62,
+    "magic_defense": 78,
+    "speed": 100,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 317,
+    "name": "酷拉",
+    "hp": 83,
+    "attack": 100,
+    "magic_attack": 100,
+    "defense": 78,
+    "magic_defense": 97,
+    "speed": 125,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 318,
+    "name": "闪电环",
+    "hp": 64,
+    "attack": 49,
+    "magic_attack": 49,
+    "defense": 51,
+    "magic_defense": 50,
+    "speed": 72,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 319,
+    "name": "刺电环",
+    "hp": 85,
+    "attack": 65,
+    "magic_attack": 65,
+    "defense": 68,
+    "magic_defense": 67,
+    "speed": 96,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 320,
+    "name": "荆棘电环",
+    "hp": 106,
+    "attack": 81,
+    "magic_attack": 81,
+    "defense": 85,
+    "magic_defense": 84,
+    "speed": 120,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 321,
+    "name": "小箱怪",
+    "hp": 111,
+    "attack": 103,
+    "magic_attack": 103,
+    "defense": 122,
+    "magic_defense": 122,
+    "speed": 64,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 322,
+    "name": "迷迷箱怪",
+    "hp": 138,
+    "attack": 129,
+    "magic_attack": 129,
+    "defense": 153,
+    "magic_defense": 153,
+    "speed": 80,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 323,
+    "name": "古钟蛇",
+    "hp": 95,
+    "attack": 76,
+    "magic_attack": 76,
+    "defense": 70,
+    "magic_defense": 99,
+    "speed": 80,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 324,
+    "name": "古钟蛇",
+    "hp": 95,
+    "attack": 76,
+    "magic_attack": 76,
+    "defense": 70,
+    "magic_defense": 99,
+    "speed": 80,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 325,
+    "name": "寒音蛇",
+    "hp": 106,
+    "attack": 79,
+    "magic_attack": 79,
+    "defense": 80,
+    "magic_defense": 114,
+    "speed": 100,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 326,
+    "name": "寒音蛇",
+    "hp": 106,
+    "attack": 79,
+    "magic_attack": 79,
+    "defense": 80,
+    "magic_defense": 114,
+    "speed": 100,
+    "types": [
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 327,
+    "name": "矮脚爬爬",
+    "hp": 80,
+    "attack": 117,
+    "magic_attack": 110,
+    "defense": 74,
+    "magic_defense": 59,
+    "speed": 92,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 328,
+    "name": "恶魔红钻",
+    "hp": 100,
+    "attack": 147,
+    "magic_attack": 137,
+    "defense": 93,
+    "magic_defense": 74,
+    "speed": 115,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 329,
+    "name": "里拉鳐",
+    "hp": 118,
+    "attack": 82,
+    "magic_attack": 89,
+    "defense": 103,
+    "magic_defense": 147,
+    "speed": 105,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 330,
+    "name": "海枝枝",
+    "hp": 78,
+    "attack": 58,
+    "magic_attack": 148,
+    "defense": 96,
+    "magic_defense": 120,
+    "speed": 110,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 331,
+    "name": "海枝枝",
+    "hp": 91,
+    "attack": 48,
+    "magic_attack": 125,
+    "defense": 104,
+    "magic_defense": 129,
+    "speed": 110,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 332,
+    "name": "海枝枝",
+    "hp": 97,
+    "attack": 62,
+    "magic_attack": 136,
+    "defense": 84,
+    "magic_defense": 121,
+    "speed": 110,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 333,
+    "name": "海枝枝",
+    "hp": 90,
+    "attack": 53,
+    "magic_attack": 135,
+    "defense": 92,
+    "magic_defense": 113,
+    "speed": 120,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 334,
+    "name": "电动长颈鹿",
+    "hp": 55,
+    "attack": 59,
+    "magic_attack": 20,
+    "defense": 65,
+    "magic_defense": 47,
+    "speed": 72,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 335,
+    "name": "奔乐鹿",
+    "hp": 73,
+    "attack": 79,
+    "magic_attack": 27,
+    "defense": 86,
+    "magic_defense": 63,
+    "speed": 96,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 336,
+    "name": "爵士鹿",
+    "hp": 92,
+    "attack": 99,
+    "magic_attack": 34,
+    "defense": 108,
+    "magic_defense": 79,
+    "speed": 120,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 337,
+    "name": "波普鹿",
+    "hp": 92,
+    "attack": 99,
+    "magic_attack": 34,
+    "defense": 108,
+    "magic_defense": 79,
+    "speed": 120,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 338,
+    "name": "缇塔",
+    "hp": 73,
+    "attack": 99,
+    "magic_attack": 38,
+    "defense": 98,
+    "magic_defense": 74,
+    "speed": 72,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 339,
+    "name": "声波缇塔",
+    "hp": 92,
+    "attack": 124,
+    "magic_attack": 48,
+    "defense": 122,
+    "magic_defense": 92,
+    "speed": 90,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 340,
+    "name": "小鹬",
+    "hp": 56,
+    "attack": 38,
+    "magic_attack": 38,
+    "defense": 67,
+    "magic_defense": 52,
+    "speed": 69,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 341,
+    "name": "鄙目鹬",
+    "hp": 75,
+    "attack": 51,
+    "magic_attack": 51,
+    "defense": 90,
+    "magic_defense": 70,
+    "speed": 92,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 342,
+    "name": "高脚鹬",
+    "hp": 94,
+    "attack": 63,
+    "magic_attack": 63,
+    "defense": 112,
+    "magic_defense": 87,
+    "speed": 115,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 343,
+    "name": "脆筒甜甜",
+    "hp": 72,
+    "attack": 67,
+    "magic_attack": 72,
+    "defense": 42,
+    "magic_defense": 55,
+    "speed": 60,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 344,
+    "name": "香草甜甜",
+    "hp": 96,
+    "attack": 90,
+    "magic_attack": 95,
+    "defense": 56,
+    "magic_defense": 74,
+    "speed": 80,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 345,
+    "name": "香草甜甜",
+    "hp": 88,
+    "attack": 92,
+    "magic_attack": 96,
+    "defense": 58,
+    "magic_defense": 77,
+    "speed": 80,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 346,
+    "name": "香草甜甜",
+    "hp": 91,
+    "attack": 94,
+    "magic_attack": 88,
+    "defense": 63,
+    "magic_defense": 74,
+    "speed": 80,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 347,
+    "name": "圣代甜甜",
+    "hp": 119,
+    "attack": 112,
+    "magic_attack": 119,
+    "defense": 70,
+    "magic_defense": 92,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 348,
+    "name": "圣代甜甜",
+    "hp": 107,
+    "attack": 120,
+    "magic_attack": 110,
+    "defense": 81,
+    "magic_defense": 96,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 349,
+    "name": "圣代甜甜",
+    "hp": 113,
+    "attack": 112,
+    "magic_attack": 110,
+    "defense": 79,
+    "magic_defense": 92,
+    "speed": 105,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 350,
+    "name": "圣代甜甜",
+    "hp": 114,
+    "attack": 117,
+    "magic_attack": 110,
+    "defense": 79,
+    "magic_defense": 92,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 351,
+    "name": "圣代甜甜",
+    "hp": 113,
+    "attack": 109,
+    "magic_attack": 100,
+    "defense": 90,
+    "magic_defense": 96,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 352,
+    "name": "圣代甜甜",
+    "hp": 121,
+    "attack": 100,
+    "magic_attack": 101,
+    "defense": 86,
+    "magic_defense": 92,
+    "speed": 105,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 353,
+    "name": "圣代甜甜",
+    "hp": 110,
+    "attack": 116,
+    "magic_attack": 120,
+    "defense": 73,
+    "magic_defense": 96,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 354,
+    "name": "圣代甜甜",
+    "hp": 108,
+    "attack": 110,
+    "magic_attack": 110,
+    "defense": 84,
+    "magic_defense": 99,
+    "speed": 100,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 355,
+    "name": "圣代甜甜",
+    "hp": 110,
+    "attack": 107,
+    "magic_attack": 110,
+    "defense": 82,
+    "magic_defense": 96,
+    "speed": 105,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 356,
+    "name": "刺轮砣",
+    "hp": 100,
+    "attack": 80,
+    "magic_attack": 78,
+    "defense": 80,
+    "magic_defense": 65,
+    "speed": 84,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 357,
+    "name": "刺轮砣",
+    "hp": 100,
+    "attack": 78,
+    "magic_attack": 80,
+    "defense": 65,
+    "magic_defense": 80,
+    "speed": 84,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 358,
+    "name": "月亮砣",
+    "hp": 125,
+    "attack": 100,
+    "magic_attack": 98,
+    "defense": 100,
+    "magic_defense": 81,
+    "speed": 105,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 359,
+    "name": "月亮砣",
+    "hp": 125,
+    "attack": 98,
+    "magic_attack": 100,
+    "defense": 81,
+    "magic_defense": 100,
+    "speed": 105,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 360,
+    "name": "豆丁鱼",
+    "hp": 45,
+    "attack": 70,
+    "magic_attack": 74,
+    "defense": 67,
+    "magic_defense": 70,
+    "speed": 75,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 361,
+    "name": "快鳍鱼",
+    "hp": 60,
+    "attack": 93,
+    "magic_attack": 99,
+    "defense": 89,
+    "magic_defense": 93,
+    "speed": 100,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 362,
+    "name": "龙鱼",
+    "hp": 75,
+    "attack": 116,
+    "magic_attack": 123,
+    "defense": 112,
+    "magic_defense": 116,
+    "speed": 125,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 363,
+    "name": "胆小鳗鱼",
+    "hp": 68,
+    "attack": 92,
+    "magic_attack": 92,
+    "defense": 83,
+    "magic_defense": 90,
+    "speed": 92,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 364,
+    "name": "闪电鳗鱼",
+    "hp": 85,
+    "attack": 115,
+    "magic_attack": 115,
+    "defense": 104,
+    "magic_defense": 112,
+    "speed": 115,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 365,
+    "name": "翡翠水母",
+    "hp": 108,
+    "attack": 30,
+    "magic_attack": 68,
+    "defense": 75,
+    "magic_defense": 109,
+    "speed": 76,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 366,
+    "name": "琉璃水母",
+    "hp": 134,
+    "attack": 37,
+    "magic_attack": 85,
+    "defense": 93,
+    "magic_defense": 136,
+    "speed": 95,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 367,
+    "name": "火尾瓦特",
+    "hp": 63,
+    "attack": 70,
+    "magic_attack": 29,
+    "defense": 81,
+    "magic_defense": 56,
+    "speed": 39,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 368,
+    "name": "火尾战士",
+    "hp": 84,
+    "attack": 94,
+    "magic_attack": 39,
+    "defense": 108,
+    "magic_defense": 74,
+    "speed": 52,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 369,
+    "name": "烈火守护",
+    "hp": 105,
+    "attack": 117,
+    "magic_attack": 49,
+    "defense": 135,
+    "magic_defense": 93,
+    "speed": 65,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 370,
+    "name": "噼啪鸟",
+    "hp": 78,
+    "attack": 116,
+    "magic_attack": 109,
+    "defense": 85,
+    "magic_defense": 85,
+    "speed": 145,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 371,
+    "name": "治愈兔",
+    "hp": 67,
+    "attack": 28,
+    "magic_attack": 73,
+    "defense": 60,
+    "magic_defense": 76,
+    "speed": 54,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 372,
+    "name": "红丝绒",
+    "hp": 90,
+    "attack": 38,
+    "magic_attack": 98,
+    "defense": 80,
+    "magic_defense": 101,
+    "speed": 72,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 373,
+    "name": "红绒十字",
+    "hp": 112,
+    "attack": 47,
+    "magic_attack": 122,
+    "defense": 100,
+    "magic_defense": 127,
+    "speed": 90,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 374,
+    "name": "乌达",
+    "hp": 80,
+    "attack": 95,
+    "magic_attack": 49,
+    "defense": 70,
+    "magic_defense": 42,
+    "speed": 33,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 375,
+    "name": "乌达",
+    "hp": 96,
+    "attack": 95,
+    "magic_attack": 55,
+    "defense": 64,
+    "magic_defense": 34,
+    "speed": 30,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 376,
+    "name": "迷你乌",
+    "hp": 107,
+    "attack": 126,
+    "magic_attack": 66,
+    "defense": 93,
+    "magic_defense": 56,
+    "speed": 44,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 377,
+    "name": "迷你乌",
+    "hp": 128,
+    "attack": 126,
+    "magic_attack": 73,
+    "defense": 85,
+    "magic_defense": 46,
+    "speed": 40,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 378,
+    "name": "乌拉塔",
+    "hp": 134,
+    "attack": 158,
+    "magic_attack": 82,
+    "defense": 116,
+    "magic_defense": 70,
+    "speed": 55,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 379,
+    "name": "乌拉塔",
+    "hp": 160,
+    "attack": 158,
+    "magic_attack": 91,
+    "defense": 106,
+    "magic_defense": 57,
+    "speed": 50,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 380,
+    "name": "螺旋帕帕",
+    "hp": 88,
+    "attack": 55,
+    "magic_attack": 8,
+    "defense": 79,
+    "magic_defense": 67,
+    "speed": 80,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 381,
+    "name": "帕帕斯卡",
+    "hp": 110,
+    "attack": 68,
+    "magic_attack": 10,
+    "defense": 99,
+    "magic_defense": 84,
+    "speed": 100,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 382,
+    "name": "机械方方",
+    "hp": 62,
+    "attack": 81,
+    "magic_attack": 32,
+    "defense": 76,
+    "magic_defense": 60,
+    "speed": 51,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 383,
+    "name": "多彩方方",
+    "hp": 82,
+    "attack": 108,
+    "magic_attack": 43,
+    "defense": 101,
+    "magic_defense": 80,
+    "speed": 68,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 384,
+    "name": "立方人",
+    "hp": 103,
+    "attack": 135,
+    "magic_attack": 54,
+    "defense": 127,
+    "magic_defense": 101,
+    "speed": 85,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 385,
+    "name": "墨鱿士",
+    "hp": 103,
+    "attack": 84,
+    "magic_attack": 34,
+    "defense": 105,
+    "magic_defense": 79,
+    "speed": 56,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 386,
+    "name": "混乱鱿彩",
+    "hp": 129,
+    "attack": 105,
+    "magic_attack": 42,
+    "defense": 131,
+    "magic_defense": 99,
+    "speed": 70,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 387,
+    "name": "秩序鱿墨",
+    "hp": 78,
+    "attack": 120,
+    "magic_attack": 39,
+    "defense": 124,
+    "magic_defense": 113,
+    "speed": 130,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      {
+        "id": 14,
+        "name": "Cute",
+        "localized": {
+          "zh": "萌"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 388,
+    "name": "可立鸡",
+    "hp": 65,
+    "attack": 79,
+    "magic_attack": 79,
+    "defense": 55,
+    "magic_defense": 52,
+    "speed": 66,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 389,
+    "name": "晕晕鸡",
+    "hp": 86,
+    "attack": 106,
+    "magic_attack": 106,
+    "defense": 74,
+    "magic_defense": 70,
+    "speed": 88,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 390,
+    "name": "绅士鸡",
+    "hp": 108,
+    "attack": 132,
+    "magic_attack": 132,
+    "defense": 92,
+    "magic_defense": 87,
+    "speed": 110,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 391,
+    "name": "武者鸡",
+    "hp": 121,
+    "attack": 144,
+    "magic_attack": 58,
+    "defense": 92,
+    "magic_defense": 70,
+    "speed": 95,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 392,
+    "name": "优优",
+    "hp": 81,
+    "attack": 35,
+    "magic_attack": 89,
+    "defense": 84,
+    "magic_defense": 104,
+    "speed": 92,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 393,
+    "name": "绒光优优",
+    "hp": 101,
+    "attack": 43,
+    "magic_attack": 111,
+    "defense": 105,
+    "magic_defense": 130,
+    "speed": 115,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 394,
+    "name": "毛头小蛛",
+    "hp": 85,
+    "attack": 80,
+    "magic_attack": 27,
+    "defense": 93,
+    "magic_defense": 79,
+    "speed": 88,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 395,
+    "name": "捕尘长绒",
+    "hp": 106,
+    "attack": 100,
+    "magic_attack": 34,
+    "defense": 116,
+    "magic_defense": 99,
+    "speed": 110,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 396,
+    "name": "食尘短绒",
+    "hp": 109,
+    "attack": 105,
+    "magic_attack": 37,
+    "defense": 113,
+    "magic_defense": 97,
+    "speed": 115,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 397,
+    "name": "厉毒小萝",
+    "hp": 67,
+    "attack": 64,
+    "magic_attack": 17,
+    "defense": 81,
+    "magic_defense": 59,
+    "speed": 108,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 398,
+    "name": "厉毒修萝",
+    "hp": 84,
+    "attack": 80,
+    "magic_attack": 21,
+    "defense": 101,
+    "magic_defense": 74,
+    "speed": 135,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 399,
+    "name": "深蓝鲸",
+    "hp": 129,
+    "attack": 40,
+    "magic_attack": 115,
+    "defense": 119,
+    "magic_defense": 135,
+    "speed": 50,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 400,
+    "name": "格兰种子",
+    "hp": 65,
+    "attack": 31,
+    "magic_attack": 74,
+    "defense": 48,
+    "magic_defense": 67,
+    "speed": 36,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 401,
+    "name": "格兰花",
+    "hp": 86,
+    "attack": 42,
+    "magic_attack": 99,
+    "defense": 64,
+    "magic_defense": 90,
+    "speed": 48,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 402,
+    "name": "格兰球",
+    "hp": 108,
+    "attack": 52,
+    "magic_attack": 124,
+    "defense": 80,
+    "magic_defense": 112,
+    "speed": 60,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 403,
+    "name": "地鼠",
+    "hp": 66,
+    "attack": 71,
+    "magic_attack": 31,
+    "defense": 61,
+    "magic_defense": 42,
+    "speed": 66,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 404,
+    "name": "地鼠",
+    "hp": 59,
+    "attack": 71,
+    "magic_attack": 23,
+    "defense": 61,
+    "magic_defense": 57,
+    "speed": 60,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 405,
+    "name": "遁鼠",
+    "hp": 88,
+    "attack": 95,
+    "magic_attack": 41,
+    "defense": 82,
+    "magic_defense": 56,
+    "speed": 88,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 406,
+    "name": "遁鼠",
+    "hp": 79,
+    "attack": 94,
+    "magic_attack": 30,
+    "defense": 82,
+    "magic_defense": 77,
+    "speed": 80,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 407,
+    "name": "遁地鼠",
+    "hp": 110,
+    "attack": 119,
+    "magic_attack": 51,
+    "defense": 102,
+    "magic_defense": 70,
+    "speed": 110,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 408,
+    "name": "遁地鼠",
+    "hp": 99,
+    "attack": 118,
+    "magic_attack": 38,
+    "defense": 102,
+    "magic_defense": 96,
+    "speed": 100,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 409,
+    "name": "画精灵",
+    "hp": 61,
+    "attack": 32,
+    "magic_attack": 78,
+    "defense": 56,
+    "magic_defense": 72,
+    "speed": 72,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 410,
+    "name": "画像守护",
+    "hp": 81,
+    "attack": 42,
+    "magic_attack": 104,
+    "defense": 75,
+    "magic_defense": 96,
+    "speed": 96,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 411,
+    "name": "画间法师手",
+    "hp": 101,
+    "attack": 53,
+    "magic_attack": 131,
+    "defense": 94,
+    "magic_defense": 120,
+    "speed": 120,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 412,
+    "name": "画间沉铁兽",
+    "hp": 100,
+    "attack": 160,
+    "magic_attack": 67,
+    "defense": 100,
+    "magic_defense": 76,
+    "speed": 105,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 413,
+    "name": "小翼龙",
+    "hp": 66,
+    "attack": 91,
+    "magic_attack": 24,
+    "defense": 73,
+    "magic_defense": 63,
+    "speed": 92,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 414,
+    "name": "翼龙",
+    "hp": 83,
+    "attack": 114,
+    "magic_attack": 31,
+    "defense": 91,
+    "magic_defense": 79,
+    "speed": 115,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 415,
+    "name": "裘洛",
+    "hp": 44,
+    "attack": 56,
+    "magic_attack": 50,
+    "defense": 39,
+    "magic_defense": 48,
+    "speed": 75,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 416,
+    "name": "裘力",
+    "hp": 59,
+    "attack": 74,
+    "magic_attack": 67,
+    "defense": 52,
+    "magic_defense": 64,
+    "speed": 100,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 417,
+    "name": "裘卡",
+    "hp": 73,
+    "attack": 93,
+    "magic_attack": 83,
+    "defense": 65,
+    "magic_defense": 81,
+    "speed": 125,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 418,
+    "name": "小甲虫",
+    "hp": 98,
+    "attack": 71,
+    "magic_attack": 31,
+    "defense": 97,
+    "magic_defense": 61,
+    "speed": 60,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 419,
+    "name": "铠甲虫",
+    "hp": 122,
+    "attack": 88,
+    "magic_attack": 39,
+    "defense": 121,
+    "magic_defense": 77,
+    "speed": 75,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 420,
+    "name": "吸泥鸥",
+    "hp": 99,
+    "attack": 89,
+    "magic_attack": 33,
+    "defense": 87,
+    "magic_defense": 71,
+    "speed": 76,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 421,
+    "name": "泥吼牙",
+    "hp": 124,
+    "attack": 112,
+    "magic_attack": 41,
+    "defense": 109,
+    "magic_defense": 88,
+    "speed": 95,
+    "types": [
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 422,
+    "name": "大头骨龙",
+    "hp": 96,
+    "attack": 109,
+    "magic_attack": 40,
+    "defense": 84,
+    "magic_defense": 65,
+    "speed": 48,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 423,
+    "name": "寂灭骨龙",
+    "hp": 120,
+    "attack": 137,
+    "magic_attack": 50,
+    "defense": 104,
+    "magic_defense": 81,
+    "speed": 60,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 424,
+    "name": "果冻",
+    "hp": 81,
+    "attack": 26,
+    "magic_attack": 81,
+    "defense": 75,
+    "magic_defense": 78,
+    "speed": 96,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 425,
+    "name": "抹茶布丁",
+    "hp": 101,
+    "attack": 32,
+    "magic_attack": 101,
+    "defense": 94,
+    "magic_defense": 98,
+    "speed": 120,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 426,
+    "name": "椰浆布丁",
+    "hp": 133,
+    "attack": 34,
+    "magic_attack": 89,
+    "defense": 81,
+    "magic_defense": 105,
+    "speed": 120,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 427,
+    "name": "熔岩布丁",
+    "hp": 128,
+    "attack": 87,
+    "magic_attack": 33,
+    "defense": 112,
+    "magic_defense": 84,
+    "speed": 120,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 428,
+    "name": "布鲁斯",
+    "hp": 44,
+    "attack": 60,
+    "magic_attack": 16,
+    "defense": 68,
+    "magic_defense": 53,
+    "speed": 54,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 429,
+    "name": "雪顶布鲁斯",
+    "hp": 58,
+    "attack": 81,
+    "magic_attack": 22,
+    "defense": 91,
+    "magic_defense": 70,
+    "speed": 72,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 430,
+    "name": "冰钻布鲁斯",
+    "hp": 73,
+    "attack": 101,
+    "magic_attack": 27,
+    "defense": 114,
+    "magic_defense": 88,
+    "speed": 90,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 431,
+    "name": "星尘虫",
+    "hp": 49,
+    "attack": 47,
+    "magic_attack": 47,
+    "defense": 46,
+    "magic_defense": 58,
+    "speed": 60,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 432,
+    "name": "落星虫",
+    "hp": 65,
+    "attack": 62,
+    "magic_attack": 62,
+    "defense": 61,
+    "magic_defense": 77,
+    "speed": 80,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 433,
+    "name": "陨星虫",
+    "hp": 81,
+    "attack": 78,
+    "magic_attack": 78,
+    "defense": 76,
+    "magic_defense": 96,
+    "speed": 100,
+    "types": [
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 434,
+    "name": "可爱猿",
+    "hp": 100,
+    "attack": 97,
+    "magic_attack": 43,
+    "defense": 86,
+    "magic_defense": 67,
+    "speed": 36,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 435,
+    "name": "炽热猿",
+    "hp": 133,
+    "attack": 130,
+    "magic_attack": 57,
+    "defense": 115,
+    "magic_defense": 89,
+    "speed": 48,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 436,
+    "name": "火焰猿",
+    "hp": 167,
+    "attack": 162,
+    "magic_attack": 72,
+    "defense": 143,
+    "magic_defense": 111,
+    "speed": 60,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 437,
+    "name": "绒绒",
+    "hp": 58,
+    "attack": 42,
+    "magic_attack": 44,
+    "defense": 49,
+    "magic_defense": 80,
+    "speed": 69,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 438,
+    "name": "小绒茧",
+    "hp": 77,
+    "attack": 56,
+    "magic_attack": 58,
+    "defense": 65,
+    "magic_defense": 106,
+    "speed": 92,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 439,
+    "name": "绒仙子",
+    "hp": 96,
+    "attack": 71,
+    "magic_attack": 73,
+    "defense": 81,
+    "magic_defense": 133,
+    "speed": 115,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 440,
+    "name": "犀角鸟",
+    "hp": 63,
+    "attack": 88,
+    "magic_attack": 40,
+    "defense": 67,
+    "magic_defense": 44,
+    "speed": 66,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 441,
+    "name": "光纤兽",
+    "hp": 83,
+    "attack": 117,
+    "magic_attack": 54,
+    "defense": 90,
+    "magic_defense": 58,
+    "speed": 88,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 442,
+    "name": "疾光千兽",
+    "hp": 104,
+    "attack": 146,
+    "magic_attack": 67,
+    "defense": 112,
+    "magic_defense": 73,
+    "speed": 110,
+    "types": [
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 443,
+    "name": "双灯鱼",
+    "hp": 102,
+    "attack": 55,
+    "magic_attack": 111,
+    "defense": 57,
+    "magic_defense": 93,
+    "speed": 84,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 444,
+    "name": "利灯鱼",
+    "hp": 128,
+    "attack": 68,
+    "magic_attack": 138,
+    "defense": 71,
+    "magic_defense": 116,
+    "speed": 105,
+    "types": [
+      {
+        "id": 4,
+        "name": "Water",
+        "localized": {
+          "zh": "水"
+        }
+      },
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 445,
+    "name": "月牙雪熊",
+    "hp": 126,
+    "attack": 97,
+    "magic_attack": 39,
+    "defense": 141,
+    "magic_defense": 103,
+    "speed": 80,
+    "types": [
+      {
+        "id": 7,
+        "name": "Ice",
+        "localized": {
+          "zh": "冰"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 446,
+    "name": "嗜光嗡嗡",
+    "hp": 75,
+    "attack": 83,
+    "magic_attack": 83,
+    "defense": 50,
+    "magic_defense": 90,
+    "speed": 92,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 447,
+    "name": "窃光蚊",
+    "hp": 93,
+    "attack": 104,
+    "magic_attack": 104,
+    "defense": 63,
+    "magic_defense": 113,
+    "speed": 115,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Light",
+        "localized": {
+          "zh": "光"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 448,
+    "name": "柴渣虫",
+    "hp": 108,
+    "attack": 96,
+    "magic_attack": 38,
+    "defense": 82,
+    "magic_defense": 58,
+    "speed": 80,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 449,
+    "name": "燃薪虫",
+    "hp": 135,
+    "attack": 120,
+    "magic_attack": 48,
+    "defense": 103,
+    "magic_defense": 73,
+    "speed": 100,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 450,
+    "name": "空空颅",
+    "hp": 70,
+    "attack": 7,
+    "magic_attack": 37,
+    "defense": 54,
+    "magic_defense": 64,
+    "speed": 48,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 451,
+    "name": "夜宿颅",
+    "hp": 94,
+    "attack": 9,
+    "magic_attack": 49,
+    "defense": 72,
+    "magic_defense": 85,
+    "speed": 64,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 452,
+    "name": "夜枭",
+    "hp": 117,
+    "attack": 10,
+    "magic_attack": 61,
+    "defense": 90,
+    "magic_defense": 106,
+    "speed": 80,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 453,
+    "name": "粉粉星",
+    "hp": 93,
+    "attack": 54,
+    "magic_attack": 102,
+    "defense": 57,
+    "magic_defense": 101,
+    "speed": 88,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 454,
+    "name": "小皮球",
+    "hp": 116,
+    "attack": 68,
+    "magic_attack": 127,
+    "defense": 71,
+    "magic_defense": 126,
+    "speed": 110,
+    "types": [
+      {
+        "id": 9,
+        "name": "Electric",
+        "localized": {
+          "zh": "电"
+        }
+      },
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 455,
+    "name": "贝瑟",
+    "hp": 79,
+    "attack": 46,
+    "magic_attack": 78,
+    "defense": 51,
+    "magic_defense": 98,
+    "speed": 33,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 456,
+    "name": "贝加尔",
+    "hp": 105,
+    "attack": 61,
+    "magic_attack": 104,
+    "defense": 68,
+    "magic_defense": 130,
+    "speed": 44,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 457,
+    "name": "贝古斯",
+    "hp": 132,
+    "attack": 76,
+    "magic_attack": 130,
+    "defense": 85,
+    "magic_defense": 163,
+    "speed": 55,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 458,
+    "name": "粉星仔",
+    "hp": 80,
+    "attack": 63,
+    "magic_attack": 119,
+    "defense": 58,
+    "magic_defense": 102,
+    "speed": 92,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 459,
+    "name": "粉耳星兔",
+    "hp": 100,
+    "attack": 79,
+    "magic_attack": 148,
+    "defense": 73,
+    "magic_defense": 127,
+    "speed": 115,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 460,
+    "name": "落陨星兔",
+    "hp": 93,
+    "attack": 61,
+    "magic_attack": 125,
+    "defense": 87,
+    "magic_defense": 141,
+    "speed": 130,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 461,
+    "name": "小帕尔",
+    "hp": 78,
+    "attack": 76,
+    "magic_attack": 34,
+    "defense": 79,
+    "magic_defense": 52,
+    "speed": 60,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 462,
+    "name": "帕尔萨斯",
+    "hp": 104,
+    "attack": 102,
+    "magic_attack": 46,
+    "defense": 105,
+    "magic_defense": 70,
+    "speed": 80,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 463,
+    "name": "龙息帕尔",
+    "hp": 130,
+    "attack": 127,
+    "magic_attack": 57,
+    "defense": 131,
+    "magic_defense": 87,
+    "speed": 100,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 464,
+    "name": "春团",
+    "hp": 48,
+    "attack": 51,
+    "magic_attack": 57,
+    "defense": 65,
+    "magic_defense": 57,
+    "speed": 63,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 465,
+    "name": "春兔",
+    "hp": 63,
+    "attack": 68,
+    "magic_attack": 76,
+    "defense": 87,
+    "magic_defense": 77,
+    "speed": 84,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 466,
+    "name": "春花兔",
+    "hp": 79,
+    "attack": 85,
+    "magic_attack": 95,
+    "defense": 103,
+    "magic_defense": 90,
+    "speed": 105,
+    "types": [
+      {
+        "id": 2,
+        "name": "Grass",
+        "localized": {
+          "zh": "草"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 467,
+    "name": "幽星光",
+    "hp": 49,
+    "attack": 21,
+    "magic_attack": 63,
+    "defense": 48,
+    "magic_defense": 63,
+    "speed": 75,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 468,
+    "name": "曜星光",
+    "hp": 65,
+    "attack": 28,
+    "magic_attack": 84,
+    "defense": 64,
+    "magic_defense": 84,
+    "speed": 100,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 469,
+    "name": "暮星辰",
+    "hp": 81,
+    "attack": 35,
+    "magic_attack": 106,
+    "defense": 80,
+    "magic_defense": 105,
+    "speed": 125,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 470,
+    "name": "学院呱呱",
+    "hp": 162,
+    "attack": 137,
+    "magic_attack": 137,
+    "defense": 115,
+    "magic_defense": 115,
+    "speed": 100,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 471,
+    "name": "阿布",
+    "hp": 98,
+    "attack": 116,
+    "magic_attack": 116,
+    "defense": 83,
+    "magic_defense": 83,
+    "speed": 80,
+    "types": [
+      {
+        "id": 1,
+        "name": "Normal",
+        "localized": {
+          "zh": "普通"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 472,
+    "name": "超能阿布",
+    "hp": 122,
+    "attack": 145,
+    "magic_attack": 145,
+    "defense": 104,
+    "magic_defense": 104,
+    "speed": 100,
+    "types": [
+      {
+        "id": 8,
+        "name": "Dragon",
+        "localized": {
+          "zh": "龙"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 473,
+    "name": "栗鼠",
+    "hp": 88,
+    "attack": 34,
+    "magic_attack": 36,
+    "defense": 67,
+    "magic_defense": 96,
+    "speed": 80,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 474,
+    "name": "壳栗丝鼠",
+    "hp": 111,
+    "attack": 43,
+    "magic_attack": 45,
+    "defense": 84,
+    "magic_defense": 120,
+    "speed": 100,
+    "types": [
+      {
+        "id": 10,
+        "name": "Poison",
+        "localized": {
+          "zh": "毒"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 475,
+    "name": "牵线木偶",
+    "hp": 82,
+    "attack": 62,
+    "magic_attack": 67,
+    "defense": 72,
+    "magic_defense": 103,
+    "speed": 84,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 476,
+    "name": "帅帅魔偶",
+    "hp": 111,
+    "attack": 91,
+    "magic_attack": 96,
+    "defense": 83,
+    "magic_defense": 119,
+    "speed": 105,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 477,
+    "name": "呼拉猫",
+    "hp": 76,
+    "attack": 75,
+    "magic_attack": 23,
+    "defense": 58,
+    "magic_defense": 38,
+    "speed": 75,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 478,
+    "name": "增肌猫",
+    "hp": 102,
+    "attack": 100,
+    "magic_attack": 30,
+    "defense": 77,
+    "magic_defense": 50,
+    "speed": 100,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 479,
+    "name": "健猫教练",
+    "hp": 127,
+    "attack": 125,
+    "magic_attack": 38,
+    "defense": 96,
+    "magic_defense": 63,
+    "speed": 125,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 480,
+    "name": "齿轮小子",
+    "hp": 74,
+    "attack": 36,
+    "magic_attack": 74,
+    "defense": 57,
+    "magic_defense": 72,
+    "speed": 68,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 481,
+    "name": "机甲小子",
+    "hp": 92,
+    "attack": 45,
+    "magic_attack": 92,
+    "defense": 71,
+    "magic_defense": 90,
+    "speed": 85,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 482,
+    "name": "不咕钟",
+    "hp": 57,
+    "attack": 76,
+    "magic_attack": 85,
+    "defense": 104,
+    "magic_defense": 104,
+    "speed": 68,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 483,
+    "name": "溯源钟",
+    "hp": 71,
+    "attack": 95,
+    "magic_attack": 107,
+    "defense": 130,
+    "magic_defense": 130,
+    "speed": 85,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 484,
+    "name": "多西",
+    "hp": 64,
+    "attack": 73,
+    "magic_attack": 26,
+    "defense": 82,
+    "magic_defense": 70,
+    "speed": 30,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 485,
+    "name": "库多西",
+    "hp": 85,
+    "attack": 98,
+    "magic_attack": 34,
+    "defense": 109,
+    "magic_defense": 93,
+    "speed": 40,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 486,
+    "name": "波多西",
+    "hp": 106,
+    "attack": 122,
+    "magic_attack": 43,
+    "defense": 136,
+    "magic_defense": 116,
+    "speed": 50,
+    "types": [
+      {
+        "id": 17,
+        "name": "Mechanical",
+        "localized": {
+          "zh": "机械"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Ground",
+        "localized": {
+          "zh": "地"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 487,
+    "name": "多灵",
+    "hp": 34,
+    "attack": 24,
+    "magic_attack": 24,
+    "defense": 28,
+    "magic_defense": 28,
+    "speed": 72,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 488,
+    "name": "多灵主",
+    "hp": 42,
+    "attack": 30,
+    "magic_attack": 30,
+    "defense": 35,
+    "magic_defense": 35,
+    "speed": 90,
+    "types": [
+      {
+        "id": 15,
+        "name": "Ghost",
+        "localized": {
+          "zh": "幽"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 489,
+    "name": "瑰眼仔",
+    "hp": 61,
+    "attack": 51,
+    "magic_attack": 53,
+    "defense": 65,
+    "magic_defense": 65,
+    "speed": 57,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 490,
+    "name": "耳翎瑰魅",
+    "hp": 81,
+    "attack": 68,
+    "magic_attack": 71,
+    "defense": 87,
+    "magic_defense": 87,
+    "speed": 76,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 491,
+    "name": "邪眼巨魔",
+    "hp": 102,
+    "attack": 85,
+    "magic_attack": 88,
+    "defense": 108,
+    "magic_defense": 108,
+    "speed": 95,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      {
+        "id": 11,
+        "name": "Bug",
+        "localized": {
+          "zh": "虫"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 492,
+    "name": "卡波",
+    "hp": 102,
+    "attack": 102,
+    "magic_attack": 57,
+    "defense": 66,
+    "magic_defense": 53,
+    "speed": 80,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 493,
+    "name": "卡拉波斯",
+    "hp": 123,
+    "attack": 134,
+    "magic_attack": 50,
+    "defense": 75,
+    "magic_defense": 60,
+    "speed": 100,
+    "types": [
+      {
+        "id": 16,
+        "name": "Dark",
+        "localized": {
+          "zh": "恶"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 494,
+    "name": "星云旅者",
+    "hp": 111,
+    "attack": 35,
+    "magic_attack": 120,
+    "defense": 56,
+    "magic_defense": 86,
+    "speed": 120,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 495,
+    "name": "格斗小五",
+    "hp": 85,
+    "attack": 88,
+    "magic_attack": 88,
+    "defense": 116,
+    "magic_defense": 90,
+    "speed": 135,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 496,
+    "name": "格斗小六",
+    "hp": 76,
+    "attack": 144,
+    "magic_attack": 63,
+    "defense": 118,
+    "magic_defense": 88,
+    "speed": 150,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 497,
+    "name": "格斗小八",
+    "hp": 136,
+    "attack": 135,
+    "magic_attack": 50,
+    "defense": 104,
+    "magic_defense": 84,
+    "speed": 66,
+    "types": [
+      {
+        "id": 12,
+        "name": "Fighting",
+        "localized": {
+          "zh": "武"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 498,
+    "name": "烈钻鸟",
+    "hp": 54,
+    "attack": 65,
+    "magic_attack": 58,
+    "defense": 60,
+    "magic_defense": 60,
+    "speed": 72,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 499,
+    "name": "长尾火鸟",
+    "hp": 72,
+    "attack": 87,
+    "magic_attack": 77,
+    "defense": 80,
+    "magic_defense": 80,
+    "speed": 96,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 500,
+    "name": "火羽",
+    "hp": 92,
+    "attack": 116,
+    "magic_attack": 106,
+    "defense": 93,
+    "magic_defense": 93,
+    "speed": 120,
+    "types": [
+      {
+        "id": 3,
+        "name": "Fire",
+        "localized": {
+          "zh": "火"
+        }
+      },
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      }
+    ]
+  },
+  {
+    "ref_id": 501,
+    "name": "凡鹰",
+    "hp": 78,
+    "attack": 128,
+    "magic_attack": 124,
+    "defense": 86,
+    "magic_defense": 86,
+    "speed": 125,
+    "types": [
+      {
+        "id": 13,
+        "name": "Flying",
+        "localized": {
+          "zh": "翼"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 502,
+    "name": "布瓜蝌",
+    "hp": 91,
+    "attack": 84,
+    "magic_attack": 35,
+    "defense": 81,
+    "magic_defense": 55,
+    "speed": 96,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  },
+  {
+    "ref_id": 503,
+    "name": "上岸蛙",
+    "hp": 114,
+    "attack": 106,
+    "magic_attack": 44,
+    "defense": 101,
+    "magic_defense": 69,
+    "speed": 120,
+    "types": [
+      {
+        "id": 18,
+        "name": "Illusion",
+        "localized": {
+          "zh": "幻"
+        }
+      },
+      null
+    ]
+  }
+]

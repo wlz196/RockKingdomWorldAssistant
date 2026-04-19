@@ -47,11 +47,17 @@
                         <button class="main-tab" data-tab="skillView">
                             <i class="fas fa-bolt-lightning"></i> <span>技能图鉴</span>
                         </button>
+                        <button class="main-tab" data-tab="featureView">
+                            <i class="fas fa-star"></i> <span>特性图鉴</span>
+                        </button>
                         <button class="main-tab" data-tab="bloodlineView">
                             <i class="fas fa-dna"></i> <span>血脉库</span>
                         </button>
                         <button class="main-tab" data-tab="buffView">
                             <i class="fas fa-sparkles"></i> <span>Buff 库</span>
+                        </button>
+                        <button class="main-tab" data-tab="benchmarkView">
+                            <i class="fas fa-chart-line"></i> <span>战力大盘</span>
                         </button>
                     </div>
                 </div>
@@ -95,6 +101,24 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- AI Strategic & Management Center -->
+                <div class="sidebar-group admin-group">
+                    <div class="sidebar-category" onclick="this.parentElement.classList.toggle('expanded')">
+                        <span>AI 战术中心</span> <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="group-items">
+                        <a href="pet_review_manager.html" target="_blank" class="sidebar-link">
+                            <i class="fas fa-robot"></i> <span>评述同步管理</span>
+                        </a>
+                        <a href="tagger.html" target="_blank" class="sidebar-link">
+                            <i class="fas fa-tags"></i> <span>AI 技能打标</span>
+                        </a>
+                        <a href="stats.html" target="_blank" class="sidebar-link">
+                            <i class="fas fa-diagnoses"></i> <span>系统数据诊断</span>
+                        </a>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -106,9 +130,9 @@
                     <div class="filter-row-block" style="display:flex; flex-direction:column; gap:8px;">
                         <div style="font-size:0.82rem; font-weight:700; color:#64748b;">是否图鉴内</div>
                         <div class="category-filters" id="categoryFilters">
-                            <button class="cat-btn active" data-cat="all">全部精灵</button>
-                            <button class="cat-btn" data-cat="book">图鉴内</button>
-                            <button class="cat-btn" data-cat="non-book">暂未收录</button>
+                            <button class="cat-btn active" data-cat="book">图鉴内</button>
+                            <button class="cat-btn" data-cat="boss">首领精灵</button>
+                            <button class="cat-btn" data-cat="non-book">未实装</button>
                         </div>
                     </div>
 
@@ -159,7 +183,7 @@
             <div id="skillView" class="tab-pane" style="display:none">
                 <header class="top-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; height: auto; margin-bottom: 25px;">
                     <div class="skill-tactical-filters">
-                        <div class="filter-row">
+                        <div class="filter-row" style="display:none">
                             <span class="filter-label"><i class="fas fa-brain"></i> 逻辑</span>
                             <div id="skillLogicFilters" class="type-filters-row"></div>
                         </div>
@@ -176,7 +200,7 @@
                             <div id="skillDamageFilters" class="type-filters-row"></div>
                         </div>
                         <div class="filter-row">
-                            <span class="filter-label"><i class="fas fa-paw"></i> 拥有</span>
+                            <span class="filter-label"><i class="fas fa-check-circle"></i> 是否实装</span>
                             <div id="skillOwnerFilters" class="type-filters-row"></div>
                         </div>
                     </div>
@@ -201,6 +225,86 @@
                     <span id="skillPageInfo">第 1 页</span>
                     <button id="nextSkillPage" class="btn-nav">下一页 <i class="fas fa-chevron-right"></i></button>
                 </div>
+            </div>
+
+            <div id="featureView" class="tab-pane" style="display:none">
+                <header class="top-filter-bar" style="display: flex; flex-direction: column; gap: 15px; align-items: stretch; height: auto; margin-bottom: 25px;">
+                    <div style="font-size: 1.2rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-star" style="color: #f59e0b;"></i> 特性图鉴
+                    </div>
+
+                    <!-- Row 2: Attribute Filter for Features -->
+                    <div class="filter-row">
+                        <span class="filter-label"><i class="fas fa-mask"></i> 系别</span>
+                        <div id="featureAttrFilters" class="type-filters-row"></div>
+                    </div>
+                    
+                    <div class="search-and-stats" style="margin-left: 0; width: 100%; display: flex; gap: 15px; align-items: center; background: rgba(245, 158, 11, 0.05); padding: 15px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.1);">
+                        <div class="search-container" style="flex: 1; position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                            <input type="text" id="featureSearch" placeholder="搜索特性名称或描述..." style="width: 100%; padding: 12px 15px 12px 45px; background: white; border: 1px solid #e2e8f0; border-radius: 10px; color: #1e293b; font-size: 0.95rem;">
+                        </div>
+                        <div class="stats-counter" style="color: #64748b; white-space: nowrap;">
+                            已发现 <span id="featureCount" style="color: #f59e0b; font-weight: bold;">0</span> 项特性
+                        </div>
+                    </div>
+                </header>
+
+                <div class="pet-grid" id="featureGrid">
+                    <!-- Dynamic Cards -->
+                </div>
+
+                <div class="pagination">
+                    <button id="prevFeaturePage" class="btn-nav"><i class="fas fa-chevron-left"></i> 上一页</button>
+                    <span id="featurePageInfo">第 1 页</span>
+                    <button id="nextFeaturePage" class="btn-nav">下一页 <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div id="benchmarkView" class="tab-pane" style="display:none">
+                <header class="top-bar">
+                    <div style="font-size: 1.2rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-chart-bar" style="color: #6366f1;"></i> 战力度量衡大盘 (Environment Analysis)
+                    </div>
+                    <button class="btn-primary" onclick="copyAISummary()" style="background: #1e293b; color: white;">
+                        <i class="fas fa-robot"></i> 复制 AI 分析数据
+                    </button>
+                </header>
+
+                <!-- Global Benchmarks Section -->
+                <section style="margin-bottom: 40px;">
+                    <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: #1e293b;">
+                         <span style="width: 4px; height: 1.2em; background: #6366f1; border-radius: 2px;"></span> 全局战平线 (Global Benchmarks)
+                    </h3>
+                    <div id="globalBenchmarksList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                        <!-- Cards will be rendered here -->
+                    </div>
+                </section>
+
+                <!-- Type Ranking Section -->
+                <section>
+                    <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: #1e293b;">
+                         <span style="width: 4px; height: 1.2em; background: #f59e0b; border-radius: 2px;"></span> 系别排行榜 (Type Arena Rankings)
+                    </h3>
+                    <div style="background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                        <table class="benchmark-table" id="typeBenchmarkTable" style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                                <tr>
+                                    <th style="padding: 15px; text-align: left;">系别</th>
+                                    <th style="padding: 15px; text-align: center;">核心定位</th>
+                                    <th class="sortable" data-stat="speed" style="padding: 15px; text-align: center; cursor: pointer;">速度 P80 <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-stat="attack" style="padding: 15px; text-align: center; cursor: pointer;">攻击 P80 <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-stat="magic_attack" style="padding: 15px; text-align: center; cursor: pointer;">魔攻 P80 <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-stat="defense" style="padding: 15px; text-align: center; cursor: pointer;">防御 P80 <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-stat="total_stats" style="padding: 15px; text-align: center; cursor: pointer;">总和 P80 <i class="fas fa-sort"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="typeBenchmarkBody">
+                                <!-- Data rows will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
 
             <div id="bloodlineView" class="tab-pane" style="display:none">
@@ -836,12 +940,35 @@
                             <button id="breedCheckBtn" class="btn-nav" style="padding:10px 30px; font-size:1rem; background:var(--accent-blue); color:white; border:none; border-radius:10px; cursor:pointer;">
                                 <i class="fas fa-check-circle"></i> 检查兼容性
                             </button>
-                        </div>
                         <div id="breedResult" style="text-align:center; padding:1rem;"></div>
                     </div>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Type Detail Modal -->
+    <div id="typeDetailModal" class="modal">
+        <div class="modal-content glass" style="max-width: 800px; width: 90%; padding: 0; overflow: hidden; border-radius: 24px;">
+            <div id="typeDetailHeader" style="padding: 30px; background: linear-gradient(135deg, #6366f1, #a855f7); color: white; position: relative;">
+                <span class="close" onclick="closeModal('typeDetailModal')" style="color: white; top: 20px; right: 20px;">&times;</span>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div id="typeDetailTag" style="font-size: 1.5rem; font-weight: 800;">系别名称</div>
+                    <div id="typeDetailSummary" style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 10px; font-size: 0.9rem;">系别定位</div>
+                </div>
+            </div>
+            <div style="padding: 30px; max-height: 70vh; overflow-y: auto;">
+                <div id="typeDetailStatsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+                    <!-- Stat cards will be injected here -->
+                </div>
+            </div>
+            <div style="padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn-primary" id="copyTypeAI" style="background: #1e293b; color: white;">
+                    <i class="fas fa-robot"></i> 复制此系别分析
+                </button>
+                <button class="btn-secondary" onclick="closeModal('typeDetailModal')">关闭</button>
+            </div>
+        </div>
     </div>
 
     <!-- Detail Drawer (Slide-in) -->
