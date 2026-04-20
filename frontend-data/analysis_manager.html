@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析数据录入台 - ROCO</title>
+    <link rel="stylesheet" href="encyclopedia.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background:#0f172a; color:white; margin:0; min-height:100vh; }
+        .layout { display:grid; grid-template-columns: 320px 1fr 320px; min-height:100vh; }
+        .panel { border-right:1px solid rgba(255,255,255,0.08); background:rgba(15,23,42,0.88); backdrop-filter: blur(18px); }
+        .panel:last-child { border-right:none; border-left:1px solid rgba(255,255,255,0.08); }
+        .panel-header { padding:24px; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .panel-header h2,.panel-header h3 { margin:0; }
+        .panel-body { padding:16px; overflow:auto; height:calc(100vh - 100px); }
+        .table-tabs { display:grid; grid-template-columns:1fr; gap:8px; margin-top:16px; }
+        .tab-btn { border:none; border-radius:12px; padding:12px 14px; text-align:left; color:white; background:rgba(255,255,255,0.04); cursor:pointer; }
+        .tab-btn.active { background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.35); }
+        .search-box { margin-top:16px; }
+        .search-box input { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.05); color:white; }
+        .list { display:flex; flex-direction:column; gap:8px; }
+        .list-item { padding:14px; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); cursor:pointer; }
+        .list-item.active { background:rgba(59,130,246,0.12); border-color:rgba(59,130,246,0.3); }
+        .list-title { font-weight:700; font-size:14px; }
+        .list-meta { margin-top:6px; color:#94a3b8; font-size:12px; }
+        .editor-card { max-width:980px; margin:0 auto; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:24px; padding:28px; }
+        .editor-title { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:24px; }
+        .editor-title h2 { margin:0; font-family:'Outfit'; }
+        .title-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+        .form-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; }
+        .field.full { grid-column:1 / -1; }
+        .field label { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px; color:#cbd5e1; font-size:13px; font-weight:600; }
+        .field input, .field textarea { width:100%; box-sizing:border-box; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.05); color:white; }
+        .field textarea { min-height:100px; resize:vertical; font-family:ui-monospace, SFMono-Regular, Menlo, monospace; }
+        .actions { display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; }
+        .btn { border:none; border-radius:12px; padding:12px 18px; cursor:pointer; font-weight:700; }
+        .btn-xs { padding:6px 10px; font-size:12px; border-radius:8px; }
+        .btn-primary { background:linear-gradient(135deg,#3b82f6,#8b5cf6); color:white; }
+        .btn-secondary { background:rgba(255,255,255,0.08); color:white; }
+        .btn-danger { background:rgba(239,68,68,0.18); color:#fecaca; }
+        .hint-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:20px; padding:20px; }
+        .hint-card h3 { margin-top:0; font-family:'Outfit'; }
+        .hint-card ul { padding-left:18px; color:#cbd5e1; line-height:1.7; }
+        .status { margin-top:12px; color:#93c5fd; font-size:13px; min-height:18px; }
+        .empty-tip { color:#64748b; text-align:center; padding:40px 20px; }
+        .field-tools { display:flex; gap:8px; flex-wrap:wrap; }
+        .autocomplete-wrap { position:relative; }
+        .autocomplete-results { position:absolute; z-index:20; top:calc(100% + 6px); left:0; right:0; background:#0f172a; border:1px solid rgba(255,255,255,0.12); border-radius:12px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,0.35); }
+        .autocomplete-item { padding:10px 12px; cursor:pointer; border-top:1px solid rgba(255,255,255,0.06); }
+        .autocomplete-item:first-child { border-top:none; }
+        .autocomplete-item:hover { background:rgba(59,130,246,0.12); }
+        .autocomplete-name { font-weight:700; }
+        .autocomplete-meta { margin-top:4px; color:#94a3b8; font-size:12px; }
+        .hidden-input { display:none; }
+        .tag-picker { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+        .tag-chip { padding:7px 10px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); font-size:12px; cursor:pointer; user-select:none; }
+        .tag-chip.active { background:rgba(59,130,246,0.18); border-color:rgba(59,130,246,0.35); color:#bfdbfe; }
+        .picker-box { margin-top:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:14px; }
+        .picker-header { display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:12px; }
+        .picker-header input { flex:1; }
+        .picker-section { margin-top:12px; }
+        .picker-section h4 { margin:0 0 8px; color:#cbd5e1; font-size:13px; }
+        .picker-skills { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:8px; }
+        .picker-skill { padding:10px 12px; border-radius:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); display:flex; gap:8px; align-items:flex-start; }
+        .picker-skill input { width:auto; margin-top:3px; }
+        .picker-skill-meta { color:#94a3b8; font-size:12px; margin-top:4px; }
+        .selected-note { margin-top:8px; color:#93c5fd; font-size:12px; }
+        .selected-skill-list { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+        .selected-skill-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.18); border-radius:12px; }
+        .selected-skill-actions { display:flex; gap:6px; }
+        .modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,0.7); z-index:100; padding:20px; }
+        .modal.open { display:flex; }
+        .modal-card { width:min(960px, 100%); max-height:85vh; overflow:auto; background:#0f172a; border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:24px; box-shadow:0 24px 80px rgba(0,0,0,0.45); }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+        .modal-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; }
+        .modal-grid .field.full { grid-column:1 / -1; }
+        @media (max-width: 1200px) { .layout { grid-template-columns: 280px 1fr; } .layout .panel:last-child { display:none; } }
+        @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .panel { border:none !important; } .panel-body { height:auto; } .form-grid, .modal-grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <aside class="panel">
+        <div class="panel-header">
+            <h2>分析数据录入台</h2>
+            <div style="margin-top:8px;color:#94a3b8;font-size:13px;">管理 AI 评述系统的 5 张核心分析表</div>
+            <div class="search-box">
+                <input id="searchInput" type="text" placeholder="搜索名称 / ID / 词条...">
+            </div>
+            <div class="table-tabs" id="tableTabs"></div>
+        </div>
+        <div class="panel-body">
+            <div class="actions" style="margin-top:0; margin-bottom:14px;">
+                <button class="btn btn-primary" id="newBtn">新建</button>
+                <button class="btn btn-secondary" id="refreshBtn">刷新</button>
+            </div>
+            <div id="itemList" class="list"></div>
+        </div>
+    </aside>
+
+    <main class="panel" style="background: radial-gradient(circle at top, rgba(59,130,246,0.10), transparent 40%), #0f172a;">
+        <div class="panel-header">
+            <h3 id="editorHeading">请选择左侧记录</h3>
+            <div class="status" id="statusText"></div>
+        </div>
+        <div class="panel-body">
+            <div class="editor-card">
+                <div class="editor-title">
+                    <h2 id="editorTitle">录入表单</h2>
+                    <div class="title-actions">
+                        <span id="recordBadge" style="font-size:12px;color:#94a3b8;">未选择记录</span>
+                        <div id="tableActions"></div>
+                    </div>
+                </div>
+                <form id="editorForm" class="form-grid"></form>
+                <div class="actions">
+                    <button class="btn btn-primary" id="saveBtn" type="button">保存</button>
+                    <button class="btn btn-danger" id="deleteBtn" type="button">删除</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <aside class="panel">
+        <div class="panel-header"><h3>字段说明</h3></div>
+        <div class="panel-body">
+            <div class="hint-card">
+                <h3 id="hintTitle">使用说明</h3>
+                <ul id="hintList"></ul>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<div id="tagConfigModal" class="modal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3>分析标签库配置</h3>
+            <button class="btn btn-secondary btn-xs" onclick="closeTagConfigModal()">关闭</button>
+        </div>
+        <div id="tagConfigForm" class="modal-grid"></div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="saveTagLibraryConfig()">保存标签库</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const API_BASE = `http://${window.location.hostname || 'localhost'}:8081/api/v1/data`;
+const DEFAULT_TAG_LIBRARY = {
+    actionTags: ['直接伤害','连击','条件增伤','斩杀','优先级','打断','护盾','减伤','锁血','回血','回能','净化','驱散','减益','控制','印记施加','印记消耗','转属性','反击','启动','强化','资源循环'],
+    triggerTags: ['对克制目标','对异常目标','对低血目标','对高血目标','先手时','后手时','应对成功后','受击后','登场后','自身有印记','对方有印记','连续使用','满能量时','低血量时','特定系别条件'],
+    payoffTags: ['启动','爆发','稳定输出','收割','续航','抗压','节奏压制','逼换','反打','资源获取','强势滚雪球'],
+    targetTags: ['自身','敌方单体','敌方全体','友方','场地'],
+    synergyTags: ['多属性打击面','异常联动','印记联动','应对联动','血脉联动','资源循环','中盘压制'],
+    riskTags: ['启动慢','怕控场','怕集火','缺续航','技能位紧张','依赖对位','依赖血脉'],
+    roleTags: ['主C','副C','坦克','节奏手','控场','反制位','先发压制','中转枢纽','对策卡'],
+    relatedTags: ['优先级','速度压制','节奏压制','条件增伤','爆发','滚雪球','回能','印记联动']
+};
+let TAG_LIBRARY = structuredClone(DEFAULT_TAG_LIBRARY);
+
+const TABLES = {
+    'skill-tactical-tags': {
+        label: '技能战术标签',
+        listApi: 'analysis/skill-tactical-tags',
+        detailApi: id => `analysis/skill-tactical-tags/${encodeURIComponent(id)}/details`,
+        saveApi: id => `analysis/skill-tactical-tags/${encodeURIComponent(id)}/save`,
+        deleteApi: id => `analysis/skill-tactical-tags/${encodeURIComponent(id)}/delete`,
+        idKey: 'skillId',
+        display: item => `${item.skillName || '未命名技能'} #${item.skillId ?? ''}`,
+        meta: item => [item.majorCategory, item.source, item.updatedAt].filter(Boolean).join(' · '),
+        hints: ['主键使用 skillId。', '支持按技能名称联想搜索。', '标签字段可点选，也可手动编辑 JSON。'],
+        tools: ['tagConfig','generateSkillTagDraft','generateSkillTagDraftBatch'],
+        fields: [
+            {key:'skillId', label:'技能 ID', type:'entity-search', entity:'skill'},
+            {key:'majorCategory', label:'大类', type:'text'},
+            {key:'actionTags', label:'动作标签', type:'textarea', full:true, format:'json', tagSource:'actionTags'},
+            {key:'triggerTags', label:'触发标签', type:'textarea', full:true, format:'json', tagSource:'triggerTags'},
+            {key:'payoffTags', label:'收益标签', type:'textarea', full:true, format:'json', tagSource:'payoffTags'},
+            {key:'targetTags', label:'作用对象标签', type:'textarea', full:true, format:'json', tagSource:'targetTags'},
+            {key:'synergyTags', label:'联动标签', type:'textarea', full:true, format:'json', tagSource:'synergyTags'},
+            {key:'riskTags', label:'风险标签', type:'textarea', full:true, format:'json', tagSource:'riskTags'},
+            {key:'manualScoreAttack', label:'输出评分', type:'number', step:'0.1'},
+            {key:'manualScoreDefense', label:'生存评分', type:'number', step:'0.1'},
+            {key:'manualScoreUtility', label:'功能评分', type:'number', step:'0.1'},
+            {key:'confidence', label:'置信度', type:'number', step:'0.1'},
+            {key:'source', label:'来源', type:'text'}
+        ]
+    },
+    'feature-tactical-tags': {
+        label: '特性战术标签',
+        listApi: 'analysis/feature-tactical-tags',
+        detailApi: id => `analysis/feature-tactical-tags/${encodeURIComponent(id)}/details`,
+        saveApi: id => `analysis/feature-tactical-tags/${encodeURIComponent(id)}/save`,
+        deleteApi: id => `analysis/feature-tactical-tags/${encodeURIComponent(id)}/delete`,
+        idKey: 'featureId',
+        display: item => `${item.featureName || '未命名特性'} #${item.featureId ?? ''}`,
+        meta: item => [item.triggerMode, item.valueAxis, item.updatedAt].filter(Boolean).join(' · '),
+        hints: ['主键使用 featureId。', '这里也支持按技能/特性名称联想。', '触发/收益/联动标签支持点选。'],
+        tools: ['tagConfig','generateFeatureTagDraft','generateFeatureTagDraftBatch'],
+        fields: [
+            {key:'featureId', label:'特性 ID', type:'entity-search', entity:'skill'},
+            {key:'triggerMode', label:'触发模式', type:'text'},
+            {key:'valueAxis', label:'价值轴', type:'text'},
+            {key:'triggerTags', label:'触发标签', type:'textarea', full:true, format:'json', tagSource:'triggerTags'},
+            {key:'payoffTags', label:'收益标签', type:'textarea', full:true, format:'json', tagSource:'payoffTags'},
+            {key:'synergyTags', label:'联动标签', type:'textarea', full:true, format:'json', tagSource:'synergyTags'},
+            {key:'floorBoost', label:'下限提升', type:'number', step:'0.1'},
+            {key:'ceilingBoost', label:'上限提升', type:'number', step:'0.1'},
+            {key:'source', label:'来源', type:'text'},
+            {key:'notes', label:'备注', type:'textarea', full:true}
+        ]
+    },
+    'pet-build-profiles': {
+        label: '精灵构筑',
+        listApi: 'analysis/pet-build-profiles',
+        detailApi: id => `analysis/pet-build-profiles/${encodeURIComponent(id)}/details`,
+        saveApi: () => `analysis/pet-build-profiles/save`,
+        deleteApi: id => `analysis/pet-build-profiles/${encodeURIComponent(id)}/delete`,
+        idKey: 'id',
+        display: item => `${item.petName || '未知精灵'} · ${item.buildName || '未命名构筑'}`,
+        meta: item => [`#${item.id ?? ''}`, item.buildType, item.priority, item.updatedAt].filter(v => v !== null && v !== undefined && v !== '').join(' · '),
+        hints: ['id 留空表示新建。', 'petId 支持按精灵名称联想。', '技能相关字段支持直接打开候选技能选择器。'],
+        tools: ['tagConfig','generateBuild','generateBuildBatch'],
+        fields: [
+            {key:'id', label:'记录 ID', type:'number'},
+            {key:'petId', label:'精灵 ID', type:'entity-search', entity:'pet'},
+            {key:'buildName', label:'构筑名称', type:'text'},
+            {key:'buildType', label:'构筑类型', type:'text'},
+            {key:'priority', label:'优先级', type:'number'},
+            {key:'source', label:'来源', type:'text'},
+            {key:'coreSkillIds', label:'核心技能', type:'textarea', full:true, format:'json', picker:'skills'},
+            {key:'optionalSkillIds', label:'可选技能', type:'textarea', full:true, format:'json', picker:'skills'},
+            {key:'recommendedSkillSet', label:'推荐技能集', type:'textarea', full:true, format:'json', picker:'skills'},
+            {key:'bloodlineOptions', label:'血脉选项', type:'textarea', full:true, format:'json'},
+            {key:'natureOptions', label:'性格选项', type:'textarea', full:true, format:'json'},
+            {key:'talentOptions', label:'特长选项', type:'textarea', full:true, format:'json'},
+            {key:'roleTags', label:'角色标签', type:'textarea', full:true, format:'json', tagSource:'roleTags'},
+            {key:'playstyleSummary', label:'玩法概述', type:'textarea', full:true},
+            {key:'strengthNotes', label:'优势说明', type:'textarea', full:true},
+            {key:'weaknessNotes', label:'弱点说明', type:'textarea', full:true},
+            {key:'environmentNotes', label:'环境说明', type:'textarea', full:true}
+        ]
+    },
+    'pet-tactical-profiles': {
+        label: '精灵画像',
+        listApi: 'analysis/pet-tactical-profiles',
+        detailApi: id => `analysis/pet-tactical-profiles/${encodeURIComponent(id)}/details`,
+        saveApi: id => `analysis/pet-tactical-profiles/${encodeURIComponent(id)}/save`,
+        deleteApi: id => `analysis/pet-tactical-profiles/${encodeURIComponent(id)}/delete`,
+        idKey: 'petId',
+        display: item => `${item.petName || '未知精灵'} #${item.petId ?? ''}`,
+        meta: item => [item.version, item.generatedBy, item.updatedAt].filter(Boolean).join(' · '),
+        hints: ['主键使用 petId。', 'petId 支持按精灵名称联想。', '画像 JSON 与数组字段支持一键格式化。'],
+        tools: ['generateProfile'],
+        fields: [
+            {key:'petId', label:'精灵 ID', type:'entity-search', entity:'pet'},
+            {key:'version', label:'版本', type:'text'},
+            {key:'roleSummary', label:'一句话定位', type:'textarea', full:true},
+            {key:'profileJson', label:'画像 JSON', type:'textarea', full:true, format:'json'},
+            {key:'offenseScore', label:'输出评分', type:'number', step:'0.1'},
+            {key:'defenseScore', label:'生存评分', type:'number', step:'0.1'},
+            {key:'speedScore', label:'速度评分', type:'number', step:'0.1'},
+            {key:'utilityScore', label:'功能评分', type:'number', step:'0.1'},
+            {key:'synergyScore', label:'自洽评分', type:'number', step:'0.1'},
+            {key:'flexibilityScore', label:'泛用评分', type:'number', step:'0.1'},
+            {key:'ceilingScore', label:'上限评分', type:'number', step:'0.1'},
+            {key:'floorScore', label:'下限评分', type:'number', step:'0.1'},
+            {key:'metaFitScore', label:'环境适配', type:'number', step:'0.1'},
+            {key:'generatedBy', label:'生成来源', type:'text'},
+            {key:'strengths', label:'优势', type:'textarea', full:true, format:'json'},
+            {key:'weaknesses', label:'短板', type:'textarea', full:true, format:'json'},
+            {key:'buildDependencies', label:'构筑依赖', type:'textarea', full:true, format:'json'}
+        ]
+    },
+    'mechanic-glossary': {
+        label: '词条字典',
+        listApi: 'analysis/mechanic-glossary',
+        detailApi: id => `analysis/mechanic-glossary/${encodeURIComponent(id)}/details`,
+        saveApi: id => `analysis/mechanic-glossary/${encodeURIComponent(id)}/save`,
+        deleteApi: id => `analysis/mechanic-glossary/${encodeURIComponent(id)}/delete`,
+        idKey: 'term',
+        display: item => item.term || '未命名词条',
+        meta: item => [item.category, item.updatedAt].filter(Boolean).join(' · '),
+        hints: ['主键使用 term。', 'relatedTags 支持标签点选。', '建议优先录入迸发、迅捷等高价值词条。'],
+        tools: ['tagConfig','seedGlossary'],
+        fields: [
+            {key:'term', label:'词条名', type:'text'},
+            {key:'category', label:'类别', type:'text'},
+            {key:'formalDefinition', label:'标准定义', type:'textarea', full:true},
+            {key:'tacticalMeaning', label:'战术含义', type:'textarea', full:true},
+            {key:'parsingHint', label:'解析提示', type:'textarea', full:true},
+            {key:'relatedTags', label:'关联标签', type:'textarea', full:true, format:'json', tagSource:'relatedTags'}
+        ]
+    }
+};
+
+let currentTable = 'skill-tactical-tags';
+let currentItems = [];
+let currentRecord = null;
+let petSkillCache = new Map();
+
+const tableTabs = document.getElementById('tableTabs');
+const itemList = document.getElementById('itemList');
+const editorForm = document.getElementById('editorForm');
+const editorHeading = document.getElementById('editorHeading');
+const editorTitle = document.getElementById('editorTitle');
+const recordBadge = document.getElementById('recordBadge');
+const statusText = document.getElementById('statusText');
+const hintTitle = document.getElementById('hintTitle');
+const hintList = document.getElementById('hintList');
+const searchInput = document.getElementById('searchInput');
+const tableActions = document.getElementById('tableActions');
+
+document.getElementById('newBtn').addEventListener('click', () => createEmptyRecord());
+document.getElementById('refreshBtn').addEventListener('click', () => loadList());
+document.getElementById('saveBtn').addEventListener('click', () => saveCurrentRecord());
+document.getElementById('deleteBtn').addEventListener('click', () => deleteCurrentRecord());
+searchInput.addEventListener('input', debounce(() => loadList(), 250));
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.autocomplete-wrap')) {
+        document.querySelectorAll('.autocomplete-results').forEach(el => el.remove());
+    }
+});
+
+function debounce(fn, delay) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), delay);
+    };
+}
+
+function renderTabs() {
+    tableTabs.innerHTML = Object.entries(TABLES).map(([key, config]) => `
+        <button class="tab-btn ${key === currentTable ? 'active' : ''}" data-key="${key}">
+            ${config.label}
+        </button>
+    `).join('');
+    tableTabs.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentTable = btn.dataset.key;
+            currentRecord = null;
+            renderTabs();
+            renderHints();
+            renderForm();
+            loadList();
+        });
+    });
+}
+
+function renderHints() {
+    const config = TABLES[currentTable];
+    hintTitle.textContent = config.label;
+    hintList.innerHTML = config.hints.map(h => `<li>${h}</li>`).join('');
+}
+
+function renderTableActions() {
+    const tools = TABLES[currentTable].tools || [];
+    tableActions.innerHTML = tools.map(tool => {
+        if (tool === 'tagConfig') return '<button class="btn btn-secondary btn-xs" type="button" onclick="openTagConfigModal()">标签库配置</button>';
+        if (tool === 'generateSkillTagDraft') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateSkillTagDraftForCurrent()">生成技能标签初稿</button>';
+        if (tool === 'generateSkillTagDraftBatch') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateSkillTagDraftBatch()">批量生成技能标签初稿</button>';
+        if (tool === 'generateFeatureTagDraft') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateFeatureTagDraftForCurrent()">生成特性标签初稿</button>';
+        if (tool === 'generateFeatureTagDraftBatch') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateFeatureTagDraftBatch()">批量生成特性标签初稿</button>';
+        if (tool === 'generateProfile') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateProfileForCurrent()">生成画像</button>';
+        if (tool === 'generateBuild') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateBuildForCurrent()">生成构筑</button>';
+        if (tool === 'generateBuildBatch') return '<button class="btn btn-secondary btn-xs" type="button" onclick="generateBuildBatch()">批量生成构筑</button>';
+        if (tool === 'seedGlossary') return '<button class="btn btn-secondary btn-xs" type="button" onclick="seedGlossaryDefaults()">导入默认词条</button>';
+        return '';
+    }).join('');
+}
+
+function renderForm() {
+    const config = TABLES[currentTable];
+    const record = currentRecord || {};
+    editorHeading.textContent = `正在编辑：${config.label}`;
+    editorTitle.textContent = config.label;
+    recordBadge.textContent = record[config.idKey] ? `${config.idKey}: ${record[config.idKey]}` : '新建记录';
+    renderTableActions();
+    editorForm.innerHTML = config.fields.map(field => renderField(field, record)).join('');
+    enhanceFormFields();
+}
+
+function renderField(field, record) {
+    const value = record[field.key] ?? '';
+    const tools = [];
+    if (field.format === 'json') tools.push(`<button type="button" class="btn btn-secondary btn-xs json-format-btn" data-target="field_${field.key}">格式化 JSON</button>`);
+    if (field.picker === 'skills') tools.push(`<button type="button" class="btn btn-secondary btn-xs skill-picker-btn" data-target="field_${field.key}">选择技能</button>`);
+
+    let inputHtml = '';
+    if (field.type === 'textarea') {
+        inputHtml = `<textarea id="field_${field.key}" data-key="${field.key}">${escapeHtml(value)}</textarea>`;
+    } else if (field.type === 'entity-search') {
+        inputHtml = `
+            <div class="autocomplete-wrap">
+                <input id="field_${field.key}" class="hidden-input" data-key="${field.key}" value="${escapeAttr(value)}">
+                <input id="display_${field.key}" type="text" placeholder="输入名称搜索..." value="${escapeAttr(record[field.key + 'Name'] || '')}">
+            </div>
+        `;
+    } else {
+        inputHtml = `<input id="field_${field.key}" data-key="${field.key}" type="${field.type || 'text'}" ${field.step ? `step="${field.step}"` : ''} value="${escapeAttr(value)}">`;
+    }
+
+    return `
+        <div class="field ${field.full ? 'full' : ''}" data-field-key="${field.key}">
+            <label for="field_${field.key}">
+                <span>${field.label}</span>
+                <span class="field-tools">${tools.join('')}</span>
+            </label>
+            ${inputHtml}
+            ${field.tagSource ? `<div class="tag-picker" data-tag-target="field_${field.key}"></div>` : ''}
+            ${field.picker === 'skills' ? `<div class="picker-box" id="picker_${field.key}" style="display:none"></div>` : ''}
+        </div>
+    `;
+}
+
+function enhanceFormFields() {
+    const config = TABLES[currentTable];
+    config.fields.forEach(field => {
+        if (field.type === 'entity-search') bindEntitySearch(field);
+        if (field.tagSource) renderTagPicker(field);
+    });
+
+    editorForm.querySelectorAll('.json-format-btn').forEach(btn => {
+        btn.addEventListener('click', () => formatJsonField(btn.dataset.target));
+    });
+    editorForm.querySelectorAll('.skill-picker-btn').forEach(btn => {
+        btn.addEventListener('click', () => toggleSkillPicker(btn.dataset.target));
+    });
+}
+
+function createEmptyRecord() {
+    currentRecord = {};
+    renderForm();
+    setStatus('已切换到新建模式');
+}
+
+async function loadAnalysisTagLibrary() {
+    try {
+        const resp = await fetch(`${API_BASE}/config/analysis-tags`);
+        const data = await resp.json();
+        TAG_LIBRARY = JSON.parse(data.config || '{}');
+    } catch {
+        TAG_LIBRARY = structuredClone(DEFAULT_TAG_LIBRARY);
+    }
+}
+
+async function loadList() {
+    const config = TABLES[currentTable];
+    const keyword = encodeURIComponent(searchInput.value.trim());
+    setStatus('正在加载列表...');
+    const resp = await fetch(`${API_BASE}/${config.listApi}?keyword=${keyword}&page=0&size=100`);
+    const data = await resp.json();
+    currentItems = data.items || [];
+    itemList.innerHTML = currentItems.length ? currentItems.map(item => `
+        <div class="list-item ${currentRecord && currentRecord[config.idKey] == item[config.idKey] ? 'active' : ''}" data-id="${item[config.idKey] ?? ''}">
+            <div class="list-title">${escapeHtml(config.display(item))}</div>
+            <div class="list-meta">${escapeHtml(config.meta(item))}</div>
+        </div>
+    `).join('') : `<div class="empty-tip">暂无记录，可点击“新建”开始录入。</div>`;
+    itemList.querySelectorAll('.list-item').forEach(el => {
+        el.addEventListener('click', () => loadDetails(el.dataset.id));
+    });
+    setStatus(`已加载 ${currentItems.length} 条记录`);
+}
+
+async function loadDetails(id) {
+    const config = TABLES[currentTable];
+    setStatus('正在加载详情...');
+    const resp = await fetch(`${API_BASE}/${config.detailApi(id)}`);
+    currentRecord = await resp.json();
+    renderForm();
+    loadList();
+    setStatus('详情已加载');
+}
+
+function collectFormData() {
+    const result = {};
+    editorForm.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.dataset.key;
+        result[key] = el.value;
+    });
+    return result;
+}
+
+async function saveCurrentRecord() {
+    const config = TABLES[currentTable];
+    const data = collectFormData();
+    const id = data[config.idKey];
+    if (!id && currentTable !== 'pet-build-profiles') {
+        setStatus(`请先填写 ${config.idKey}`);
+        return;
+    }
+    setStatus('正在保存...');
+    const resp = await fetch(`${API_BASE}/${config.saveApi(id)}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+    const result = await resp.json();
+    if (result.success) {
+        currentRecord = data;
+        setStatus('保存成功');
+        await loadList();
+    } else {
+        setStatus('保存失败');
+    }
+}
+
+async function deleteCurrentRecord() {
+    const config = TABLES[currentTable];
+    const data = collectFormData();
+    const id = data[config.idKey];
+    if (!id) {
+        setStatus('当前没有可删除的记录');
+        return;
+    }
+    if (!confirm(`确定删除 ${config.label} 的当前记录吗？`)) return;
+    setStatus('正在删除...');
+    const resp = await fetch(`${API_BASE}/${config.deleteApi(id)}`, { method: 'POST' });
+    const result = await resp.json();
+    if (result.success) {
+        currentRecord = null;
+        renderForm();
+        await loadList();
+        setStatus('删除成功');
+    } else {
+        setStatus('删除失败');
+    }
+}
+
+function bindEntitySearch(field) {
+    const input = document.getElementById(`display_${field.key}`);
+    const hidden = document.getElementById(`field_${field.key}`);
+    if (!input || !hidden) return;
+    const run = debounce(async () => {
+        const keyword = input.value.trim();
+        removeAutocomplete(input);
+        if (!keyword) return;
+        const items = await searchEntities(field.entity, keyword);
+        if (!items.length) return;
+        const resultBox = document.createElement('div');
+        resultBox.className = 'autocomplete-results';
+        resultBox.innerHTML = items.map(item => renderAutocompleteItem(field.entity, item)).join('');
+        input.parentElement.appendChild(resultBox);
+        resultBox.querySelectorAll('.autocomplete-item').forEach(el => {
+            el.addEventListener('click', () => {
+                const item = items.find(x => String(getEntityId(field.entity, x)) === el.dataset.id);
+                hidden.value = getEntityId(field.entity, item);
+                input.value = getEntityName(field.entity, item);
+                removeAutocomplete(input);
+                setStatus(`已选择：${getEntityName(field.entity, item)}`);
+            });
+        });
+    }, 250);
+    input.addEventListener('input', run);
+}
+
+function removeAutocomplete(input) {
+    const existing = input.parentElement.querySelector('.autocomplete-results');
+    if (existing) existing.remove();
+}
+
+async function searchEntities(entity, keyword) {
+    if (entity === 'pet') {
+        const resp = await fetch(`${API_BASE}/pets?keyword=${encodeURIComponent(keyword)}&size=8&category=all`);
+        return await resp.json();
+    }
+    const resp = await fetch(`${API_BASE}/skills?keyword=${encodeURIComponent(keyword)}&size=8`);
+    return await resp.json();
+}
+
+function renderAutocompleteItem(entity, item) {
+    const id = getEntityId(entity, item);
+    const name = getEntityName(entity, item);
+    const meta = entity === 'pet'
+        ? [item.bookId ? `图鉴#${item.bookId}` : '', item.type1, item.type2].filter(Boolean).join(' · ')
+        : [item.attribute, item.category, item.power && item.power !== '0' ? `威力${item.power}` : ''].filter(Boolean).join(' · ');
+    return `<div class="autocomplete-item" data-id="${escapeAttr(id)}"><div class="autocomplete-name">${escapeHtml(name)}</div><div class="autocomplete-meta">${escapeHtml(meta)}</div></div>`;
+}
+
+function getEntityId(entity, item) {
+    return item.id;
+}
+function getEntityName(entity, item) {
+    return item.name;
+}
+
+function formatJsonField(targetId) {
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    try {
+        const text = el.value.trim();
+        if (!text) {
+            el.value = '[]';
+            setStatus('已填充空 JSON 数组');
+            return;
+        }
+        const parsed = JSON.parse(text);
+        el.value = JSON.stringify(parsed, null, 2);
+        setStatus('JSON 已格式化');
+    } catch {
+        const raw = el.value.split(',').map(s => s.trim()).filter(Boolean);
+        if (raw.length) {
+            el.value = JSON.stringify(raw, null, 2);
+            setStatus('已按逗号文本转为 JSON 数组');
+        } else {
+            setStatus('JSON 格式错误，无法格式化');
+        }
+    }
+}
+
+function renderTagPicker(field) {
+    const box = editorForm.querySelector(`[data-tag-target="field_${field.key}"]`);
+    const textarea = document.getElementById(`field_${field.key}`);
+    if (!box || !textarea) return;
+    const library = TAG_LIBRARY[field.tagSource] || [];
+    const selected = new Set(parseArrayValue(textarea.value));
+    box.innerHTML = library.map(tag => `
+        <span class="tag-chip ${selected.has(tag) ? 'active' : ''}" data-tag="${escapeAttr(tag)}" data-target="field_${field.key}">${escapeHtml(tag)}</span>
+    `).join('');
+    box.querySelectorAll('.tag-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const current = new Set(parseArrayValue(textarea.value));
+            const tag = chip.dataset.tag;
+            if (current.has(tag)) current.delete(tag);
+            else current.add(tag);
+            textarea.value = JSON.stringify(Array.from(current), null, 2);
+            renderTagPicker(field);
+        });
+    });
+}
+
+function parseArrayValue(value) {
+    const text = String(value || '').trim();
+    if (!text) return [];
+    try {
+        const parsed = JSON.parse(text);
+        return Array.isArray(parsed) ? parsed.map(String) : [];
+    } catch {
+        return text.split(',').map(s => s.trim()).filter(Boolean);
+    }
+}
+
+async function toggleSkillPicker(targetId) {
+    const box = document.getElementById(`picker_${targetId.replace('field_', '')}`);
+    if (!box) return;
+    if (box.style.display === 'block') {
+        box.style.display = 'none';
+        return;
+    }
+    const petId = document.getElementById('field_petId')?.value?.trim();
+    if (!petId) {
+        setStatus('请先选择精灵，再打开技能选择器');
+        return;
+    }
+    box.style.display = 'block';
+    box.innerHTML = '<div class="empty-tip">正在加载技能候选...</div>';
+    const skills = await loadPetSkills(petId);
+    renderSkillPicker(box, targetId, skills);
+}
+
+async function loadPetSkills(petId) {
+    if (petSkillCache.has(petId)) return petSkillCache.get(petId);
+    const resp = await fetch(`${API_BASE}/pets/${encodeURIComponent(petId)}/details`);
+    const data = await resp.json();
+    const skills = data.skills || {};
+    petSkillCache.set(petId, skills);
+    return skills;
+}
+
+function renderSkillPicker(box, targetId, skillsByGroup) {
+    const target = document.getElementById(targetId);
+    let selected = parseArrayValue(target.value).map(v => String(v));
+    box.innerHTML = `
+        <div class="picker-header">
+            <input type="text" placeholder="筛选技能名称..." id="${targetId}_skill_search">
+            <button class="btn btn-secondary btn-xs" type="button" id="${targetId}_picker_close">收起</button>
+        </div>
+        <div id="${targetId}_selected"></div>
+        <div id="${targetId}_skill_groups"></div>
+        <div class="selected-note">当前已选 ${selected.length} 个技能</div>
+    `;
+    document.getElementById(`${targetId}_picker_close`).addEventListener('click', () => box.style.display = 'none');
+
+    const rebuildSelectedPanel = () => {
+        const selectedEl = document.getElementById(`${targetId}_selected`);
+        const allSkills = Object.values(skillsByGroup).flat();
+        selectedEl.innerHTML = selected.length ? `
+            <div class="picker-section">
+                <h4>已选技能排序</h4>
+                <div class="selected-skill-list">
+                    ${selected.map((skillId, index) => {
+                        const skill = allSkills.find(s => String(s.id) === String(skillId));
+                        return `
+                            <div class="selected-skill-item">
+                                <div>
+                                    <div>${escapeHtml(skill?.name || `技能#${skillId}`)}</div>
+                                    <div class="picker-skill-meta">${escapeHtml(skill ? [skill.attribute, skill.category].filter(Boolean).join(' · ') : '')}</div>
+                                </div>
+                                <div class="selected-skill-actions">
+                                    <button class="btn btn-secondary btn-xs" type="button" data-move="up" data-index="${index}">↑</button>
+                                    <button class="btn btn-secondary btn-xs" type="button" data-move="down" data-index="${index}">↓</button>
+                                    <button class="btn btn-danger btn-xs" type="button" data-move="remove" data-index="${index}">移除</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        ` : '';
+        selectedEl.querySelectorAll('[data-move]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const index = Number(btn.dataset.index);
+                const action = btn.dataset.move;
+                if (action === 'up' && index > 0) [selected[index - 1], selected[index]] = [selected[index], selected[index - 1]];
+                if (action === 'down' && index < selected.length - 1) [selected[index + 1], selected[index]] = [selected[index], selected[index + 1]];
+                if (action === 'remove') selected.splice(index, 1);
+                target.value = JSON.stringify(selected.map(Number), null, 2);
+                box.querySelector('.selected-note').textContent = `当前已选 ${selected.length} 个技能`;
+                rebuildSelectedPanel();
+                renderGroups(document.getElementById(`${targetId}_skill_search`).value.trim());
+            });
+        });
+    };
+
+    const renderGroups = (keyword = '') => {
+        const groupsEl = document.getElementById(`${targetId}_skill_groups`);
+        groupsEl.innerHTML = Object.entries(skillsByGroup).map(([groupName, list]) => {
+            const filtered = (list || []).filter(skill => !keyword || (skill.name || '').includes(keyword));
+            if (!filtered.length) return '';
+            return `
+                <div class="picker-section">
+                    <h4>${groupName}</h4>
+                    <div class="picker-skills">
+                        ${filtered.map(skill => `
+                            <label class="picker-skill">
+                                <input type="checkbox" data-skill-id="${skill.id}" ${selected.includes(String(skill.id)) ? 'checked' : ''}>
+                                <div>
+                                    <div>${escapeHtml(skill.name || '')}</div>
+                                    <div class="picker-skill-meta">${escapeHtml([skill.attribute, skill.category, skill.power && skill.power !== '0' ? '威力' + skill.power : '', '能耗' + (skill.energyConsumption ?? 0)].filter(Boolean).join(' · '))}</div>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }).join('') || '<div class="empty-tip">没有匹配到技能</div>';
+
+        groupsEl.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const skillId = String(checkbox.dataset.skillId);
+                if (checkbox.checked && !selected.includes(skillId)) selected.push(skillId);
+                if (!checkbox.checked) selected = selected.filter(id => id !== skillId);
+                target.value = JSON.stringify(selected.map(Number), null, 2);
+                box.querySelector('.selected-note').textContent = `当前已选 ${selected.length} 个技能`;
+                rebuildSelectedPanel();
+            });
+        });
+    };
+    rebuildSelectedPanel();
+    renderGroups();
+    document.getElementById(`${targetId}_skill_search`).addEventListener('input', debounce(e => renderGroups(e.target.value.trim()), 200));
+}
+
+function openTagConfigModal() {
+    const form = document.getElementById('tagConfigForm');
+    form.innerHTML = Object.entries(TAG_LIBRARY).map(([key, values]) => `
+        <div class="field ${key === 'actionTags' || key === 'triggerTags' || key === 'payoffTags' || key === 'synergyTags' ? 'full' : ''}">
+            <label>${key}</label>
+            <textarea id="tagcfg_${key}">${escapeHtml(JSON.stringify(values, null, 2))}</textarea>
+        </div>
+    `).join('');
+    document.getElementById('tagConfigModal').classList.add('open');
+}
+
+function closeTagConfigModal() {
+    document.getElementById('tagConfigModal').classList.remove('open');
+}
+
+async function saveTagLibraryConfig() {
+    const config = {};
+    Object.keys(DEFAULT_TAG_LIBRARY).forEach(key => {
+        const raw = document.getElementById(`tagcfg_${key}`)?.value || '[]';
+        try {
+            const parsed = JSON.parse(raw);
+            config[key] = Array.isArray(parsed) ? parsed.map(v => String(v).trim()).filter(Boolean) : [];
+        } catch {
+            config[key] = raw.split(',').map(s => s.trim()).filter(Boolean);
+        }
+    });
+    const resp = await fetch(`${API_BASE}/config/analysis-tags`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ config: JSON.stringify(config) })
+    });
+    const result = await resp.json();
+    if (result.success) {
+        TAG_LIBRARY = config;
+        closeTagConfigModal();
+        renderForm();
+        setStatus('分析标签库已更新');
+    } else {
+        setStatus('分析标签库更新失败');
+    }
+}
+
+async function generateProfileForCurrent() {
+    const petId = document.getElementById('field_petId')?.value?.trim();
+    if (!petId) {
+        setStatus('请先选择 petId 再生成画像');
+        return;
+    }
+    setStatus('正在生成画像骨架...');
+    const resp = await fetch(`${API_BASE}/analysis/pet-tactical-profiles/${encodeURIComponent(petId)}/generate`, { method: 'POST' });
+    const result = await resp.json();
+    if (result.success && result.profile) {
+        currentRecord = { petId, ...result.profile };
+        renderForm();
+        await loadList();
+        setStatus('画像骨架已生成并回填表单');
+    } else {
+        setStatus('画像生成失败');
+    }
+}
+
+async function generateSkillTagDraftForCurrent() {
+    const skillId = document.getElementById('field_skillId')?.value?.trim();
+    if (!skillId) {
+        setStatus('请先选择 skillId 再生成技能标签初稿');
+        return;
+    }
+    setStatus('正在生成技能标签初稿...');
+    const resp = await fetch(`${API_BASE}/analysis/skill-tactical-tags/${encodeURIComponent(skillId)}/suggest`, { method: 'POST' });
+    const result = await resp.json();
+    if (result.success && result.draft) {
+        currentRecord = { skillId, ...result.draft };
+        renderForm();
+        setStatus('技能标签初稿已回填表单');
+    } else {
+        setStatus('技能标签初稿生成失败');
+    }
+}
+
+async function generateSkillTagDraftBatch() {
+    setStatus('正在启动批量技能标签任务...');
+    const resp = await fetch(`${API_BASE}/analysis/skill-tactical-tags/generate-batch`, { method: 'POST' });
+    const result = await resp.json();
+    if (!result.success) {
+        setStatus(result.message || '批量技能标签任务启动失败');
+        return;
+    }
+    setStatus(result.message || '批量技能标签任务已启动');
+    const timer = setInterval(async () => {
+        const statusResp = await fetch(`${API_BASE}/analysis/skill-tactical-tags/generate-status`);
+        const status = await statusResp.json();
+        setStatus(`技能标签进度：${status.processed || 0} / ${status.total || 0} (${Math.round(status.percent || 0)}%)`);
+        if (!status.running) {
+            clearInterval(timer);
+            await loadList();
+            setStatus(`技能标签批量任务完成：${status.processed || 0} / ${status.total || 0}`);
+        }
+    }, 1500);
+}
+
+async function generateFeatureTagDraftForCurrent() {
+    const featureId = document.getElementById('field_featureId')?.value?.trim();
+    if (!featureId) {
+        setStatus('请先选择 featureId 再生成特性标签初稿');
+        return;
+    }
+    setStatus('正在生成特性标签初稿...');
+    const resp = await fetch(`${API_BASE}/analysis/feature-tactical-tags/${encodeURIComponent(featureId)}/suggest`, { method: 'POST' });
+    const result = await resp.json();
+    if (result.success && result.draft) {
+        currentRecord = { featureId, ...result.draft };
+        renderForm();
+        setStatus('特性标签初稿已回填表单');
+    } else {
+        setStatus('特性标签初稿生成失败');
+    }
+}
+
+async function generateFeatureTagDraftBatch() {
+    setStatus('正在启动批量特性标签任务...');
+    const resp = await fetch(`${API_BASE}/analysis/feature-tactical-tags/generate-batch`, { method: 'POST' });
+    const result = await resp.json();
+    if (!result.success) {
+        setStatus(result.message || '批量特性标签任务启动失败');
+        return;
+    }
+    setStatus(result.message || '批量特性标签任务已启动');
+    const timer = setInterval(async () => {
+        const statusResp = await fetch(`${API_BASE}/analysis/feature-tactical-tags/generate-status`);
+        const status = await statusResp.json();
+        setStatus(`特性标签进度：${status.processed || 0} / ${status.total || 0} (${Math.round(status.percent || 0)}%)`);
+        if (!status.running) {
+            clearInterval(timer);
+            await loadList();
+            setStatus(`特性标签批量任务完成：${status.processed || 0} / ${status.total || 0}`);
+        }
+    }, 1500);
+}
+
+async function generateBuildForCurrent() {
+    const petId = document.getElementById('field_petId')?.value?.trim();
+    if (!petId) {
+        setStatus('请先选择 petId 再生成构筑');
+        return;
+    }
+    setStatus('正在生成构筑草稿...');
+    const resp = await fetch(`${API_BASE}/analysis/pet-build-profiles/${encodeURIComponent(petId)}/generate`, { method: 'POST' });
+    const result = await resp.json();
+    if (result.success && result.build) {
+        currentRecord = result.build;
+        renderForm();
+        await loadList();
+        setStatus('构筑草稿已生成并回填表单');
+    } else {
+        setStatus('构筑草稿生成失败');
+    }
+}
+
+async function generateBuildBatch() {
+    setStatus('正在启动批量构筑草稿任务...');
+    const resp = await fetch(`${API_BASE}/analysis/pet-build-profiles/generate-batch`, { method: 'POST' });
+    const result = await resp.json();
+    if (!result.success) {
+        setStatus(result.message || '批量构筑草稿任务启动失败');
+        return;
+    }
+    setStatus(result.message || '批量构筑草稿任务已启动');
+    const timer = setInterval(async () => {
+        const statusResp = await fetch(`${API_BASE}/analysis/pet-build-profiles/generate-status`);
+        const status = await statusResp.json();
+        setStatus(`构筑草稿进度：${status.processed || 0} / ${status.total || 0} (${Math.round(status.percent || 0)}%)`);
+        if (!status.running) {
+            clearInterval(timer);
+            await loadList();
+            setStatus(`构筑草稿批量任务完成：${status.processed || 0} / ${status.total || 0}`);
+        }
+    }, 1500);
+}
+
+async function seedGlossaryDefaults() {
+    setStatus('正在导入默认词条...');
+    const resp = await fetch(`${API_BASE}/analysis/mechanic-glossary/seed-defaults`, { method: 'POST' });
+    const result = await resp.json();
+    if (result.success) {
+        await loadList();
+        setStatus(`默认词条导入完成，本次新增 ${result.inserted ?? 0} 条`);
+    } else {
+        setStatus('默认词条导入失败');
+    }
+}
+
+function setStatus(text) {
+    statusText.textContent = text || '';
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+}
+
+function escapeAttr(value) {
+    return escapeHtml(value).replaceAll('"', '&quot;');
+}
+
+(async function init() {
+    await loadAnalysisTagLibrary();
+    renderTabs();
+    renderHints();
+    renderForm();
+    loadList();
+})();
+</script>
+</body>
+</html>

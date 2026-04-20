@@ -48,10 +48,19 @@ public class DataService {
 
         // 2. 蛋组
         List<String> groups = new ArrayList<>();
-        Map<Integer, String> eggGroupNameMap = getEggGroupNameMap();
-        jdbcTemplate.query("SELECT group_id FROM pet_egg_groups WHERE pet_id = ?", (rs) -> {
-            groups.add(eggGroupNameMap.getOrDefault(rs.getInt("group_id"), "未知组"));
-        }, p.getId());
+        List<Map<String, String>> eggGroupFull = new ArrayList<>();
+        jdbcTemplate.query(
+            "SELECT d.id, d.name_cn, d.description FROM pet_egg_groups e " +
+            "JOIN pet_egg_group_definitions d ON e.group_id = d.id " +
+            "WHERE e.pet_id = ?", 
+            (rs) -> {
+                groups.add(rs.getString("name_cn"));
+                Map<String, String> gMap = new HashMap<>();
+                gMap.put("id", String.valueOf(rs.getInt("id")));
+                gMap.put("name", rs.getString("name_cn"));
+                gMap.put("description", rs.getString("description"));
+                eggGroupFull.add(gMap);
+            }, p.getId());
         p.setEggGroups(groups);
 
         Map<String, Object> details = new HashMap<>();
@@ -75,6 +84,7 @@ public class DataService {
         details.put("height", p.getHeight() != null ? p.getHeight() : "未知");
         details.put("weight", p.getWeight() != null ? p.getWeight() : "未知");
         details.put("eggGroups", p.getEggGroups());
+        details.put("eggGroupFull", eggGroupFull);
 
         // 特性名称和描述
         details.put("featureName", "暂无特性");
@@ -161,6 +171,26 @@ public class DataService {
         }
         details.put("aiReview", aiReview);
         details.put("natureRecommendation", getNatureRecommendation(p));
+
+        try {
+            Map<String, Object> tacticalProfile = jdbcTemplate.queryForMap(
+                "SELECT version, role_summary, offense_score, defense_score, speed_score, utility_score, synergy_score, flexibility_score, ceiling_score, floor_score, meta_fit_score, strengths, weaknesses, build_dependencies, profile_json, generated_by, updated_at FROM pet_tactical_profiles WHERE pet_id = ?",
+                id
+            );
+            details.put("tacticalProfile", tacticalProfile);
+        } catch (Exception e) {
+            details.put("tacticalProfile", null);
+        }
+
+        try {
+            List<Map<String, Object>> buildProfiles = jdbcTemplate.queryForList(
+                "SELECT id, build_name, build_type, core_skill_ids, optional_skill_ids, recommended_skill_set, role_tags, playstyle_summary, strength_notes, weakness_notes, environment_notes, priority, source, updated_at FROM pet_build_profiles WHERE pet_id = ? ORDER BY priority DESC, id ASC",
+                id
+            );
+            details.put("buildProfiles", buildProfiles);
+        } catch (Exception e) {
+            details.put("buildProfiles", new ArrayList<>());
+        }
 
         // 关联形态（Boss 形态）
         List<Map<String, Object>> bossForms = new ArrayList<>();
@@ -294,14 +324,11 @@ public class DataService {
         });
     }
 
-    private Map<Integer, String> getEggGroupNameMap() {
+    public Map<Integer, String> getEggGroupNameMap() {
         Map<Integer, String> map = new HashMap<>();
-        map.put(1, "植物组"); map.put(2, "动物组"); map.put(3, "龙系组");
-        map.put(4, "守护组"); map.put(5, "萌系组"); map.put(6, "精灵组");
-        map.put(7, "唯美组"); map.put(8, "力量组"); map.put(9, "矿石组");
-        map.put(10, "不死组"); map.put(11, "翼组"); map.put(12, "猎鹰组");
-        map.put(13, "幻灵组"); map.put(14, "神系组"); map.put(15, "动作组");
-        map.put(16, "未知组");
+        jdbcTemplate.query("SELECT id, name_cn FROM pet_egg_group_definitions", (rs) -> {
+            map.put(rs.getInt("id"), rs.getString("name_cn"));
+        });
         return map;
     }
 

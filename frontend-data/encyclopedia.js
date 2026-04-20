@@ -1,5 +1,9 @@
 // ===== 配置和常量已提取到 js/api.js 和 js/constants.js =====
 
+// ===== 管理端标志 =====
+// C端访问 encyclopedia.html（无参数）；管理端访问 encyclopedia.html?admin=1
+const isAdmin = new URLSearchParams(window.location.search).get('admin') === '1';
+
 // ===== 全局状态 =====
 let currentPage = 0;
 let currentType = '';
@@ -842,7 +846,12 @@ async function showDetail(id) {
                 <div class="bio-meta-row">
                     <div class="bio-tag" title="身高"><i class="fas fa-ruler-vertical"></i> ${d.height}</div>
                     <div class="bio-tag" title="体重"><i class="fas fa-weight-hanging"></i> ${d.weight}</div>
-                    <div class="bio-tag" title="蛋组"><i class="fas fa-egg"></i> ${d.eggGroups && d.eggGroups.length > 0 ? d.eggGroups.join(' / ') : '未知蛋组'}</div>
+                    <div class="bio-tag" title="蛋组">
+                        <i class="fas fa-egg"></i> 
+                        ${d.eggGroupFull && d.eggGroupFull.length > 0 
+                            ? d.eggGroupFull.map(g => `<span title="${g.description}" style="cursor:help">${g.name}</span>`).join(' / ') 
+                            : '未知蛋组'}
+                    </div>
 
                 </div>
                 ${renderStatsBars(d)}
@@ -857,10 +866,7 @@ async function showDetail(id) {
 
             <div class="tabs-container">
                 <div class="tabs-nav">
-                    <button class="tab-link active" onclick="switchTab(event, 'skill-common')">
-                        <i class="fas fa-star"></i> <span>常用</span>
-                    </button>
-                    <button class="tab-link" onclick="switchTab(event, 'skill-self')">
+                    <button class="tab-link active" onclick="switchTab(event, 'skill-self')">
                         <i class="fas fa-book"></i> <span>自学</span>
                     </button>
                     <button class="tab-link" onclick="switchTab(event, 'skill-stone')">
@@ -869,11 +875,14 @@ async function showDetail(id) {
                     <button class="tab-link" onclick="switchTab(event, 'skill-bloodline')">
                         <i class="fas fa-dna"></i> <span>血脉库</span>
                     </button>
+                    <button class="tab-link" onclick="switchTab(event, 'skill-common')">
+                        <i class="fas fa-star"></i> <span>常用</span>
+                    </button>
                 </div>
-                <div id="skill-common" class="tab-content">${renderSkillsList(d.skills['常用'] || [])}</div>
-                <div id="skill-self" class="tab-content" style="display:none">${renderSkillsList(d.skills['自学'])}</div>
+                <div id="skill-self" class="tab-content">${renderSkillsList(d.skills['自学'])}</div>
                 <div id="skill-stone" class="tab-content" style="display:none">${renderSkillsList(d.skills['技能石'])}</div>
                 <div id="skill-bloodline" class="tab-content" style="display:none">${renderSkillsList(d.skills['血脉'])}</div>
+                <div id="skill-common" class="tab-content" style="display:none">${renderSkillsList(d.skills['常用'] || [])}</div>
             </div>
 
             ${d.aiReview ? `
@@ -888,6 +897,65 @@ async function showDetail(id) {
             </div>
             ` : ''}
 
+            ${d.tacticalProfile ? `
+            <div class="ai-review-box master-review" style="margin-top: 18px; border-color: rgba(59,130,246,0.18);">
+                <h3><i class="fas fa-chess-knight"></i> 战术画像骨架 (${d.tacticalProfile.version || 'skeleton'})</h3>
+                <div class="review-status-row" style="flex-wrap:wrap; gap:8px;">
+                    ${d.tacticalProfile.role_summary ? `<span class="review-badge"><i class="fas fa-bullseye"></i> ${d.tacticalProfile.role_summary}</span>` : ''}
+                    ${d.tacticalProfile.generated_by ? `<span class="review-badge"><i class="fas fa-microchip"></i> ${d.tacticalProfile.generated_by}</span>` : ''}
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin-top:14px;">
+                    ${[
+                        ['输出', d.tacticalProfile.offense_score],
+                        ['生存', d.tacticalProfile.defense_score],
+                        ['速度', d.tacticalProfile.speed_score],
+                        ['功能', d.tacticalProfile.utility_score],
+                        ['自洽', d.tacticalProfile.synergy_score],
+                        ['泛用', d.tacticalProfile.flexibility_score],
+                        ['上限', d.tacticalProfile.ceiling_score],
+                        ['下限', d.tacticalProfile.floor_score],
+                        ['环境', d.tacticalProfile.meta_fit_score]
+                    ].map(([label, value]) => `
+                        <div style="background:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.12); border-radius:12px; padding:10px 12px;">
+                            <div style="font-size:12px;color:#94a3b8;">${label}</div>
+                            <div style="font-size:18px;font-weight:800;color:#e2e8f0; margin-top:4px;">${value ?? '--'}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${(d.tacticalProfile.strengths || d.tacticalProfile.weaknesses) ? `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;">
+                    <div style="background:rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.12); border-radius:14px; padding:14px;">
+                        <div style="font-weight:700; margin-bottom:8px; color:#86efac;">核心优势</div>
+                        <div style="font-size:13px; line-height:1.7; color:#cbd5e1;">${safeArrayText(d.tacticalProfile.strengths)}</div>
+                    </div>
+                    <div style="background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.12); border-radius:14px; padding:14px;">
+                        <div style="font-weight:700; margin-bottom:8px; color:#fca5a5;">核心短板</div>
+                        <div style="font-size:13px; line-height:1.7; color:#cbd5e1;">${safeArrayText(d.tacticalProfile.weaknesses)}</div>
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+            ` : ''}
+
+            ${Array.isArray(d.buildProfiles) && d.buildProfiles.length ? `
+            <div class="ai-review-box" style="margin-top:18px;">
+                <h3><i class="fas fa-swatchbook"></i> 推荐构筑骨架</h3>
+                <div style="display:grid; gap:12px; margin-top:12px;">
+                    ${d.buildProfiles.map(build => `
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:14px;">
+                            <div style="display:flex; justify-content:space-between; gap:8px; align-items:center; flex-wrap:wrap;">
+                                <div style="font-weight:800; color:#e2e8f0;">${build.build_name || '未命名构筑'}</div>
+                                <div style="font-size:12px; color:#94a3b8;">${[build.build_type, build.priority != null ? '优先级 ' + build.priority : '', build.source].filter(Boolean).join(' · ')}</div>
+                            </div>
+                            <div style="font-size:13px; line-height:1.8; color:#cbd5e1; margin-top:8px;">
+                                ${build.playstyle_summary || build.strength_notes || '暂无构筑说明'}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            ` : ''}
+
             <div class="ai-review-box">
                 <h3><i class="fas fa-microchip"></i> 战术前瞻 (数值修正)</h3>
                 <div style="font-size:0.9rem; line-height:1.8; color: #64748b;">
@@ -898,6 +966,19 @@ async function showDetail(id) {
     } catch (e) {
         body.innerHTML = `<div style="color:red">详情加载失败: ${e.message}</div>`;
     }
+}
+
+function safeArrayText(raw) {
+    if (!raw) return '暂无';
+    try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+            return parsed.length ? parsed.map(item => `• ${item}`).join('<br>') : '暂无';
+        }
+    } catch (e) {
+        // ignore
+    }
+    return String(raw).replace(/\n/g, '<br>');
 }
 
 function renderSkillsList(skills) {
@@ -931,9 +1012,10 @@ function renderSkillsList(skills) {
                                 <span class="stat-mini-inline">🔋${s.energyConsumption}</span>
                             </div>
                         </div>
-                        <div class="skill-common-toggle ${isCommon ? 'active' : ''}" onclick="toggleCommonSkill(event, ${s.id})">
-                            <i class="${isCommon ? 'fas' : 'far'} fa-bookmark"></i>
-                        </div>
+                        ${isAdmin
+                            ? `<div class="skill-common-toggle ${isCommon ? 'active' : ''}" onclick="toggleCommonSkill(event, ${s.id})" title="标记为常用技能（管理端）"><i class="${isCommon ? 'fas' : 'far'} fa-bookmark"></i></div>`
+                            : (isCommon ? `<div class="skill-common-toggle active" title="常用技能" style="cursor:default;pointer-events:none;opacity:0.6;"><i class="fas fa-bookmark"></i></div>` : '')
+                        }
                     </div>
                     <div class="skill-desc-mini">
                         ${s.description || '暂无描述'}
@@ -1539,7 +1621,7 @@ async function loadEggGroupFilters() {
 
         // 渲染按钮
         container.innerHTML = groups.map(g =>
-            `<button class="type-btn" data-gid="${g.groupId}">${g.groupName} (${g.petCount})</button>`
+            `<button class="type-btn" data-gid="${g.groupId}" title="${g.description || ''}">${g.groupName} (${g.petCount})</button>`
         ).join('');
 
         // 渲染下拉选择器

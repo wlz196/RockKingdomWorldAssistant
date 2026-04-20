@@ -1,0 +1,170 @@
+[
+  {
+    "id": 1,
+    "name": "PEG_UNDISCOVERED",
+    "name_cn": "未发现",
+    "desc": "未发现：不能和任何精灵生蛋，多用于传说中的精灵；喜欢的口味较为大众；不排斥任何天气"
+  },
+  {
+    "id": 2,
+    "name": "PEG_MONSTER",
+    "name_cn": "怪兽型",
+    "desc": "怪兽：像怪兽一样，或者比较野性的动物；喜欢的口味较为大众"
+  },
+  {
+    "id": 3,
+    "name": "PEG_AMPHIBIAN",
+    "name_cn": "两栖型",
+    "desc": "两栖：两栖动物和水边生活的多栖动物；喜欢湿润，喜欢湿度高的天气"
+  },
+  {
+    "id": 4,
+    "name": "PEG_INSECT",
+    "name_cn": "虫型",
+    "desc": "虫：看起来像虫子的精灵；喜欢湿润与自然，排斥极端天气"
+  },
+  {
+    "id": 5,
+    "name": "PEG_FLYING",
+    "name_cn": "飞行型",
+    "desc": "飞行：会飞的精灵；喜欢自然，排斥阻碍飞行的天气"
+  },
+  {
+    "id": 6,
+    "name": "PEG_LAND",
+    "name_cn": "陆上型",
+    "desc": "陆上：生活在陆地上的精灵；喜欢自然，排斥极端天气"
+  },
+  {
+    "id": 7,
+    "name": "PEG_FAIRY",
+    "name_cn": "妖精型",
+    "desc": "妖精：可爱的小动物，以及神话中的精灵；喜欢自然，排斥极端天气"
+  },
+  {
+    "id": 8,
+    "name": "PEG_PLANT",
+    "name_cn": "植物型",
+    "desc": "植物：看起来像植物的精灵；喜欢自然，喜欢湿度高的天气"
+  },
+  {
+    "id": 9,
+    "name": "PEG_HUMAN_LIKE",
+    "name_cn": "人型",
+    "desc": "人型：看起来像人的精灵；啥都喜欢"
+  },
+  {
+    "id": 10,
+    "name": "PEG_INVERTEBRATE",
+    "name_cn": "软体型",
+    "desc": "软体型：看起来软软的精灵，圆形多为软体动物；喜欢湿润，喜欢湿度高的天气"
+  },
+  {
+    "id": 11,
+    "name": "PEG_MINERAL",
+    "name_cn": "矿物型",
+    "desc": "矿物：身体由矿物组成的精灵；喜欢岩石"
+  },
+  {
+    "id": 12,
+    "name": "PEG_UNFORM",
+    "name_cn": "不定型",
+    "desc": "不定型：看起来没有固定形态的精灵，包括：水、火、灵魂、能量；喜欢自然能量"
+  },
+  {
+    "id": 13,
+    "name": "PEG_FISH",
+    "name_cn": "鱼型",
+    "desc": "鱼：看起来像鱼的精灵；喜欢湿润与大海；排斥沙暴与雪"
+  },
+  {
+    "id": 14,
+    "name": "PEG_DRAGON",
+    "name_cn": "龙型",
+    "desc": "龙：看起来像龙的精灵；喜欢的口味较为大众；不排斥任何天气"
+  },
+  {
+    "id": 15,
+    "name": "PEG_MACHINE",
+    "name_cn": "机械型",
+    "desc": "机械：身体由机械组成的精灵；喜欢口味极少，排斥绝大部分异常天气"
+  },
+  {
+    "id": 16,
+    "name": "101",
+    "name_cn": "IS+TJ",
+    "desc": "IS+TJ；排斥恐惧"
+  },
+  {
+    "id": 17,
+    "name": "102",
+    "name_cn": "IS+TJ",
+    "desc": "IS+TJ；排斥恐惧"
+  },
+  {
+    "id": 18,
+    "name": "201",
+    "name_cn": "ES+TJ",
+    "desc": "ES+TJ；排斥困倦和恐惧"
+  },
+  {
+    "id": 19,
+    "name": "202",
+    "name_cn": "ES+TJ",
+    "desc": "ES+TJ；排斥困倦和恐惧"
+  },
+  {
+    "id": 20,
+    "name": "301",
+    "name_cn": "ES+FJ",
+    "desc": "ES+FJ；排斥恐惧"
+  },
+  {
+    "id": 21,
+    "name": "302",
+    "name_cn": "ES+FJ",
+    "desc": "ES+FJ；排斥恐惧"
+  },
+  {
+    "id": 22,
+    "name": "401",
+    "name_cn": "ES+FP",
+    "desc": "ES+FP；排斥困倦"
+  },
+  {
+    "id": 23,
+    "name": "402",
+    "name_cn": "ES+FP",
+    "desc": "ES+FP；排斥困倦"
+  },
+  {
+    "id": 24,
+    "name": "501",
+    "name_cn": "IS+FP",
+    "desc": "IS+FP；排斥困倦"
+  },
+  {
+    "id": 25,
+    "name": "502",
+    "name_cn": "IS+FP",
+    "desc": "IS+FP；排斥困倦"
+  },
+  {
+    "id": 26,
+    "name": "601",
+    "name_cn": "ES+TP",
+    "desc": "ES+TP；排斥困倦"
+  },
+  {
+    "id": 27,
+    "name": "602",
+    "name_cn": "ES+TP",
+    "desc": "ES+TP；排斥困倦"
+  },
+  {
+    "id": 28,
+    "name": "603",
+    "name_cn": "IS+TP",
+    "desc": "IS+TP；排斥困倦"
+  }
+]

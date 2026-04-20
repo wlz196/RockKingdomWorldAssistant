@@ -4,8 +4,10 @@ import com.roco.data.model.dto.SkillItemDTO;
 import com.roco.data.model.entity.Pet;
 import com.roco.data.repository.PetRepository;
 import com.roco.data.service.DataService;
-import com.roco.data.service.AiTaggerService;
 import com.roco.data.service.AiPetReviewService;
+import com.roco.data.service.PetProfileEngineService;
+import com.roco.data.service.PetBuildProfileDraftService;
+import com.roco.data.service.TacticalTagDraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -30,30 +32,51 @@ public class DataController {
 
     private final DataService dataService;
     private final PetRepository petRepository;
-    private final AiTaggerService aiTaggerService;
     private final AiPetReviewService aiPetReviewService;
-
-    // 进度追踪状态 (技能)
-    private final AtomicBoolean isBatchRunning = new AtomicBoolean(false);
-    private final AtomicInteger processedCount = new AtomicInteger(0);
-    private int totalToProcess = 0;
+    private final PetProfileEngineService petProfileEngineService;
+    private final PetBuildProfileDraftService petBuildProfileDraftService;
+    private final TacticalTagDraftService tacticalTagDraftService;
 
     // 进度追踪状态 (精灵评述)
     private final AtomicBoolean isPetReviewRunning = new AtomicBoolean(false);
     private final AtomicInteger processedPetReviewCount = new AtomicInteger(0);
     private int totalPetReviewsToProcess = 0;
 
+    // 进度追踪状态 (精灵画像)
+    private final AtomicBoolean isPetProfileRunning = new AtomicBoolean(false);
+    private final AtomicInteger processedPetProfileCount = new AtomicInteger(0);
+    private int totalPetProfilesToProcess = 0;
+
+    // 进度追踪状态 (构筑草稿)
+    private final AtomicBoolean isBuildDraftRunning = new AtomicBoolean(false);
+    private final AtomicInteger processedBuildDraftCount = new AtomicInteger(0);
+    private int totalBuildDraftsToProcess = 0;
+
+    // 进度追踪状态 (技能标签)
+    private final AtomicBoolean isSkillTagRunning = new AtomicBoolean(false);
+    private final AtomicInteger processedSkillTagCount = new AtomicInteger(0);
+    private int totalSkillTagsToProcess = 0;
+
+    // 进度追踪状态 (特性标签)
+    private final AtomicBoolean isFeatureTagRunning = new AtomicBoolean(false);
+    private final AtomicInteger processedFeatureTagCount = new AtomicInteger(0);
+    private int totalFeatureTagsToProcess = 0;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public DataController(DataService dataService,
                           PetRepository petRepository,
-                          AiTaggerService aiTaggerService,
-                          AiPetReviewService aiPetReviewService) {
+                          AiPetReviewService aiPetReviewService,
+                          PetProfileEngineService petProfileEngineService,
+                          PetBuildProfileDraftService petBuildProfileDraftService,
+                          TacticalTagDraftService tacticalTagDraftService) {
         this.dataService = dataService;
         this.petRepository = petRepository;
-        this.aiTaggerService = aiTaggerService;
         this.aiPetReviewService = aiPetReviewService;
+        this.petProfileEngineService = petProfileEngineService;
+        this.petBuildProfileDraftService = petBuildProfileDraftService;
+        this.tacticalTagDraftService = tacticalTagDraftService;
     }
 
     @GetMapping("/pets")
@@ -458,12 +481,7 @@ public class DataController {
     @GetMapping("/egg-groups")
     public List<Map<String, Object>> getEggGroups(
             @RequestParam(required = false) Integer groupId) {
-        Map<Integer, String> groupNames = new HashMap<>();
-        groupNames.put(1, "植物组"); groupNames.put(2, "动物组"); groupNames.put(3, "龙系组");
-        groupNames.put(4, "守护组"); groupNames.put(5, "萌系组"); groupNames.put(6, "精灵组");
-        groupNames.put(7, "唯美组"); groupNames.put(8, "力量组"); groupNames.put(9, "矿石组");
-        groupNames.put(10, "不死组"); groupNames.put(11, "翼组"); groupNames.put(12, "猎鹰组");
-        groupNames.put(13, "幻灵组"); groupNames.put(14, "神系组"); groupNames.put(15, "动作组");
+        Map<Integer, String> groupNames = dataService.getEggGroupNameMap();
 
         if (groupId != null) {
             return jdbcTemplate.query(
@@ -484,12 +502,15 @@ public class DataController {
         }
 
         return jdbcTemplate.query(
-            "SELECT group_id, COUNT(*) as pet_count FROM pet_egg_groups GROUP BY group_id ORDER BY group_id",
+            "SELECT d.id as group_id, d.name_cn, d.description, COUNT(e.pet_id) as pet_count " +
+            "FROM pet_egg_group_definitions d " +
+            "LEFT JOIN pet_egg_groups e ON d.id = e.group_id " +
+            "GROUP BY d.id ORDER BY d.id",
             (rs, rowNum) -> {
                 Map<String, Object> map = new HashMap<>();
-                int gid = rs.getInt("group_id");
-                map.put("groupId", gid);
-                map.put("groupName", groupNames.getOrDefault(gid, "未知组"));
+                map.put("groupId", rs.getInt("group_id"));
+                map.put("groupName", rs.getString("name_cn"));
+                map.put("description", rs.getString("description"));
                 map.put("petCount", rs.getInt("pet_count"));
                 return map;
             });
@@ -504,12 +525,7 @@ public class DataController {
         List<Integer> groups2 = jdbcTemplate.queryForList(
             "SELECT group_id FROM pet_egg_groups WHERE pet_id = ?", Integer.class, petId2);
 
-        Map<Integer, String> groupNames = new HashMap<>();
-        groupNames.put(1, "植物组"); groupNames.put(2, "动物组"); groupNames.put(3, "龙系组");
-        groupNames.put(4, "守护组"); groupNames.put(5, "萌系组"); groupNames.put(6, "精灵组");
-        groupNames.put(7, "唯美组"); groupNames.put(8, "力量组"); groupNames.put(9, "矿石组");
-        groupNames.put(10, "不死组"); groupNames.put(11, "翼组"); groupNames.put(12, "猎鹰组");
-        groupNames.put(13, "幻灵组"); groupNames.put(14, "神系组"); groupNames.put(15, "动作组");
+        Map<Integer, String> groupNames = dataService.getEggGroupNameMap();
 
         List<String> commonGroups = groups1.stream()
             .filter(groups2::contains)
@@ -728,232 +744,26 @@ public class DataController {
         return result;
     }
 
-    /**
-     * 获取技能列表用于手动打标 (支持分页和系别筛选)
-     */
-    @GetMapping("/skills/list")
-    public Map<String, Object> getSkillsForTagging(
-            @RequestParam(required = false) Integer typeId,
-            @RequestParam(required = false) String keyword,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "50") int size) {
-        
-        int offset = (page - 1) * size;
-        StringBuilder sql = new StringBuilder("SELECT id, name, desc, ai_tags, skill_dam_type as typeId FROM skill_conf_main WHERE is_official = 1 AND type = 1");
-        List<Object> params = new ArrayList<>();
-        
-        if (typeId != null) {
-            sql.append(" AND skill_dam_type = ?");
-            params.add(typeId);
-        }
-        if (keyword != null && !keyword.isEmpty()) {
-            sql.append(" AND (name LIKE ? OR desc LIKE ? OR ai_tags LIKE ?)");
-            String pattern = "%" + keyword + "%";
-            params.add(pattern);
-            params.add(pattern);
-            params.add(pattern);
-        }
-        
-        sql.append(" ORDER BY id ASC LIMIT ? OFFSET ?");
-        params.add(size);
-        params.add(offset);
-        
-        List<Map<String, Object>> skills = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
-            Map<String, Object> m = new HashMap<>();
-            m.put("id", rs.getInt("id"));
-            m.put("name", rs.getString("name"));
-            m.put("desc", rs.getString("desc"));
-            m.put("aiTags", rs.getString("ai_tags"));
-            m.put("typeId", rs.getInt("typeId"));
-            return m;
-        }, params.toArray());
-        
-        Map<String, Object> result = new HashMap<>();
-        result.put("skills", skills);
-        result.put("page", page);
-        result.put("size", size);
-        return result;
-    }
-
-    /**
-     * 更新技能的 AI 标签
-     */
-    @PostMapping("/skills/{id}/tags")
-    public Map<String, Object> updateSkillTags(@PathVariable int id, @RequestBody Map<String, List<String>> body) {
-        List<String> tags = body.get("tags");
-        String tagsJson = (tags == null || tags.isEmpty()) ? "" : String.join(",", tags);
-        
-        jdbcTemplate.update("UPDATE skill_conf_main SET ai_tags = ? WHERE id = ?", tagsJson, id);
-        
-        Map<String, Object> res = new HashMap<>();
-        res.put("success", true);
-        res.put("id", id);
-        res.put("tags", tags);
-        return res;
-    }
-
-    /**
-     * 获取全局配置
-     */
-    @GetMapping("/config/tags")
-    public Map<String, Object> getTagConfig() {
-        String sql = "SELECT config_value FROM global_config WHERE config_key = 'SKILL_TAG_LIBRARY'";
+    @GetMapping("/config/analysis-tags")
+    public Map<String, Object> getAnalysisTagConfig() {
+        String sql = "SELECT config_value FROM global_config WHERE config_key = 'ANALYSIS_TAG_LIBRARY'";
         List<String> values = jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("config_value"));
-        
+        String defaultJson = "{\"actionTags\":[\"直接伤害\",\"连击\",\"条件增伤\",\"斩杀\",\"优先级\",\"打断\",\"护盾\",\"减伤\",\"锁血\",\"回血\",\"回能\",\"净化\",\"驱散\",\"减益\",\"控制\",\"印记施加\",\"印记消耗\",\"转属性\",\"反击\",\"启动\",\"强化\",\"资源循环\"],\"triggerTags\":[\"对克制目标\",\"对异常目标\",\"对低血目标\",\"对高血目标\",\"先手时\",\"后手时\",\"应对成功后\",\"受击后\",\"登场后\",\"自身有印记\",\"对方有印记\",\"连续使用\",\"满能量时\",\"低血量时\",\"特定系别条件\"],\"payoffTags\":[\"启动\",\"爆发\",\"稳定输出\",\"收割\",\"续航\",\"抗压\",\"节奏压制\",\"逼换\",\"反打\",\"资源获取\",\"强势滚雪球\"],\"targetTags\":[\"自身\",\"敌方单体\",\"敌方全体\",\"友方\",\"场地\"],\"synergyTags\":[\"多属性打击面\",\"异常联动\",\"印记联动\",\"应对联动\",\"血脉联动\",\"资源循环\",\"中盘压制\"],\"riskTags\":[\"启动慢\",\"怕控场\",\"怕集火\",\"缺续航\",\"技能位紧张\",\"依赖对位\",\"依赖血脉\"],\"roleTags\":[\"主C\",\"副C\",\"坦克\",\"节奏手\",\"控场\",\"反制位\",\"先发压制\",\"中转枢纽\",\"对策卡\"],\"relatedTags\":[\"优先级\",\"速度压制\",\"节奏压制\",\"条件增伤\",\"爆发\",\"滚雪球\",\"回能\",\"印记联动\"]}";
+
         Map<String, Object> res = new HashMap<>();
-        res.put("tags", values.isEmpty() ? "输出,生存,控制,博弈,机制" : values.get(0));
+        res.put("config", values.isEmpty() ? defaultJson : values.get(0));
         return res;
     }
 
-    /**
-     * 更新全局标签库配置
-     */
-    @PostMapping("/config/tags")
-    public Map<String, Object> updateTagConfig(@RequestBody Map<String, String> body) {
-        String tagsRaw = body.get("tags");
-        // 鲁棒性处理：去除首尾空格、按逗号分割、去重、重新组合
-        String tagsClean = Arrays.stream(tagsRaw.split("[,，]"))
-                                .map(String::trim)
-                                .filter(s -> !s.isEmpty())
-                                .distinct()
-                                .collect(Collectors.joining(","));
-        
-        jdbcTemplate.update("INSERT OR REPLACE INTO global_config (config_key, config_value) VALUES ('SKILL_TAG_LIBRARY', ?)", tagsClean);
-        
-        Map<String, Object> res = new HashMap<>();
-        res.put("success", true);
-        res.put("tags", tagsClean);
-        return res;
-    }
-
-    /**
-     * 获取技能打标统计数据
-     */
-    @GetMapping("/skills/stats")
-    public Map<String, Object> getSkillStats() {
-        // 统计时也只关注正式的主动技能
-        String allTagsSql = "SELECT ai_tags FROM skill_conf_main WHERE ai_tags IS NOT NULL AND ai_tags != '' AND is_official = 1 AND type = 1";
-        List<String> tagsList = jdbcTemplate.queryForList(allTagsSql, String.class);
-        
-        String totalSql = "SELECT COUNT(*) FROM skill_conf_main WHERE is_official = 1 AND type = 1";
-        Integer totalSkills = jdbcTemplate.queryForObject(totalSql, Integer.class);
-        
-        Map<String, Integer> tagCounts = new HashMap<>();
-        int taggedSkillsCount = tagsList.size();
-        
-        for (String tags : tagsList) {
-            String[] split = tags.split("[,，]");
-            for (String tag : split) {
-                String cleanTag = tag.trim();
-                if (!cleanTag.isEmpty()) {
-                    tagCounts.put(cleanTag, tagCounts.getOrDefault(cleanTag, 0) + 1);
-                }
-            }
-        }
-        
-        // 按频率从高到低排序
-        List<Map<String, Object>> sortedTags = tagCounts.entrySet().stream()
-            .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
-            .map(entry -> {
-                Map<String, Object> map = new HashMap<>();
-                map.put("name", entry.getKey());
-                map.put("count", entry.getValue());
-                return map;
-            })
-            .collect(Collectors.toList());
-
-        Map<String, Object> res = new HashMap<>();
-        res.put("totalSkills", totalSkills);
-        res.put("taggedSkills", taggedSkillsCount);
-        res.put("tagDistribution", sortedTags);
-        return res;
-    }
-
-    /**
-     * AI 智能建议单个技能标签
-     */
-    @PostMapping("/skills/{id}/ai-suggest")
-    public Map<String, Object> aiSuggestSingle(@PathVariable Integer id) {
-        Map<String, Object> skill = jdbcTemplate.queryForMap(
-            "SELECT name, desc FROM skill_conf_main WHERE id = ?", id);
-        
-        String name = (String) skill.get("name");
-        String desc = (String) skill.get("desc");
-        
-        Map<String, Object> analysis = aiTaggerService.analyzeSkill(name, desc);
-        Map<String, Object> res = new HashMap<>();
-        res.put("success", analysis != null);
-        res.put("analysis", analysis);
-        if (analysis != null) {
-            res.put("combinedTags", aiTaggerService.combineTags(analysis));
-        }
-        return res;
-    }
-
-    @PostMapping("/skills/ai-sync-batch")
-    public Map<String, Object> aiSyncBatch() {
-        // 获取所有正式技能
-        List<Map<String, Object>> skills = jdbcTemplate.queryForList(
-            "SELECT id, name, desc FROM skill_conf_main WHERE is_official = 1 AND type = 1");
-        
-        if (isBatchRunning.get()) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("message", "打标任务已经在运行中，请等待完成。");
-            return error;
-        }
-
-        // 初始化状态
-        isBatchRunning.set(true);
-        processedCount.set(0);
-        totalToProcess = skills.size();
-
-        // 开启后台并行任务
-        new Thread(() -> {
-            log.info("🚀 开始并行 AI 打标任务，总计 {} 条...", totalToProcess);
-            int batchSize = 10;
-            int threadCount = 5;
-            ExecutorService executor = Executors.newFixedThreadPool(threadCount);
-            
-            // 任务分片
-            List<List<Map<String, Object>>> chunks = new ArrayList<>();
-            for (int i = 0; i < skills.size(); i += batchSize) {
-                chunks.add(skills.subList(i, Math.min(i + batchSize, skills.size())));
-            }
-
-            for (List<Map<String, Object>> chunk : chunks) {
-                executor.submit(() -> {
-                    try {
-                        List<Map<String, Object>> results = aiTaggerService.analyzeSkillsBatch(chunk);
-                        for (Map<String, Object> res : results) {
-                            Integer id = (Integer) res.get("id");
-                            String combinedTags = aiTaggerService.combineTags(res);
-                            jdbcTemplate.update("UPDATE skill_conf_main SET ai_tags = ? WHERE id = ?", combinedTags, id);
-                        }
-                        processedCount.addAndGet(chunk.size());
-                        log.info("✅ 批次处理完成，当前总进度: {} / {}", processedCount.get(), totalToProcess);
-                    } catch (Exception e) {
-                        log.error("❌ 批次任务异常: {}", e.getMessage());
-                    }
-                });
-            }
-
-            executor.shutdown();
-            try {
-                if (executor.awaitTermination(60, TimeUnit.MINUTES)) {
-                    log.info("🎉 全量 AI 极速打标任务圆满完成！");
-                }
-            } catch (InterruptedException e) {
-                log.error("打标任务被中断: {}", e.getMessage());
-                Thread.currentThread().interrupt();
-            } finally {
-                isBatchRunning.set(false);
-            }
-        }).start();
+    @PostMapping("/config/analysis-tags")
+    public Map<String, Object> updateAnalysisTagConfig(@RequestBody Map<String, Object> body) {
+        Object config = body.get("config");
+        String configText = config == null ? "{}" : config.toString();
+        jdbcTemplate.update("INSERT OR REPLACE INTO global_config (config_key, config_value) VALUES ('ANALYSIS_TAG_LIBRARY', ?)", configText);
 
         Map<String, Object> res = new HashMap<>();
         res.put("success", true);
-        res.put("message", "全量 AI 极速并行任务已在后台启动。处理 1300+ 技能预计耗时 10-20 分钟。");
+        res.put("config", configText);
         return res;
     }
 
@@ -1048,11 +858,740 @@ public class DataController {
         Map<String, Object> res = new HashMap<>();
         int processed = processedPetReviewCount.get();
         double percent = totalPetReviewsToProcess > 0 ? (processed * 100.0 / totalPetReviewsToProcess) : 0;
-        
+
         res.put("running", isPetReviewRunning.get());
         res.put("processed", processed);
         res.put("total", totalPetReviewsToProcess);
         res.put("percent", Math.min(100.0, percent));
         return res;
+    }
+
+    @GetMapping("/analysis/skill-tactical-tags")
+    public Map<String, Object> getSkillTacticalTags(
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "50") int size) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT st.skill_id, sc.name as skill_name, st.major_category, st.source, st.confidence, st.updated_at " +
+            "FROM skill_tactical_tags st " +
+            "LEFT JOIN skill_conf_main sc ON st.skill_id = sc.id " +
+            "WHERE CAST(st.skill_id AS TEXT) LIKE ? OR IFNULL(sc.name, '') LIKE ? " +
+            "ORDER BY st.skill_id ASC LIMIT ? OFFSET ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("skillId", rs.getInt("skill_id"));
+                map.put("skillName", rs.getString("skill_name"));
+                map.put("majorCategory", rs.getString("major_category"));
+                map.put("source", rs.getString("source"));
+                map.put("confidence", rs.getObject("confidence"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            },
+            "%" + keyword + "%", "%" + keyword + "%", size, page * size
+        );
+        Map<String, Object> res = new HashMap<>();
+        res.put("items", rows);
+        res.put("page", page);
+        res.put("size", size);
+        return res;
+    }
+
+    @GetMapping("/analysis/skill-tactical-tags/{id}/details")
+    public Map<String, Object> getSkillTacticalTagDetails(@PathVariable Integer id) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT st.*, sc.name as skill_name, sc.desc as skill_desc FROM skill_tactical_tags st " +
+            "LEFT JOIN skill_conf_main sc ON st.skill_id = sc.id WHERE st.skill_id = ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("skillId", rs.getInt("skill_id"));
+                map.put("skillName", rs.getString("skill_name"));
+                map.put("skillDesc", rs.getString("skill_desc"));
+                map.put("majorCategory", rs.getString("major_category"));
+                map.put("actionTags", rs.getString("action_tags"));
+                map.put("triggerTags", rs.getString("trigger_tags"));
+                map.put("payoffTags", rs.getString("payoff_tags"));
+                map.put("targetTags", rs.getString("target_tags"));
+                map.put("synergyTags", rs.getString("synergy_tags"));
+                map.put("riskTags", rs.getString("risk_tags"));
+                map.put("manualScoreAttack", rs.getObject("manual_score_attack"));
+                map.put("manualScoreDefense", rs.getObject("manual_score_defense"));
+                map.put("manualScoreUtility", rs.getObject("manual_score_utility"));
+                map.put("confidence", rs.getObject("confidence"));
+                map.put("source", rs.getString("source"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            }, id
+        );
+        return rows.isEmpty() ? Map.of("skillId", id) : rows.get(0);
+    }
+
+    @PostMapping("/analysis/skill-tactical-tags/{id}/save")
+    public Map<String, Object> saveSkillTacticalTag(@PathVariable Integer id, @RequestBody Map<String, Object> body) {
+        jdbcTemplate.update(
+            "INSERT OR REPLACE INTO skill_tactical_tags (skill_id, major_category, action_tags, trigger_tags, payoff_tags, target_tags, synergy_tags, risk_tags, manual_score_attack, manual_score_defense, manual_score_utility, confidence, source, updated_at) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))",
+            id,
+            body.get("majorCategory"),
+            body.get("actionTags"),
+            body.get("triggerTags"),
+            body.get("payoffTags"),
+            body.get("targetTags"),
+            body.get("synergyTags"),
+            body.get("riskTags"),
+            body.get("manualScoreAttack"),
+            body.get("manualScoreDefense"),
+            body.get("manualScoreUtility"),
+            body.get("confidence"),
+            body.get("source")
+        );
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/skill-tactical-tags/{id}/delete")
+    public Map<String, Object> deleteSkillTacticalTag(@PathVariable Integer id) {
+        jdbcTemplate.update("DELETE FROM skill_tactical_tags WHERE skill_id = ?", id);
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/skill-tactical-tags/{id}/suggest")
+    public Map<String, Object> suggestSkillTacticalTag(@PathVariable Integer id) {
+        Map<String, Object> draft = tacticalTagDraftService.suggestSkillDraft(id);
+        return Map.of("success", true, "draft", draft);
+    }
+
+    @GetMapping("/analysis/skill-tactical-tags/generate-candidates")
+    public List<Map<String, Object>> getSkillTagGenerateCandidates() {
+        return tacticalTagDraftService.getSkillGenerateCandidates();
+    }
+
+    @PostMapping("/analysis/skill-tactical-tags/generate-batch")
+    public Map<String, Object> generateSkillTagsBatch() {
+        if (isSkillTagRunning.get()) {
+            return Map.of("success", false, "message", "技能标签任务已在运行中。");
+        }
+        List<Map<String, Object>> candidates = tacticalTagDraftService.getSkillGenerateCandidates().stream()
+            .filter(item -> ((Number) item.get("has_tag")).intValue() == 0)
+            .collect(Collectors.toList());
+        isSkillTagRunning.set(true);
+        processedSkillTagCount.set(0);
+        totalSkillTagsToProcess = candidates.size();
+
+        new Thread(() -> {
+            log.info("🚀 开始批量生成技能标签，共 {} 条...", totalSkillTagsToProcess);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
+            for (Map<String, Object> candidate : candidates) {
+                Integer id = ((Number) candidate.get("id")).intValue();
+                executor.submit(() -> {
+                    try {
+                        tacticalTagDraftService.generateSkillTag(id);
+                        processedSkillTagCount.incrementAndGet();
+                    } catch (Exception e) {
+                        log.error("❌ 技能标签生成异常 [#{}]: {}", id, e.getMessage());
+                    }
+                });
+            }
+            executor.shutdown();
+            try {
+                executor.awaitTermination(60, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                isSkillTagRunning.set(false);
+            }
+        }).start();
+
+        return Map.of("success", true, "message", "技能标签批量生成任务已启动。");
+    }
+
+    @GetMapping("/analysis/skill-tactical-tags/generate-status")
+    public Map<String, Object> getSkillTagGenerateStatus() {
+        int processed = processedSkillTagCount.get();
+        double percent = totalSkillTagsToProcess > 0 ? (processed * 100.0 / totalSkillTagsToProcess) : 0;
+        return Map.of(
+            "running", isSkillTagRunning.get(),
+            "processed", processed,
+            "total", totalSkillTagsToProcess,
+            "percent", Math.min(100.0, percent)
+        );
+    }
+
+    @GetMapping("/analysis/feature-tactical-tags")
+    public Map<String, Object> getFeatureTacticalTags(
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "50") int size) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT ft.feature_id, sc.name as feature_name, ft.trigger_mode, ft.value_axis, ft.source, ft.updated_at " +
+            "FROM feature_tactical_tags ft " +
+            "LEFT JOIN skill_conf_main sc ON ft.feature_id = sc.id " +
+            "WHERE CAST(ft.feature_id AS TEXT) LIKE ? OR IFNULL(sc.name, '') LIKE ? " +
+            "ORDER BY ft.feature_id ASC LIMIT ? OFFSET ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("featureId", rs.getInt("feature_id"));
+                map.put("featureName", rs.getString("feature_name"));
+                map.put("triggerMode", rs.getString("trigger_mode"));
+                map.put("valueAxis", rs.getString("value_axis"));
+                map.put("source", rs.getString("source"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            },
+            "%" + keyword + "%", "%" + keyword + "%", size, page * size
+        );
+        Map<String, Object> res = new HashMap<>();
+        res.put("items", rows);
+        res.put("page", page);
+        res.put("size", size);
+        return res;
+    }
+
+    @GetMapping("/analysis/feature-tactical-tags/{id}/details")
+    public Map<String, Object> getFeatureTacticalTagDetails(@PathVariable Integer id) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT ft.*, sc.name as feature_name, sc.desc as feature_desc FROM feature_tactical_tags ft " +
+            "LEFT JOIN skill_conf_main sc ON ft.feature_id = sc.id WHERE ft.feature_id = ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("featureId", rs.getInt("feature_id"));
+                map.put("featureName", rs.getString("feature_name"));
+                map.put("featureDesc", rs.getString("feature_desc"));
+                map.put("triggerMode", rs.getString("trigger_mode"));
+                map.put("valueAxis", rs.getString("value_axis"));
+                map.put("triggerTags", rs.getString("trigger_tags"));
+                map.put("payoffTags", rs.getString("payoff_tags"));
+                map.put("synergyTags", rs.getString("synergy_tags"));
+                map.put("floorBoost", rs.getObject("floor_boost"));
+                map.put("ceilingBoost", rs.getObject("ceiling_boost"));
+                map.put("notes", rs.getString("notes"));
+                map.put("source", rs.getString("source"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            }, id
+        );
+        return rows.isEmpty() ? Map.of("featureId", id) : rows.get(0);
+    }
+
+    @PostMapping("/analysis/feature-tactical-tags/{id}/save")
+    public Map<String, Object> saveFeatureTacticalTag(@PathVariable Integer id, @RequestBody Map<String, Object> body) {
+        jdbcTemplate.update(
+            "INSERT OR REPLACE INTO feature_tactical_tags (feature_id, trigger_mode, value_axis, trigger_tags, payoff_tags, synergy_tags, floor_boost, ceiling_boost, notes, source, updated_at) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))",
+            id,
+            body.get("triggerMode"),
+            body.get("valueAxis"),
+            body.get("triggerTags"),
+            body.get("payoffTags"),
+            body.get("synergyTags"),
+            body.get("floorBoost"),
+            body.get("ceilingBoost"),
+            body.get("notes"),
+            body.get("source")
+        );
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/feature-tactical-tags/{id}/delete")
+    public Map<String, Object> deleteFeatureTacticalTag(@PathVariable Integer id) {
+        jdbcTemplate.update("DELETE FROM feature_tactical_tags WHERE feature_id = ?", id);
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/feature-tactical-tags/{id}/suggest")
+    public Map<String, Object> suggestFeatureTacticalTag(@PathVariable Integer id) {
+        Map<String, Object> draft = tacticalTagDraftService.suggestFeatureDraft(id);
+        return Map.of("success", true, "draft", draft);
+    }
+
+    @GetMapping("/analysis/feature-tactical-tags/generate-candidates")
+    public List<Map<String, Object>> getFeatureTagGenerateCandidates() {
+        return tacticalTagDraftService.getFeatureGenerateCandidates();
+    }
+
+    @PostMapping("/analysis/feature-tactical-tags/generate-batch")
+    public Map<String, Object> generateFeatureTagsBatch() {
+        if (isFeatureTagRunning.get()) {
+            return Map.of("success", false, "message", "特性标签任务已在运行中。");
+        }
+        List<Map<String, Object>> candidates = tacticalTagDraftService.getFeatureGenerateCandidates().stream()
+            .filter(item -> ((Number) item.get("has_tag")).intValue() == 0)
+            .collect(Collectors.toList());
+        isFeatureTagRunning.set(true);
+        processedFeatureTagCount.set(0);
+        totalFeatureTagsToProcess = candidates.size();
+
+        new Thread(() -> {
+            log.info("🚀 开始批量生成特性标签，共 {} 条...", totalFeatureTagsToProcess);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
+            for (Map<String, Object> candidate : candidates) {
+                Integer id = ((Number) candidate.get("id")).intValue();
+                executor.submit(() -> {
+                    try {
+                        tacticalTagDraftService.generateFeatureTag(id);
+                        processedFeatureTagCount.incrementAndGet();
+                    } catch (Exception e) {
+                        log.error("❌ 特性标签生成异常 [#{}]: {}", id, e.getMessage());
+                    }
+                });
+            }
+            executor.shutdown();
+            try {
+                executor.awaitTermination(60, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                isFeatureTagRunning.set(false);
+            }
+        }).start();
+
+        return Map.of("success", true, "message", "特性标签批量生成任务已启动。");
+    }
+
+    @GetMapping("/analysis/feature-tactical-tags/generate-status")
+    public Map<String, Object> getFeatureTagGenerateStatus() {
+        int processed = processedFeatureTagCount.get();
+        double percent = totalFeatureTagsToProcess > 0 ? (processed * 100.0 / totalFeatureTagsToProcess) : 0;
+        return Map.of(
+            "running", isFeatureTagRunning.get(),
+            "processed", processed,
+            "total", totalFeatureTagsToProcess,
+            "percent", Math.min(100.0, percent)
+        );
+    }
+
+    @GetMapping("/analysis/pet-build-profiles")
+    public Map<String, Object> getPetBuildProfiles(
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @RequestParam(required = false) Integer petId,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "50") int size) {
+        StringBuilder sql = new StringBuilder(
+            "SELECT pb.id, pb.pet_id, p.name as pet_name, pb.build_name, pb.build_type, pb.priority, pb.source, pb.updated_at " +
+            "FROM pet_build_profiles pb LEFT JOIN pets p ON pb.pet_id = p.id WHERE 1=1"
+        );
+        List<Object> params = new ArrayList<>();
+        if (keyword != null && !keyword.isBlank()) {
+            sql.append(" AND (CAST(pb.pet_id AS TEXT) LIKE ? OR IFNULL(p.name, '') LIKE ? OR IFNULL(pb.build_name, '') LIKE ?)");
+            params.add("%" + keyword + "%");
+            params.add("%" + keyword + "%");
+            params.add("%" + keyword + "%");
+        }
+        if (petId != null) {
+            sql.append(" AND pb.pet_id = ?");
+            params.add(petId);
+        }
+        sql.append(" ORDER BY pb.priority DESC, pb.id ASC LIMIT ? OFFSET ?");
+        params.add(size);
+        params.add(page * size);
+
+        List<Map<String, Object>> rows = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", rs.getInt("id"));
+            map.put("petId", rs.getInt("pet_id"));
+            map.put("petName", rs.getString("pet_name"));
+            map.put("buildName", rs.getString("build_name"));
+            map.put("buildType", rs.getString("build_type"));
+            map.put("priority", rs.getObject("priority"));
+            map.put("source", rs.getString("source"));
+            map.put("updatedAt", rs.getString("updated_at"));
+            return map;
+        }, params.toArray());
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("items", rows);
+        res.put("page", page);
+        res.put("size", size);
+        return res;
+    }
+
+    @GetMapping("/analysis/pet-build-profiles/{id}/details")
+    public Map<String, Object> getPetBuildProfileDetails(@PathVariable Integer id) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT pb.*, p.name as pet_name FROM pet_build_profiles pb LEFT JOIN pets p ON pb.pet_id = p.id WHERE pb.id = ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", rs.getInt("id"));
+                map.put("petId", rs.getInt("pet_id"));
+                map.put("petName", rs.getString("pet_name"));
+                map.put("buildName", rs.getString("build_name"));
+                map.put("buildType", rs.getString("build_type"));
+                map.put("coreSkillIds", rs.getString("core_skill_ids"));
+                map.put("optionalSkillIds", rs.getString("optional_skill_ids"));
+                map.put("recommendedSkillSet", rs.getString("recommended_skill_set"));
+                map.put("bloodlineOptions", rs.getString("bloodline_options"));
+                map.put("natureOptions", rs.getString("nature_options"));
+                map.put("talentOptions", rs.getString("talent_options"));
+                map.put("roleTags", rs.getString("role_tags"));
+                map.put("playstyleSummary", rs.getString("playstyle_summary"));
+                map.put("strengthNotes", rs.getString("strength_notes"));
+                map.put("weaknessNotes", rs.getString("weakness_notes"));
+                map.put("environmentNotes", rs.getString("environment_notes"));
+                map.put("source", rs.getString("source"));
+                map.put("priority", rs.getObject("priority"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            }, id
+        );
+        return rows.isEmpty() ? Map.of("id", id) : rows.get(0);
+    }
+
+    @PostMapping("/analysis/pet-build-profiles/save")
+    public Map<String, Object> savePetBuildProfile(@RequestBody Map<String, Object> body) {
+        Object id = body.get("id");
+        if (id == null || id.toString().isBlank()) {
+            jdbcTemplate.update(
+                "INSERT INTO pet_build_profiles (pet_id, build_name, build_type, core_skill_ids, optional_skill_ids, recommended_skill_set, bloodline_options, nature_options, talent_options, role_tags, playstyle_summary, strength_notes, weakness_notes, environment_notes, source, priority, updated_at) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))",
+                body.get("petId"),
+                body.get("buildName"),
+                body.get("buildType"),
+                body.get("coreSkillIds"),
+                body.get("optionalSkillIds"),
+                body.get("recommendedSkillSet"),
+                body.get("bloodlineOptions"),
+                body.get("natureOptions"),
+                body.get("talentOptions"),
+                body.get("roleTags"),
+                body.get("playstyleSummary"),
+                body.get("strengthNotes"),
+                body.get("weaknessNotes"),
+                body.get("environmentNotes"),
+                body.get("source"),
+                body.get("priority")
+            );
+        } else {
+            jdbcTemplate.update(
+                "UPDATE pet_build_profiles SET pet_id = ?, build_name = ?, build_type = ?, core_skill_ids = ?, optional_skill_ids = ?, recommended_skill_set = ?, bloodline_options = ?, nature_options = ?, talent_options = ?, role_tags = ?, playstyle_summary = ?, strength_notes = ?, weakness_notes = ?, environment_notes = ?, source = ?, priority = ?, updated_at = datetime('now', 'localtime') WHERE id = ?",
+                body.get("petId"),
+                body.get("buildName"),
+                body.get("buildType"),
+                body.get("coreSkillIds"),
+                body.get("optionalSkillIds"),
+                body.get("recommendedSkillSet"),
+                body.get("bloodlineOptions"),
+                body.get("natureOptions"),
+                body.get("talentOptions"),
+                body.get("roleTags"),
+                body.get("playstyleSummary"),
+                body.get("strengthNotes"),
+                body.get("weaknessNotes"),
+                body.get("environmentNotes"),
+                body.get("source"),
+                body.get("priority"),
+                id
+            );
+        }
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/pet-build-profiles/{id}/delete")
+    public Map<String, Object> deletePetBuildProfile(@PathVariable Integer id) {
+        jdbcTemplate.update("DELETE FROM pet_build_profiles WHERE id = ?", id);
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/pet-build-profiles/{petId}/generate")
+    public Map<String, Object> generatePetBuildProfile(@PathVariable Integer petId) {
+        Map<String, Object> generated = petBuildProfileDraftService.generateDraft(petId);
+        Map<String, Object> res = new HashMap<>();
+        res.put("success", true);
+        res.put("build", generated);
+        return res;
+    }
+
+    @GetMapping("/analysis/pet-build-profiles/generate-candidates")
+    public List<Map<String, Object>> getPetBuildProfileGenerateCandidates() {
+        return petBuildProfileDraftService.getGenerateCandidates();
+    }
+
+    @PostMapping("/analysis/pet-build-profiles/generate-batch")
+    public Map<String, Object> generatePetBuildProfilesBatch() {
+        if (isBuildDraftRunning.get()) {
+            return Map.of("success", false, "message", "构筑草稿任务已在运行中。");
+        }
+
+        List<Map<String, Object>> candidates = petBuildProfileDraftService.getGenerateCandidates();
+        isBuildDraftRunning.set(true);
+        processedBuildDraftCount.set(0);
+        totalBuildDraftsToProcess = candidates.size();
+
+        new Thread(() -> {
+            log.info("🚀 开始批量生成构筑草稿，共 {} 只...", totalBuildDraftsToProcess);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
+            for (Map<String, Object> candidate : candidates) {
+                Integer id = ((Number) candidate.get("id")).intValue();
+                executor.submit(() -> {
+                    try {
+                        petBuildProfileDraftService.generateDraft(id);
+                        processedBuildDraftCount.incrementAndGet();
+                    } catch (Exception e) {
+                        log.error("❌ 构筑草稿生成异常 [#{}]: {}", id, e.getMessage());
+                    }
+                });
+            }
+            executor.shutdown();
+            try {
+                executor.awaitTermination(60, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                isBuildDraftRunning.set(false);
+            }
+        }).start();
+
+        return Map.of("success", true, "message", "构筑草稿批量生成任务已启动。");
+    }
+
+    @GetMapping("/analysis/pet-build-profiles/generate-status")
+    public Map<String, Object> getPetBuildProfileGenerateStatus() {
+        int processed = processedBuildDraftCount.get();
+        double percent = totalBuildDraftsToProcess > 0 ? (processed * 100.0 / totalBuildDraftsToProcess) : 0;
+        return Map.of(
+            "running", isBuildDraftRunning.get(),
+            "processed", processed,
+            "total", totalBuildDraftsToProcess,
+            "percent", Math.min(100.0, percent)
+        );
+    }
+
+    @GetMapping("/analysis/pet-tactical-profiles")
+    public Map<String, Object> getPetTacticalProfiles(
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "50") int size) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT pt.pet_id, p.name as pet_name, pt.version, pt.role_summary, pt.generated_by, pt.updated_at " +
+            "FROM pet_tactical_profiles pt LEFT JOIN pets p ON pt.pet_id = p.id " +
+            "WHERE CAST(pt.pet_id AS TEXT) LIKE ? OR IFNULL(p.name, '') LIKE ? " +
+            "ORDER BY pt.pet_id ASC LIMIT ? OFFSET ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("petId", rs.getInt("pet_id"));
+                map.put("petName", rs.getString("pet_name"));
+                map.put("version", rs.getString("version"));
+                map.put("roleSummary", rs.getString("role_summary"));
+                map.put("generatedBy", rs.getString("generated_by"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            },
+            "%" + keyword + "%", "%" + keyword + "%", size, page * size
+        );
+        Map<String, Object> res = new HashMap<>();
+        res.put("items", rows);
+        res.put("page", page);
+        res.put("size", size);
+        return res;
+    }
+
+    @GetMapping("/analysis/pet-tactical-profiles/{id}/details")
+    public Map<String, Object> getPetTacticalProfileDetails(@PathVariable Integer id) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT pt.*, p.name as pet_name FROM pet_tactical_profiles pt LEFT JOIN pets p ON pt.pet_id = p.id WHERE pt.pet_id = ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("petId", rs.getInt("pet_id"));
+                map.put("petName", rs.getString("pet_name"));
+                map.put("version", rs.getString("version"));
+                map.put("profileJson", rs.getString("profile_json"));
+                map.put("roleSummary", rs.getString("role_summary"));
+                map.put("offenseScore", rs.getObject("offense_score"));
+                map.put("defenseScore", rs.getObject("defense_score"));
+                map.put("speedScore", rs.getObject("speed_score"));
+                map.put("utilityScore", rs.getObject("utility_score"));
+                map.put("synergyScore", rs.getObject("synergy_score"));
+                map.put("flexibilityScore", rs.getObject("flexibility_score"));
+                map.put("ceilingScore", rs.getObject("ceiling_score"));
+                map.put("floorScore", rs.getObject("floor_score"));
+                map.put("metaFitScore", rs.getObject("meta_fit_score"));
+                map.put("strengths", rs.getString("strengths"));
+                map.put("weaknesses", rs.getString("weaknesses"));
+                map.put("buildDependencies", rs.getString("build_dependencies"));
+                map.put("generatedBy", rs.getString("generated_by"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            }, id
+        );
+        return rows.isEmpty() ? Map.of("petId", id) : rows.get(0);
+    }
+
+    @PostMapping("/analysis/pet-tactical-profiles/{id}/save")
+    public Map<String, Object> savePetTacticalProfile(@PathVariable Integer id, @RequestBody Map<String, Object> body) {
+        jdbcTemplate.update(
+            "INSERT OR REPLACE INTO pet_tactical_profiles (pet_id, version, profile_json, role_summary, offense_score, defense_score, speed_score, utility_score, synergy_score, flexibility_score, ceiling_score, floor_score, meta_fit_score, strengths, weaknesses, build_dependencies, generated_by, updated_at) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))",
+            id,
+            body.get("version"),
+            body.get("profileJson"),
+            body.get("roleSummary"),
+            body.get("offenseScore"),
+            body.get("defenseScore"),
+            body.get("speedScore"),
+            body.get("utilityScore"),
+            body.get("synergyScore"),
+            body.get("flexibilityScore"),
+            body.get("ceilingScore"),
+            body.get("floorScore"),
+            body.get("metaFitScore"),
+            body.get("strengths"),
+            body.get("weaknesses"),
+            body.get("buildDependencies"),
+            body.get("generatedBy")
+        );
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/pet-tactical-profiles/{id}/generate")
+    public Map<String, Object> generatePetTacticalProfile(@PathVariable Integer id) {
+        Map<String, Object> generated = petProfileEngineService.generateProfile(id);
+        Map<String, Object> res = new HashMap<>();
+        res.put("success", true);
+        res.put("profile", generated);
+        return res;
+    }
+
+    @GetMapping("/analysis/pet-tactical-profiles/generate-candidates")
+    public List<Map<String, Object>> getPetTacticalProfileGenerateCandidates() {
+        return petProfileEngineService.getGenerateCandidates();
+    }
+
+    @PostMapping("/analysis/pet-tactical-profiles/generate-batch")
+    public Map<String, Object> generatePetTacticalProfilesBatch() {
+        if (isPetProfileRunning.get()) {
+            return Map.of("success", false, "message", "精灵画像任务已在运行中。");
+        }
+
+        List<Map<String, Object>> candidates = petProfileEngineService.getGenerateCandidates();
+        isPetProfileRunning.set(true);
+        processedPetProfileCount.set(0);
+        totalPetProfilesToProcess = candidates.size();
+
+        new Thread(() -> {
+            log.info("🚀 开始批量生成精灵画像，共 {} 只...", totalPetProfilesToProcess);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
+            for (Map<String, Object> candidate : candidates) {
+                Integer id = ((Number) candidate.get("id")).intValue();
+                executor.submit(() -> {
+                    try {
+                        petProfileEngineService.generateProfile(id);
+                        processedPetProfileCount.incrementAndGet();
+                    } catch (Exception e) {
+                        log.error("❌ 精灵画像生成异常 [#{}]: {}", id, e.getMessage());
+                    }
+                });
+            }
+            executor.shutdown();
+            try {
+                executor.awaitTermination(60, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                isPetProfileRunning.set(false);
+            }
+        }).start();
+
+        return Map.of("success", true, "message", "精灵画像批量生成任务已启动。");
+    }
+
+    @GetMapping("/analysis/pet-tactical-profiles/generate-status")
+    public Map<String, Object> getPetTacticalProfileGenerateStatus() {
+        int processed = processedPetProfileCount.get();
+        double percent = totalPetProfilesToProcess > 0 ? (processed * 100.0 / totalPetProfilesToProcess) : 0;
+        return Map.of(
+            "running", isPetProfileRunning.get(),
+            "processed", processed,
+            "total", totalPetProfilesToProcess,
+            "percent", Math.min(100.0, percent)
+        );
+    }
+
+    @PostMapping("/analysis/pet-tactical-profiles/{id}/delete")
+    public Map<String, Object> deletePetTacticalProfile(@PathVariable Integer id) {
+        jdbcTemplate.update("DELETE FROM pet_tactical_profiles WHERE pet_id = ?", id);
+        return Map.of("success", true);
+    }
+
+    @GetMapping("/analysis/mechanic-glossary")
+    public Map<String, Object> getMechanicGlossary(
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "50") int size) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT term, category, tactical_meaning, updated_at FROM mechanic_glossary " +
+            "WHERE term LIKE ? OR IFNULL(category, '') LIKE ? OR IFNULL(tactical_meaning, '') LIKE ? " +
+            "ORDER BY term ASC LIMIT ? OFFSET ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("term", rs.getString("term"));
+                map.put("category", rs.getString("category"));
+                map.put("tacticalMeaning", rs.getString("tactical_meaning"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            },
+            "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", size, page * size
+        );
+        Map<String, Object> res = new HashMap<>();
+        res.put("items", rows);
+        res.put("page", page);
+        res.put("size", size);
+        return res;
+    }
+
+    @GetMapping("/analysis/mechanic-glossary/{term}/details")
+    public Map<String, Object> getMechanicGlossaryDetails(@PathVariable String term) {
+        List<Map<String, Object>> rows = jdbcTemplate.query(
+            "SELECT * FROM mechanic_glossary WHERE term = ?",
+            (rs, rowNum) -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("term", rs.getString("term"));
+                map.put("category", rs.getString("category"));
+                map.put("formalDefinition", rs.getString("formal_definition"));
+                map.put("tacticalMeaning", rs.getString("tactical_meaning"));
+                map.put("parsingHint", rs.getString("parsing_hint"));
+                map.put("relatedTags", rs.getString("related_tags"));
+                map.put("updatedAt", rs.getString("updated_at"));
+                return map;
+            }, term
+        );
+        return rows.isEmpty() ? Map.of("term", term) : rows.get(0);
+    }
+
+    @PostMapping("/analysis/mechanic-glossary/{term}/save")
+    public Map<String, Object> saveMechanicGlossary(@PathVariable String term, @RequestBody Map<String, Object> body) {
+        jdbcTemplate.update(
+            "INSERT OR REPLACE INTO mechanic_glossary (term, category, formal_definition, tactical_meaning, parsing_hint, related_tags, updated_at) " +
+            "VALUES (?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))",
+            term,
+            body.get("category"),
+            body.get("formalDefinition"),
+            body.get("tacticalMeaning"),
+            body.get("parsingHint"),
+            body.get("relatedTags")
+        );
+        return Map.of("success", true);
+    }
+
+    @PostMapping("/analysis/mechanic-glossary/seed-defaults")
+    public Map<String, Object> seedMechanicGlossaryDefaults() {
+        List<Map<String, String>> seeds = List.of(
+            Map.of("term", "迸发", "category", "机制", "formalDefinition", "在特定条件下触发额外收益或追加伤害。", "tacticalMeaning", "偏上限型收益，常用于爆发与滚雪球。", "parsingHint", "看到追加收益、额外伤害、满足条件后强化时优先考虑。", "relatedTags", "[\"条件增伤\", \"爆发\", \"滚雪球\"]"),
+            Map.of("term", "迅捷", "category", "机制", "formalDefinition", "赋予先手节奏或速度相关收益。", "tacticalMeaning", "提升抢节奏能力，提高先手压制与收割稳定性。", "parsingHint", "看到先手、速度提升、出手顺序调整时优先考虑。", "relatedTags", "[\"优先级\", \"速度压制\", \"节奏压制\"]"),
+            Map.of("term", "印记", "category", "状态", "formalDefinition", "在自身或敌方身上叠加的可被后续技能利用的状态标记。", "tacticalMeaning", "常用于连段、资源循环与中盘压制。", "parsingHint", "看到叠层、标记、消耗层数换收益时优先考虑。", "relatedTags", "[\"印记联动\", \"资源循环\"]")
+        );
+        int inserted = 0;
+        for (Map<String, String> seed : seeds) {
+            Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM mechanic_glossary WHERE term = ?", Integer.class, seed.get("term"));
+            if (count != null && count > 0) continue;
+            jdbcTemplate.update(
+                "INSERT INTO mechanic_glossary (term, category, formal_definition, tactical_meaning, parsing_hint, related_tags, updated_at) VALUES (?, ?, ?, ?, ?, ?, datetime('now', 'localtime'))",
+                seed.get("term"), seed.get("category"), seed.get("formalDefinition"), seed.get("tacticalMeaning"), seed.get("parsingHint"), seed.get("relatedTags")
+            );
+            inserted++;
+        }
+        return Map.of("success", true, "inserted", inserted);
+    }
+
+    @PostMapping("/analysis/mechanic-glossary/{term}/delete")
+    public Map<String, Object> deleteMechanicGlossary(@PathVariable String term) {
+        jdbcTemplate.update("DELETE FROM mechanic_glossary WHERE term = ?", term);
+        return Map.of("success", true);
     }
 }

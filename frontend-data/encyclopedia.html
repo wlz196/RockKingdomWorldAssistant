@@ -102,27 +102,28 @@
                     </div>
                 </div>
 
-                <!-- AI Strategic & Management Center -->
-                <div class="sidebar-group admin-group">
+                <!-- AI Strategic & Management Center - 仅管理端可见 -->
+                <div class="sidebar-group admin-group" id="adminSidebarGroup" style="display:none;">
                     <div class="sidebar-category" onclick="this.parentElement.classList.toggle('expanded')">
+                        <i class="fas fa-shield-halved" style="color:#f59e0b;font-size:12px;margin-right:4px;"></i>
                         <span>AI 战术中心</span> <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="group-items">
                         <a href="pet_review_manager.html" target="_blank" class="sidebar-link">
                             <i class="fas fa-robot"></i> <span>评述同步管理</span>
                         </a>
-                        <a href="tagger.html" target="_blank" class="sidebar-link">
-                            <i class="fas fa-tags"></i> <span>AI 技能打标</span>
-                        </a>
-                        <a href="gallery.html" target="_blank" class="sidebar-link">
-                            <i class="fas fa-th-large"></i> <span>战术全景图鉴</span>
-                        </a>
-                        <a href="stats.html" target="_blank" class="sidebar-link">
-                            <i class="fas fa-chart-pie"></i> <span>打标数据大盘</span>
+                        <a href="analysis_manager.html" target="_blank" class="sidebar-link">
+                            <i class="fas fa-database"></i> <span>分析数据录入台</span>
                         </a>
                     </div>
                 </div>
             </nav>
+
+            <!-- 管理端模式标识（仅 admin=1 时显示）-->
+            <div id="adminModeBadge" style="display:none; margin:12px 16px 0; padding:8px 14px; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3); border-radius:12px; font-size:12px; color:#f59e0b; align-items:center; gap:8px;">
+                <i class="fas fa-shield-halved"></i> 管理员模式
+                <a href="encyclopedia.html" style="margin-left:auto; color:#94a3b8; font-size:11px; text-decoration:none;">退出</a>
+            </div>
         </aside>
 
         <!-- Main Content -->
@@ -996,6 +997,20 @@
                     .catch(err => console.log('Service Worker registration failed', err));
             });
         }
+
+        // ===== 管理端 / C端 UI 切换 =====
+        // isAdmin 由 encyclopedia.js 最顶部定义，此处在其加载后执行
+        (function applyAdminUI() {
+            const adminGroup = document.getElementById('adminSidebarGroup');
+            const adminBadge = document.getElementById('adminModeBadge');
+            if (typeof isAdmin !== 'undefined' && isAdmin) {
+                // 管理端：显示 AI 战术中心入口 + 顶部 badge
+                if (adminGroup) adminGroup.style.display = '';
+                if (adminBadge) adminBadge.style.display = 'flex';
+                // 在页面 title 增加 [管理] 标识
+                document.title = '[管理] ' + document.title;
+            }
+        })();
     </script>
 </body>
 </html>

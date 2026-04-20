@@ -17,21 +17,24 @@ def reimport_all():
     cursor = conn.cursor()
 
     try:
+        # 0. 确保 AI 分析辅助表存在
+        ensure_analysis_tables(cursor)
+
         # 1. 重刷技能主库 (skill_conf_main)
         reimport_skills(cursor)
-        
+
         # 2. 重刷精灵主库 (pets)
         reimport_pets(cursor)
-        
+
         # 3. 重刷技能关联 (pet_level_skills)
         reimport_level_skills(cursor)
-        
+
         # 4. 刷新实装状态位 (is_official)
         refresh_official_status(cursor)
 
         # 5. 计算战力度量衡 (P50/P80/P95)
         calculate_benchmarks(cursor)
-        
+
         conn.commit()
         print("\n✅ 全量数据刷新完成（主表状态位重构版）")
     except Exception as e:
@@ -41,6 +44,115 @@ def reimport_all():
         print(f"\n❌ 执行失败: {e}")
     finally:
         conn.close()
+
+
+def ensure_analysis_tables(cursor):
+    print("正在确保 AI 分析辅助表存在...")
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS skill_tactical_tags (
+            skill_id INTEGER PRIMARY KEY,
+            major_category TEXT,
+            action_tags TEXT,
+            trigger_tags TEXT,
+            payoff_tags TEXT,
+            target_tags TEXT,
+            synergy_tags TEXT,
+            risk_tags TEXT,
+            manual_score_attack REAL,
+            manual_score_defense REAL,
+            manual_score_utility REAL,
+            confidence REAL,
+            source TEXT,
+            updated_at TEXT
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_skill_tactical_tags_major_category ON skill_tactical_tags(major_category)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_skill_tactical_tags_source ON skill_tactical_tags(source)")
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS feature_tactical_tags (
+            feature_id INTEGER PRIMARY KEY,
+            trigger_mode TEXT,
+            value_axis TEXT,
+            trigger_tags TEXT,
+            payoff_tags TEXT,
+            synergy_tags TEXT,
+            floor_boost REAL,
+            ceiling_boost REAL,
+            notes TEXT,
+            source TEXT,
+            updated_at TEXT
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_feature_tactical_tags_trigger_mode ON feature_tactical_tags(trigger_mode)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_feature_tactical_tags_source ON feature_tactical_tags(source)")
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pet_build_profiles (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pet_id INTEGER NOT NULL,
+            build_name TEXT,
+            build_type TEXT,
+            core_skill_ids TEXT,
+            optional_skill_ids TEXT,
+            recommended_skill_set TEXT,
+            bloodline_options TEXT,
+            nature_options TEXT,
+            talent_options TEXT,
+            role_tags TEXT,
+            playstyle_summary TEXT,
+            strength_notes TEXT,
+            weakness_notes TEXT,
+            environment_notes TEXT,
+            source TEXT,
+            priority INTEGER,
+            updated_at TEXT
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_pet_build_profiles_pet_id ON pet_build_profiles(pet_id)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_pet_build_profiles_priority ON pet_build_profiles(priority)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_pet_build_profiles_build_type ON pet_build_profiles(build_type)")
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pet_tactical_profiles (
+            pet_id INTEGER PRIMARY KEY,
+            version TEXT,
+            profile_json TEXT,
+            role_summary TEXT,
+            offense_score REAL,
+            defense_score REAL,
+            speed_score REAL,
+            utility_score REAL,
+            synergy_score REAL,
+            flexibility_score REAL,
+            ceiling_score REAL,
+            floor_score REAL,
+            meta_fit_score REAL,
+            strengths TEXT,
+            weaknesses TEXT,
+            build_dependencies TEXT,
+            generated_by TEXT,
+            updated_at TEXT
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_pet_tactical_profiles_version ON pet_tactical_profiles(version)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_pet_tactical_profiles_generated_by ON pet_tactical_profiles(generated_by)")
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS mechanic_glossary (
+            term TEXT PRIMARY KEY,
+            category TEXT,
+            formal_definition TEXT,
+            tactical_meaning TEXT,
+            parsing_hint TEXT,
+            related_tags TEXT,
+            updated_at TEXT
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_mechanic_glossary_category ON mechanic_glossary(category)")
+
+    print("✅ AI 分析辅助表已就绪")
 
 def reimport_skills(cursor):
     print("正在导入技能库...")
