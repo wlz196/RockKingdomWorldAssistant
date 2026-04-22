@@ -22,6 +22,6 @@ logging:
 
 ai:
   openai:
-    api-key: sk-yRBmWJw9TQn98zzcuuA97YL8hHCNGtKSUaQ6yDMLvIyWT9V5
+    api-key: ${AI_API_KEY:your-api-key-here}
     base-url: https://gpt-agent.cc/v1
     model: gpt-5.4
