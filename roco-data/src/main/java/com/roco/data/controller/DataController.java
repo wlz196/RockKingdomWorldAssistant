@@ -22,6 +22,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/v1/data")
@@ -1593,5 +1594,112 @@ public class DataController {
     public Map<String, Object> deleteMechanicGlossary(@PathVariable String term) {
         jdbcTemplate.update("DELETE FROM mechanic_glossary WHERE term = ?", term);
         return Map.of("success", true);
+    }
+
+    @GetMapping("/pets/query")
+    public Map<String, Object> getPetInfo(@RequestParam String query) {
+        // 1. 查找精灵
+        Pet pet = null;
+        try {
+            int id = Integer.parseInt(query);
+            pet = petRepository.findById(id).orElse(null);
+        } catch (NumberFormatException e) {
+            pet = petRepository.findByName(query).orElse(null);
+        }
+
+        if (pet == null) {
+            return Map.of("error", "未找到该精灵: " + query);
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", pet.getId());
+        result.put("bookId", pet.getBookId());
+        result.put("name", pet.getName());
+        result.put("form", pet.getForm());
+
+        // 2. 种族值
+        Map<String, Integer> stats = new HashMap<>();
+        stats.put("hp", pet.getHp());
+        stats.put("attack", pet.getAttack());
+        stats.put("defense", pet.getDefense());
+        stats.put("magic_attack", pet.getMagicAttack());
+        stats.put("magic_defense", pet.getMagicDefense());
+        stats.put("speed", pet.getSpeed());
+        stats.put("total", pet.getTotalStats());
+        result.put("base_stats", stats);
+
+        // 3. 属性列表 (中文)
+        Map<Integer, String> typeMap = new HashMap<>();
+        jdbcTemplate.query("SELECT id, name FROM types", (rs) -> {
+            typeMap.put(rs.getInt("id"), rs.getString("name").replace("系", ""));
+        });
+
+        List<String> attributes = new ArrayList<>();
+        if (pet.getMainTypeId() != null) attributes.add(typeMap.getOrDefault(pet.getMainTypeId(), "未知"));
+        if (pet.getSubTypeId() != null) attributes.add(typeMap.getOrDefault(pet.getSubTypeId(), "未知"));
+        result.put("attributes", attributes);
+
+        // 4. 弱点计算
+        List<Map<String, Object>> relations = jdbcTemplate.queryForList("SELECT * FROM type_relations");
+        List<String> weaknesses = new ArrayList<>();
+        List<String> strongWeaknesses = new ArrayList<>();
+
+        for (Map.Entry<Integer, String> attacker : typeMap.entrySet()) {
+            double multiplier = 1.0;
+            
+            // 计算主属性倍率
+            if (pet.getMainTypeId() != null) {
+                multiplier *= getTypeMultiplier(relations, attacker.getKey(), pet.getMainTypeId());
+            }
+            // 计算副属性倍率
+            if (pet.getSubTypeId() != null) {
+                multiplier *= getTypeMultiplier(relations, attacker.getKey(), pet.getSubTypeId());
+            }
+
+            if (multiplier == 2.0) {
+                weaknesses.add(attacker.getValue());
+            } else if (multiplier == 4.0) {
+                strongWeaknesses.add(attacker.getValue());
+            }
+        }
+        result.put("weakness", weaknesses);
+        result.put("strong_weakness", strongWeaknesses);
+
+        // 5. 技能列表
+        final Pattern tagPattern = Pattern.compile("<[^>]*>");
+        List<Map<String, Object>> skillList = jdbcTemplate.query(
+            "SELECT s.name, s.desc, s.dam_para, s.energy_cost, s.skill_dam_type " +
+            "FROM pet_level_skills m JOIN skill_conf_main s ON m.skill_id = s.id " +
+            "WHERE m.pet_id = ? AND s.type = 1 ORDER BY m.learn_level ASC",
+            (rs, rowNum) -> {
+                Map<String, Object> s = new HashMap<>();
+                s.put("name", rs.getString("name"));
+                
+                String rawDesc = rs.getString("desc");
+                String cleanedDesc = rawDesc != null ? tagPattern.matcher(rawDesc).replaceAll("").trim() : "";
+                s.put("desc", cleanedDesc);
+
+                s.put("power", rs.getString("dam_para") != null ? rs.getString("dam_para") : "0");
+                
+                String cost = rs.getString("energy_cost");
+                s.put("energy_cost", cost != null ? cost.replace("[", "").replace("]", "") : "0");
+                
+                s.put("attribute", typeMap.getOrDefault(rs.getInt("skill_dam_type"), "无别"));
+                return s;
+            }, pet.getId());
+        result.put("skills", skillList);
+
+        return result;
+    }
+
+    private double getTypeMultiplier(List<Map<String, Object>> relations, int attackerId, int defenderId) {
+        for (Map<String, Object> rel : relations) {
+            if (Integer.valueOf(rel.get("attacker_id").toString()).equals(attackerId) && 
+                Integer.valueOf(rel.get("defender_id").toString()).equals(defenderId)) {
+                int m = Integer.valueOf(rel.get("multiplier").toString());
+                return m == 1 ? 2.0 : (m == -1 ? 0.5 : 0.0);
+            }
+        }
+        return 1.0;
     }
 }
