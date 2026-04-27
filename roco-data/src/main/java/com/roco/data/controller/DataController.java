@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.Arrays;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -1699,6 +1701,13 @@ public class DataController {
                 return s;
             }, pet.getId());
         result.put("skills", skillList);
+
+        // 技能属性覆盖列表
+        Set<String> skillAttributes = skillList.stream()
+            .map(s -> (String) s.get("attribute"))
+            .filter(attr -> !"无别".equals(attr))
+            .collect(Collectors.toCollection(TreeSet::new));
+        result.put("skill_attributes", skillAttributes);
 
         return result;
     }
