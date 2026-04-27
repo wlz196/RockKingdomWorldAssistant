@@ -1617,6 +1617,18 @@ public class DataController {
         result.put("name", pet.getName());
         result.put("form", pet.getForm());
 
+        // 特性信息
+        final Pattern tagPattern = Pattern.compile("<[^>]*>");
+        result.put("feature_name", "无");
+        result.put("feature_desc", "");
+        if (pet.getFeatureId() != null) {
+            jdbcTemplate.query("SELECT name, desc FROM skill_conf_main WHERE id = ?", (rs) -> {
+                result.put("feature_name", rs.getString("name"));
+                String rawDesc = rs.getString("desc");
+                result.put("feature_desc", rawDesc != null ? tagPattern.matcher(rawDesc).replaceAll("").trim() : "");
+            }, pet.getFeatureId());
+        }
+
         // 2. 种族值
         Map<String, Integer> stats = new HashMap<>();
         stats.put("hp", pet.getHp());
@@ -1666,7 +1678,6 @@ public class DataController {
         result.put("strong_weakness", strongWeaknesses);
 
         // 5. 技能列表
-        final Pattern tagPattern = Pattern.compile("<[^>]*>");
         List<Map<String, Object>> skillList = jdbcTemplate.query(
             "SELECT s.name, s.desc, s.dam_para, s.energy_cost, s.skill_dam_type " +
             "FROM pet_level_skills m JOIN skill_conf_main s ON m.skill_id = s.id " +
