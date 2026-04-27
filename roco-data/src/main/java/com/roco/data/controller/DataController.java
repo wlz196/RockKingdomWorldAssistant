@@ -1683,7 +1683,7 @@ public class DataController {
         List<Map<String, Object>> skillList = jdbcTemplate.query(
             "SELECT s.name, s.desc, s.dam_para, s.energy_cost, s.skill_dam_type " +
             "FROM pet_level_skills m JOIN skill_conf_main s ON m.skill_id = s.id " +
-            "WHERE m.pet_id = ? AND s.type = 1 AND s.name NOT LIKE '%血脉%' ORDER BY m.learn_level ASC",
+            "WHERE m.pet_id = ? AND s.type = 1 AND m.source != 2 ORDER BY m.learn_level ASC",
             (rs, rowNum) -> {
                 Map<String, Object> s = new HashMap<>();
                 s.put("name", rs.getString("name"));
